@@ -96,7 +96,11 @@ export default function Signup(props) {
         value={formData.name}
         onChange={handleInputChange}
       />
-      <div>{errors.name && <p>{errors.name}</p>}</div>
+      {errors.name && (
+        <Typography variant="body2" fontWeight="600">
+          {errors.name}
+        </Typography>
+      )}
       <TextField
         label="Email"
         placeholder="Enter email"
@@ -109,7 +113,11 @@ export default function Signup(props) {
         value={formData.email}
         onChange={handleInputChange}
       />
-      <div>{errors.email && <p>{errors.email}</p>}</div>
+      {errors.email && (
+        <Typography variant="body2" fontWeight="600">
+          {errors.email}
+        </Typography>
+      )}
       <TextField
         label="Password"
         type="password"
@@ -123,7 +131,11 @@ export default function Signup(props) {
         value={formData.password}
         onChange={handleInputChange}
       />
-      <div>{errors.password && <p>{errors.password}</p>}</div>
+      {errors.password && (
+        <Typography variant="body2" fontWeight="600">
+          {errors.password}
+        </Typography>
+      )}
       <TextField
         label="Password Again"
         type="password"
@@ -137,7 +149,18 @@ export default function Signup(props) {
         value={formData.rePassword}
         onChange={handleInputChange}
       />
-      <div>{errors.rePassword && <p>{errors.rePassword}</p>}</div>
+      <>
+        {errors.rePassword && (
+          <Typography
+            sx={{ marginBottom:"10px" }}
+            variant="body2"
+            fontWeight="600"
+            className="flex-start"
+          >
+            {errors.rePassword}
+          </Typography>
+        )}
+      </>
       <Button
         variant="contained"
         disableElevation
@@ -151,7 +174,7 @@ export default function Signup(props) {
       >
         Sign Up
       </Button>
-      <Typography variant="body2" fontWeight="600">
+      <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
         Already a member?{" "}
         <span
           style={{

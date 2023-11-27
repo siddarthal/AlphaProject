@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 
-
 export default function Login(props) {
   const [formData, setFormData] = useState({
     email: "",
@@ -42,9 +41,8 @@ export default function Login(props) {
         .catch((err) => {
           console.error(err);
         });
-    }
-    else{
-        console.error(`can't validate`);
+    } else {
+      console.error(`can't validate`);
     }
   };
 
@@ -91,7 +89,11 @@ export default function Login(props) {
         value={formData.email}
         onChange={handleInputChange}
       />
-      <div>{errors.email && <p>{errors.email}</p>}</div>
+      {errors.email && (
+        <Typography variant="body2" fontWeight="600">
+          {errors.email}
+        </Typography>
+      )}
       <TextField
         label="Password"
         type="password"
@@ -105,7 +107,11 @@ export default function Login(props) {
         value={formData.password}
         onChange={handleInputChange}
       />
-      <div>{errors.password && <p>{errors.password}</p>}</div>
+      {errors.password && (
+        <Typography variant="body2" fontWeight="600">
+          {errors.password}
+        </Typography>
+      )}
       <Button
         variant="contained"
         disableElevation
@@ -119,7 +125,7 @@ export default function Login(props) {
       >
         Login
       </Button>
-      <Typography variant="body2" fontWeight="600">
+      <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
         New to Website{" "}
         <span
           style={{
