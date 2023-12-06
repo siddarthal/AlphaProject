@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
-export default function Login(props) {
+import { Link, useNavigate } from "react-router-dom";
+
+export default function Signin({ onLogin }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({});
-
+  const navigate = useNavigate();
   const signValidation = () => {
     let newErrors = {};
     if (!formData.email) {
@@ -29,14 +31,19 @@ export default function Login(props) {
       setErrors({});
       const url = "http://127.0.0.1:8000/api/login/";
       axios
-        .post(url,formData)
+        .post(url, formData)
         .then((result) => {
           console.log("successfull");
-          console.log('formadata',formData);
-          console.log('result',result);
+          onLogin();
+          console.log("formadata", formData);
+          console.log("result", result.data.access_token);
+          localStorage.setItem("accessToken", result.data.access_token);
+          setFormData({ email: "", password: "" });
+          navigate("/main");
         })
         .catch((err) => {
           console.error(err);
+          alert("wrong credentials");
         });
     } else {
       console.error(`can't validate`);
@@ -123,17 +130,7 @@ export default function Login(props) {
         Login
       </Button>
       <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
-        New to Website{" "}
-        <span
-          style={{
-            textDecoration: "underline",
-            cursor: "pointer",
-            color: "#1976D2",
-          }}
-          onClick={() => props.name(false)}
-        >
-          Sign up
-        </span>
+        New to Website <Link to="/signup">Signup</Link>
       </Typography>
     </Box>
   );

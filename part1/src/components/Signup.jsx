@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
-export default function Signup(props) {
+import { Link } from "react-router-dom";
+export default function Signup() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -48,10 +49,11 @@ export default function Signup(props) {
           console.log("successfull");
           console.log("formData", formData);
           console.log("result", result);
-          // setFormData("");
+          setFormData({ name: "", email: "", password: "" });
         })
         .catch((err) => {
           console.error(err);
+          alert(`email adress is already registered`);
         });
     } else {
       console.error(`can't validate`);
@@ -173,17 +175,7 @@ export default function Signup(props) {
         Sign Up
       </Button>
       <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
-        Already a member?{" "}
-        <span
-          style={{
-            textDecoration: "underline",
-            cursor: "pointer",
-            color: "#1976D2",
-          }}
-          onClick={() => props.name(true)}
-        >
-          Sign in
-        </span>
+        Already a member? <Link to="/signin">Signin</Link>
       </Typography>
     </Box>
   );
