@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
-
+import axios from "axios";
 export default function Login(props) {
   const [formData, setFormData] = useState({
     email: "",
@@ -27,16 +27,13 @@ export default function Login(props) {
     e.preventDefault();
     if (signValidation()) {
       setErrors({});
-      await fetch("", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      const url = "http://127.0.0.1:8000/api/login/";
+      axios
+        .post(url,formData)
         .then((result) => {
           console.log("successfull");
-          console.log(formData);
+          console.log('formadata',formData);
+          console.log('result',result);
         })
         .catch((err) => {
           console.error(err);
