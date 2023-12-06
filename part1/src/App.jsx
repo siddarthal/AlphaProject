@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Signup from "./components/Signup.jsx";
 import Signin from "./components/Signin.jsx";
-import Mainpage from "./components/mainpage.jsx";
+import Mainpage from "./components/Mainpage.jsx";
 import {  Routes, Route, Navigate } from "react-router-dom";
-function App() {
+function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const handleLogin = () => {
