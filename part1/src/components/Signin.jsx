@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../Services/service";
 
 export default function Signin({ onLogin }) {
   const [formData, setFormData] = useState({
@@ -29,15 +29,13 @@ export default function Signin({ onLogin }) {
     e.preventDefault();
     if (signValidation()) {
       setErrors({});
-      const url = "http://127.0.0.1:8000/api/login/";
-      axios
-        .post(url, formData)
-        .then((result) => {
+      api
+        .signin(formData)
+        .then((res) => {
           console.log("successfull");
+          console.log("result", res);
           onLogin();
-          console.log("formadata", formData);
-          console.log("result", result.data.access_token);
-          localStorage.setItem("accessToken", result.data.access_token);
+          localStorage.setItem("accessToken", res);
           setFormData({ email: "", password: "" });
           navigate("/main");
         })

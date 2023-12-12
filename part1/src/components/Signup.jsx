@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import api from "../Services/service";
 export default function Signup() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    // rePassword: "",
+    rePassword: "",
   });
   const [errors, setErrors] = useState({});
   const handleInputChange = (event) => {
@@ -29,11 +30,11 @@ export default function Signup() {
     if (!formData.password) {
       newErrors.password = "Password is required";
     }
-    // if (!formData.rePassword) {
-    //   newErrors.rePassword = "Password should be rentered";
-    // } else if (formData.password !== formData.rePassword) {
-    //   newErrors.rePassword = "Both the passwords should match";
-    // }
+    if (!formData.rePassword) {
+      newErrors.rePassword = "Password should be rentered";
+    } else if (formData.password !== formData.rePassword) {
+      newErrors.rePassword = "Both the passwords should match";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -42,14 +43,14 @@ export default function Signup() {
     e.preventDefault();
     if (formValidation()) {
       setErrors({});
-      const url = "http://127.0.0.1:8000/api/signup/";
-      axios
-        .post(url, formData)
+      const { rePassword, ...dataToSend } = formData;
+      api
+        .signUp(dataToSend)
         .then((result) => {
           console.log("successfull");
-          console.log("formData", formData);
+          console.log("formData", dataToSend);
           console.log("result", result);
-          setFormData({ name: "", email: "", password: "" });
+          setFormData({ name: "", email: "", password: "", rePassword: "" });
         })
         .catch((err) => {
           console.error(err);
@@ -136,7 +137,7 @@ export default function Signup() {
           {errors.password}
         </Typography>
       )}
-      {/* <TextField
+      <TextField
         label="Password Again"
         type="password"
         placeholder="re-enter password"
@@ -149,10 +150,10 @@ export default function Signup() {
         value={formData.rePassword}
         onChange={handleInputChange}
       />
-      <> */}
-      {/* {errors.rePassword && (
+      <>
+        {errors.rePassword && (
           <Typography
-            sx={{ marginBottom:"10px" }}
+            sx={{ marginBottom: "10px" }}
             variant="body2"
             fontWeight="600"
             className="flex-start"
@@ -160,7 +161,7 @@ export default function Signup() {
             {errors.rePassword}
           </Typography>
         )}
-      </> */}
+      </>
       <Button
         variant="contained"
         disableElevation
