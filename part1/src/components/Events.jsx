@@ -21,9 +21,9 @@ const Events = () => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {Array.from(Array(18)).map((_, index) => (
+        {event.map((item, index) => (
           <Grid item xs={2} sm={4} md={4} key={index}>
-            <EventCard idx={index} />
+            <EventCard event={item} idx={index} />
           </Grid>
         ))}
       </Grid>

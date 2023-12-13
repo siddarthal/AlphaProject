@@ -6,14 +6,14 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import image from "../Images/R.jpg";
 import { useNavigate } from "react-router-dom";
-export default function EventCard({ idx }) {
+export default function EventCard({ event, idx }) {
   const navigate = useNavigate();
   const handleClickOpen = () => {
     navigate(`/events/${idx}`);
   };
   return (
     <div>
-      <Card sx={{ maxWidth: 345 ,marginTop: 6}}>
+      <Card sx={{ maxWidth: 345, marginTop: 6 }}>
         <CardActionArea onClick={handleClickOpen}>
           <CardMedia
             component="img"
@@ -23,7 +23,7 @@ export default function EventCard({ idx }) {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              Music
+              {event.event_name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Pls Join us for competition
