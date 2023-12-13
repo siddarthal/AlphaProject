@@ -14,5 +14,14 @@ const getEvents = () => {
   const promise = axios.get(urlEvents);
   return promise.then((res) => res.data).catch((error) => error);
 };
-
-export default { signin: signin, getEvents: getEvents, signUp: signUp };
+const fetchEvent = (id) => {
+  const urlEachEvent = `/api/events/${id}`;
+  const promise = axios.get(urlEachEvent);
+  return promise.then((res) => res).catch((error) => error);
+};
+export default {
+  signin: signin,
+  getEvents: getEvents,
+  signUp: signUp,
+  fetchEvent: fetchEvent,
+};

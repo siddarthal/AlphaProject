@@ -1,31 +1,47 @@
-import React, { useState } from "react";
-import Signup from "./components/Signup.jsx";
-import Signin from "./components/Signin.jsx";
-import Mainpage from "./components/Mainpage.jsx";
-import { Routes, Route, Navigate } from "react-router-dom";
+import Signup from "./Pages/Signup.jsx";
+import Signin from "./Pages/Signin.jsx";
+import Mainpage from "./Pages/Mainpage.jsx";
+import EventDetails from "./Pages/Eventdetails.jsx";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Layout from "./components/Layout.jsx";
+import Homepage from "./Pages/Hompage.jsx";
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const handleLogin = () => {
-    setLoggedIn(true);
-  };
-  const handleLogout = () => {
-    setLoggedIn(false);
-  };
+  const router = createBrowserRouter([
+    {
+      path: "/signin",
+      element: <Signin />,
+    },
+    {
+      path: "/signup",
+      element: <Signup />,
+    },
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <Homepage />,
+        },
+        {
+          path: "/events",
+          element: <Mainpage />,
+        },
+        {
+          path: "/events/:id",
+          element: <EventDetails />,
+        },
+      ],
+    },
+  ]);
+
   console.log("accessToken", accessToken);
-  // setTimeout(() => localStorage.setItem("accessToken", ""), 10000);
+
   return (
-    <div>
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin onLogin={handleLogin} />} />
-        {isLoggedIn ? (
-          <Route path="/main" element={<Mainpage onLogout={handleLogout} />} />
-        ) : (
-          <Route path="/main" element={<Navigate to="/signin" />} />
-        )}
-      </Routes>
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 }
 

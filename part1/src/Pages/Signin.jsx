@@ -3,7 +3,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../Services/service";
 
-export default function Signin({ onLogin }) {
+export default function Signin() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,10 +34,10 @@ export default function Signin({ onLogin }) {
         .then((res) => {
           console.log("successfull");
           console.log("result", res);
-          onLogin();
+          // onLogin();
           localStorage.setItem("accessToken", res);
           setFormData({ email: "", password: "" });
-          navigate("/main");
+          navigate("/events");
         })
         .catch((err) => {
           console.error(err);
