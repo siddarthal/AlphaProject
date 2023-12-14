@@ -8,7 +8,12 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import { useNavigate } from "react-router-dom";
 const LeftSide = () => {
+  const navigate = useNavigate();
+  const handleeHome = () => {
+    navigate("/dashboard");
+  };
   return (
     <div>
       <Stack spacing={4}>
@@ -19,7 +24,11 @@ const LeftSide = () => {
         </Container>
         <Box>
           <Container>
-            <Button variant="text" startIcon={<HomeIcon />}>
+            <Button
+              variant="text"
+              startIcon={<HomeIcon />}
+              onClick={handleeHome}
+            >
               Home
             </Button>
           </Container>

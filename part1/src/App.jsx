@@ -7,7 +7,7 @@ import Homepage from "./Pages/Hompage.jsx";
 import EventDetails from "./Pages/Eventdetails.jsx";
 import Dashboard from "./Pages/Dashboard.jsx";
 import AddEvent from "./Pages/AddEvent.jsx";
-import LeftSide from "./components/LeftSide.jsx";
+import RightSide from "./components/RightSide.jsx";
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -19,6 +19,11 @@ function App({}) {
       path: "/dashboard",
       element: <Dashboard />,
       children: [
+        {
+          path: "/dashboard",
+          element: <RightSide />,
+        },
+
         {
           path: "add",
           element: <AddEvent />,
