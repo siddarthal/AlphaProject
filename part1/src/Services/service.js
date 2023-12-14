@@ -15,7 +15,7 @@ const getEvents = () => {
   return promise.then((res) => res.data).catch((error) => error);
 };
 const fetchEvent = (id) => {
-  const urlEachEvent = `/api/events/${id}`;
+  const urlEachEvent = `http://localhost:3001/profile/`;
   const promise = axios.get(urlEachEvent);
   return promise.then((res) => res).catch((error) => error);
 };

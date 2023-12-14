@@ -18,13 +18,13 @@ const NavBar = ({ handleLog }) => {
   };
 
   return (
-    <AppBar position="static" style={{ backgroundColor: '#673ab7', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)' }}>
+    <AppBar position="static" style={{  backgroundColor: '#3f51b5', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)' }}>
       <Toolbar>
         {/* Left side of the navbar */}
         <IconButton edge="start" color="inherit" aria-label="menu">
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" component={Link} to="/events" style={{ textDecoration: 'none', color: 'inherit', marginLeft: '10px' }}>
+        <Typography variant="h6" component={Link} to="events" style={{ textDecoration: 'none', color: 'inherit', marginLeft: '10px' }}>
           Home
         </Typography>
 

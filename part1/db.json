@@ -1,7 +1,29 @@
 {
-  "profile": {
-    "name": "Siddartha Legala",
-    "email": "sidhureddy.legala@gmail.com",
-    "password": "Siddartha@2002"
-  }
+  "profile": [
+    {
+      "title": "Sample Event Authorised NCC unit of usa",
+      "description": "This is a sample event description.",
+      "medium": "offline",
+      "price": 10,
+      "category": "Workshop",
+      "startDate": "2023-01-01T10:00:00+00:00",
+      "endDate": "2023-01-01T14:00:00+00:00",
+      "location": [
+        "Higrave maddox mall ,Siddacity",
+        37.7749,
+        -122.4194
+      ],
+      "image": "https://example.com/sample-image.jpg",
+      "meet": "online",
+      "tnc": [
+        "You may not be able to attend the live session if you are late.",
+        "You may face interruptions during the course of the live stream due to internet connectivity issues.",
+        "Show details and the artist lineup are subject to change as per the artist’s discretion.",
+        "No refunds on purchased tickets are possible, even in case of any rescheduling."
+      ],
+      "language": "English",
+      "duration": "02:00",
+      "otherField": "This is an additional field if needed"
+    }
+  ]
 }
