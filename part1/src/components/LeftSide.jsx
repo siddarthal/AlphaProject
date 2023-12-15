@@ -65,7 +65,7 @@ const LeftSide = () => {
             </Button>
           </Container>
         </Box>
-        <Box style={{ position: "fixed", bottom: 0 }}>
+        <Box style={{  bottom: 0 }}>
           <Container>
             <Button variant="text" startIcon={<PersonOutlineOutlinedIcon />}>
               Account
@@ -77,3 +77,4 @@ const LeftSide = () => {
   );
 };
 export default LeftSide;
+// position: "fixed",
