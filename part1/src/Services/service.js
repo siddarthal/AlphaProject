@@ -19,9 +19,15 @@ const fetchEvent = (id) => {
   const promise = axios.get(urlEachEvent);
   return promise.then((res) => res).catch((error) => error);
 };
+const submitEvent = (body) => {
+  const urlSubmitEvent = "http://localhost:3001/submit/";
+  const promise = axios.post(urlSubmitEvent, body);
+  return promise.then((res) => res).catch((error) => error);
+};
 export default {
   signin: signin,
   getEvents: getEvents,
   signUp: signUp,
   fetchEvent: fetchEvent,
+  submitEvent:submitEvent,
 };

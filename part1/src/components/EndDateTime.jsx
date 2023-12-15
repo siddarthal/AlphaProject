@@ -5,8 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
-export default function EndDateTime() {
-  const [value, setValue] = React.useState(dayjs("2022-04-17T15:30"));
+export default function EndDateTime({value,setValue}) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
