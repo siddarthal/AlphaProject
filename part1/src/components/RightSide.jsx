@@ -4,8 +4,10 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import image from "../Images/home.jpg";
-const RightSide = () => {
+import RightSideEvents from "./RighsideEvents";
+const RightSide = ({eventPresent}) => {
   const [date, setDate] = useState(new Date());
+
   const [] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -56,21 +58,27 @@ const RightSide = () => {
           </Box>
         </Grid>
 
-        <Box style={{ textAlign: "center", paddingTop: 74 }}>
-          <Typography
-            variant="h6"
-            sx={{ align: "center" }}
-            fontWeight="bold"
-            color="textSecondary"
-          >
-            No events found. Add your first event.
-          </Typography>
-        </Box>
-        <Container>
-          <Box sx={{ paddingLeft: 30 }}>
-            <img src={image} sx={{ width: "100%" }} alt="event.jpg" />
-          </Box>
-        </Container>
+        {eventPresent == 0 ? (
+          <>
+            <Box style={{ textAlign: "center", paddingTop: 74 }}>
+              <Typography
+                variant="h6"
+                sx={{ align: "center" }}
+                fontWeight="bold"
+                color="textSecondary"
+              >
+                No events found. Add your first event.
+              </Typography>
+            </Box>
+            <Container>
+              <Box sx={{ paddingLeft: 30 }}>
+                <img src={image} sx={{ width: "100%" }} alt="event.jpg" />
+              </Box>
+            </Container>
+          </>
+        ) : (
+          <RightSideEvents/>
+        )}
       </Stack>
     </Box>
   );

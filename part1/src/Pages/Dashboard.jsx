@@ -5,7 +5,6 @@ import RightSide from "../components/RightSide";
 import { Outlet } from "react-router-dom";
 // import useState from "react";
 const Dashboard = () => {
-  // const [,] = useState(true);
   return (
     <Grid container style={{ height: "100vh" }}>
       <Grid
@@ -21,7 +20,7 @@ const Dashboard = () => {
         
       </Grid>
       <Grid item xs={10.5} sx={{ padding: "16px" }}>
-        <Outlet />
+        <Outlet/>
       </Grid>
     </Grid>
   );
