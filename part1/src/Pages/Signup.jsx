@@ -35,7 +35,6 @@ export default function Signup() {
     } else if (formData.password !== formData.rePassword) {
       newErrors.rePassword = "Both the passwords should match";
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };

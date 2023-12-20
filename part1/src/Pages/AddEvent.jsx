@@ -1,7 +1,17 @@
 import * as React from "react";
 import dayjs from "dayjs";
 import api from "../Services/service";
-import { Box, Stack, Button, TextField, Typography, Grid } from "@mui/material";
+import {
+  Box,
+  Stack,
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  Alert,
+  AlertTitle,
+  Snackbar,
+} from "@mui/material";
 import { useState } from "react";
 import StartDateTime from "../components/StartDateTime";
 import EndDateTime from "../components/EndDateTime";
@@ -19,7 +29,8 @@ const AddEvent = () => {
   const [edate, seteDate] = useState(dayjs("2022-04-17T15:30"));
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [isHovered, setHovered] = useState(true);
-
+  const [errors, setErrors] = useState({});
+  const [eventPresent, setEventPresent] = useState(false);
   const navigate = useNavigate();
   const [event, setEvent] = useState({
     title: "",
@@ -53,22 +64,24 @@ const AddEvent = () => {
     console.log(e.target.name);
     setEvent({ ...event, [e.target.name]: e.target.value });
   };
+  const formValidation = () => {
+    const newErrors = {};
+    if (!event.title) {
+      newErrors.title = " Title is required";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
   const handleCreate = () => {
     console.log("clicked");
-    api
-      .submitEvent(event)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
-  };
-
-  const handleHover = () => {
-    setHovered(true);
-    // console.log("hovered", isHovered);
-  };
-
-  const handleLeave = () => {
-    setHovered(false);
-    // console.log("left overed", isHovered);
+    if (formValidation()) {
+      api
+        .submitEvent(event)
+        .then((res) => console.log(res))
+        .catch((error) => console.log(error));
+    } else {
+      console.log("cannot validate", errors.title);
+    }
   };
 
   const handlePress = () => {
@@ -76,28 +89,42 @@ const AddEvent = () => {
     navigate("/dashboard");
     console.log("Button clicked!");
   };
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+  const generateAlert = () => {
+    for (let key in errors) {
+      if (errors.hasOwnProperty(key) && errors[key] !== null) {
+        return (
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              {errors[key]}
+            </Alert>
+          </Snackbar>
+        );
+      }
+    }
+  };
   return (
     <Box>
+      {generateAlert()}
       <Stack spacing={2.5}>
         <Box>
-          <Grid
-            container
-            spacing={1}
-            alignItems="center"
-            onMouseEnter={handleHover}
-            onMouseLeave={handleLeave}
-            onClick={handlePress}
-          >
-            {isHovered ? (
-              <Grid item xs={3}>
-                <ArrowBackRoundedIcon />
-              </Grid>
-            ) : (
-              <Grid item xs={6}>
-                <ArrowBackRoundedIcon fontSize="small" />
-                <Typography variant="h6">Go back</Typography>
-              </Grid>
-            )}
+          <Grid container spacing={1} alignItems="center">
+            <Grid item xs={6}>
+              <ArrowBackRoundedIcon fontSize="small" />
+              <Typography variant="h6">Go back</Typography>
+            </Grid>
           </Grid>
         </Box>
         <Box></Box>
