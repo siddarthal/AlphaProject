@@ -19,6 +19,7 @@ const AddEvent = () => {
   const [edate, seteDate] = useState(dayjs("2022-04-17T15:30"));
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [isHovered, setHovered] = useState(true);
+
   const navigate = useNavigate();
   const [event, setEvent] = useState({
     title: "",

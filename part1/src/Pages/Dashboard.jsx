@@ -15,8 +15,10 @@ const Dashboard = () => {
           backgroundColor: "#f0f0f0",
           paddingTop: 4,
         }}
+
       >
         <LeftSide />
+        
       </Grid>
       <Grid item xs={10.5} sx={{ padding: "16px" }}>
         <Outlet />

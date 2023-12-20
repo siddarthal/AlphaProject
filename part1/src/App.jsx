@@ -8,12 +8,28 @@ import EventDetails from "./Pages/Eventdetails.jsx";
 import Dashboard from "./Pages/Dashboard.jsx";
 import AddEvent from "./Pages/AddEvent.jsx";
 import RightSide from "./components/RightSide.jsx";
+import HomeContent from "./components/HomeContent.jsx";
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Homepage />,
+      children: [
+        {
+          path: "/",
+          element:<HomeContent/>
+
+        },
+        {
+          path: "/events",
+          element: <Mainpage />,
+        },
+        {
+          path: "/events/:id",
+          element: <EventDetails />,
+        },
+      ],
     },
     {
       path: "/dashboard",
@@ -28,6 +44,10 @@ function App({}) {
           path: "add",
           element: <AddEvent />,
         },
+        ,
+        {
+          path: "events",
+        },
       ],
     },
 
@@ -38,20 +58,6 @@ function App({}) {
     {
       path: "/signup",
       element: <Signup />,
-    },
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          path: "/events",
-          element: <Mainpage />,
-        },
-        {
-          path: "/events/:id",
-          element: <EventDetails />,
-        },
-      ],
     },
   ]);
 
