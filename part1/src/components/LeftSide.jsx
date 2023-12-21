@@ -67,7 +67,7 @@ const LeftSide = () => {
         </Box>
         <Box style={{  bottom: 0 }}>
           <Container>
-            <Button variant="text" startIcon={<PersonOutlineOutlinedIcon />}>
+            <Button onClick={()=>{navigate("accounts")}} variant="text" startIcon={<PersonOutlineOutlinedIcon />}>
               Account
             </Button>
           </Container>
