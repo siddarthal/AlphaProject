@@ -10,7 +10,7 @@ import RightSide from "./components/RightSide.jsx";
 import HomeContent from "./components/HomeContent.jsx";
 import UserEventDetails from "./components/UserEventDetails.jsx";
 import { useState } from "react";
-import AccountDetails from "./components/AccountDetails.jsx";
+// import AccountDetails from "./components/AccountDetails.jsx";
 
 function App({}) {
 const [eventPresent, setEventPresent] = useState(0);
@@ -53,11 +53,7 @@ const [eventPresent, setEventPresent] = useState(0);
         {
           path: "events",
           element:<UserEventDetails/>
-        },
-        {
-          path: "accounts",
-          element:<AccountDetails/>
-        },
+        }
       ],
     },
 
