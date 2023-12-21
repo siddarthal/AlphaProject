@@ -29,11 +29,17 @@ const useSpecificEvent = () => {
   const promise = axios.get(urlFetchEvent);
   return promise.then((res) => res).catch((error) => error);
 };
+const fetchParticularEvent = (id) => {
+  const urlFetchParticularEvent = `http://localhost:3001/submit/${id}`;
+  const promise = axios.get(urlFetchParticularEvent);
+  return promise.then((res) => res.data).catch((error) => error);
+};
 export default {
   signin: signin,
   getEvents: getEvents,
   signUp: signUp,
   fetchEvent: fetchEvent,
   submitEvent: submitEvent,
-  useSpecificEvent:useSpecificEvent
+  useSpecificEvent: useSpecificEvent,
+  fetchParticularEvent: fetchParticularEvent
 };

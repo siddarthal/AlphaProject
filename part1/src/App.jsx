@@ -11,6 +11,7 @@ import HomeContent from "./components/HomeContent.jsx";
 import AccountDetails from "./components/AccountDetails.jsx";
 import UserEventDetails from "./components/UserEventDetails.jsx";
 import { useState } from "react";
+import ParticularEvent from "./components/Creator/ParticularEvent.jsx";
 
 
 function App({}) {
@@ -59,6 +60,10 @@ const [eventPresent, setEventPresent] = useState(0);
           path: "accounts",
           element: <AccountDetails/>,
         },
+        {
+          path:"events/:id",
+          element: <ParticularEvent/>
+        }
       ],
     },
 

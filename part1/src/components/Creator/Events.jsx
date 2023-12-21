@@ -8,42 +8,56 @@ import {
   Typography,
   Button,
   Grid,
-  Stack
+  Stack,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import image from "../../Images/R.jpg";
-const Events = ({ eventData }) => {
-  console.log(eventData);
+
+const Events = ({ eventdata }) => {
+  console.log(eventdata);
+  const navigate = useNavigate();
+
+  const maxDescriptionHeight = 400; 
+
   return (
     <Box>
-      <Card sx={{ maxWidth: "40%", maxHeight: "15%" }}>
-        <CardMedia sx={{ height: 140 }} image={image} title={eventData.title} />
+      <Card sx={{}}>
+        <CardMedia sx={{ height: 200 }} image={image} title={eventdata.title} />
         <CardContent>
-          <Grid conatner>
+          <Grid container>
             <Grid item xs={9}>
               <Typography gutterBottom variant="h5" component="div">
-                {eventData.title}
+                {eventdata.title}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {eventData.description}
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  maxHeight: maxDescriptionHeight,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {eventdata.description}
               </Typography>
             </Grid>
             <Grid item xs={3}>
-                <Stack spacing={1}>
-                   <Box>
-
-                   </Box>
-                   <Box>
-
-                   </Box>
-                </Stack>
+              <Stack spacing={1}>
+                <Box></Box>
+                <Box></Box>
+              </Stack>
             </Grid>
           </Grid>
         </CardContent>
         <CardActions>
-          <Button size="small">Share</Button>
+          <Button size="small" onClick={() => navigate(`/dashboard/events/${eventdata.id}`)}>
+            More Details
+          </Button>
         </CardActions>
       </Card>
     </Box>
   );
 };
+
 export default Events;

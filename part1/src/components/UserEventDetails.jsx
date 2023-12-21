@@ -39,10 +39,17 @@ const UserEventDetails = () => {
             </Grid>
           </Grid>
           {eventData[0] ? (
-            eventData.map((item, idx) => <Events key={idx} eventData={item}/>)
+            <Grid container spacing={4}>
+              {eventData.map((item, idx) => (
+                <Grid item xs={6} key={idx}>
+                  {" "}
+                  <Events  eventdata={item} />{" "}
+                </Grid>
+              ))}
+            </Grid>
           ) : (
             // <p></p>
-            <Typography variant="body" eventData={eventData}>
+            <Typography variant="body" >
               There are no events please add events
             </Typography>
           )}

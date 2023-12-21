@@ -85,4 +85,4 @@ const LeftSide = () => {
   );
 };
 export default LeftSide;
-// position: "fixed",
+
