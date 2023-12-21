@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 const Homepage = () => {
   return (
     <Box>
-      <Box sx={{width:"100%"}}>
+      <Box sx={{ width: "100%" }}>
         <Container>
           <NavBar />
         </Container>
