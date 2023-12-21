@@ -8,10 +8,12 @@ import Dashboard from "./Pages/Dashboard.jsx";
 import AddEvent from "./Pages/AddEvent.jsx";
 import RightSide from "./components/RightSide.jsx";
 import HomeContent from "./components/HomeContent.jsx";
+import UserEventDetails from "./components/UserEventDetails.jsx";
 import { useState } from "react";
+import AccountDetails from "./components/AccountDetails.jsx";
 
 function App({}) {
-const [eventPresent, setEventPresent] = useState(1);
+const [eventPresent, setEventPresent] = useState(0);
 
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -50,6 +52,11 @@ const [eventPresent, setEventPresent] = useState(1);
         ,
         {
           path: "events",
+          element:<UserEventDetails/>
+        },
+        {
+          path: "accounts",
+          element:<AccountDetails/>
         },
       ],
     },

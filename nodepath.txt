@@ -1,2 +1,1 @@
-
 export PATH="/c/Users/siddartha_legala/node-v21.1.0-win-x64/node-v21.1.0-win-x64:$PATH"

@@ -35,7 +35,7 @@ const LeftSide = () => {
         </Box>
         <Box>
           <Container>
-            <Button variant="text" startIcon={<EventAvailableOutlinedIcon />}>
+            <Button onClick={()=>navigate("events")} variant="text" startIcon={<EventAvailableOutlinedIcon />}>
               Events
             </Button>
           </Container>
@@ -67,7 +67,7 @@ const LeftSide = () => {
         </Box>
         <Box style={{  bottom: 0 }}>
           <Container>
-            <Button variant="text" startIcon={<PersonOutlineOutlinedIcon />}>
+            <Button onClick={()=>navigate("accounts")} variant="text" startIcon={<PersonOutlineOutlinedIcon />}>
               Account
             </Button>
           </Container>
