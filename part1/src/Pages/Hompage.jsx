@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
+
 const Homepage = () => {
   return (
     <Box>
@@ -11,11 +12,13 @@ const Homepage = () => {
           <NavBar />
         </Container>
       </Box>
+
       <Container>
         <Stack>
           <Outlet />
         </Stack>
       </Container>
+
       <Footer />
     </Box>
   );
