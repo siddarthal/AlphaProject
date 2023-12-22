@@ -12,6 +12,7 @@ import AccountDetails from "./components/AccountDetails.jsx";
 import UserEventDetails from "./components/UserEventDetails.jsx";
 import { useState } from "react";
 import ParticularEvent from "./components/Creator/ParticularEvent.jsx";
+import EditExistingEvent from "./components/Creator/EditExistingEvent.jsx";
 
 
 function App({}) {
@@ -36,6 +37,7 @@ const [eventPresent, setEventPresent] = useState(0);
           path: "/events/:id",
           element: <EventDetails />,
         },
+       
       ],
     },
     {
@@ -63,6 +65,10 @@ const [eventPresent, setEventPresent] = useState(0);
         {
           path:"events/:id",
           element: <ParticularEvent/>
+        },
+        {
+          path: "edit/:id",
+          element:<EditExistingEvent/>
         }
       ],
     },
