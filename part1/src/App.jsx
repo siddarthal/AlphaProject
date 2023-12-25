@@ -13,10 +13,10 @@ import UserEventDetails from "./components/UserEventDetails.jsx";
 import { useState } from "react";
 import ParticularEvent from "./components/Creator/ParticularEvent.jsx";
 import EditExistingEvent from "./components/Creator/EditExistingEvent.jsx";
-
+import "./app.css";
 
 function App({}) {
-const [eventPresent, setEventPresent] = useState(0);
+  const [eventPresent, setEventPresent] = useState(0);
 
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -26,8 +26,7 @@ const [eventPresent, setEventPresent] = useState(0);
       children: [
         {
           path: "/",
-          element:<HomeContent/>
-
+          element: <HomeContent />,
         },
         {
           path: "/events",
@@ -37,7 +36,6 @@ const [eventPresent, setEventPresent] = useState(0);
           path: "/events/:id",
           element: <EventDetails />,
         },
-       
       ],
     },
     {
@@ -46,30 +44,35 @@ const [eventPresent, setEventPresent] = useState(0);
       children: [
         {
           path: "/dashboard",
-        element: <RightSide eventPresent={eventPresent}/>,
+          element: <RightSide eventPresent={eventPresent} />,
         },
 
         {
           path: "add",
-          element: <AddEvent eventPresent={eventPresent} setEventPresent={setEventPresent}/>,
+          element: (
+            <AddEvent
+              eventPresent={eventPresent}
+              setEventPresent={setEventPresent}
+            />
+          ),
         },
         ,
         {
           path: "events",
-          element:<UserEventDetails/>
+          element: <UserEventDetails />,
         },
         {
           path: "accounts",
-          element: <AccountDetails/>,
+          element: <AccountDetails />,
         },
         {
-          path:"events/:id",
-          element: <ParticularEvent/>
+          path: "events/:id",
+          element: <ParticularEvent />,
         },
         {
           path: "edit/:id",
-          element:<EditExistingEvent/>
-        }
+          element: <EditExistingEvent />,
+        },
       ],
     },
 

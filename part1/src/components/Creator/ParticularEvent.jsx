@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../Services/service";
-import img from "../../images/R.jpg";
+import img from "../../Images/R.jpg";
 // const ParticularEvent = () => {
 // const { id } = useParams();
 // const [details, setDetails] = useState({});

@@ -44,6 +44,36 @@
       "latitude": "33333",
       "longitude": "44444",
       "id": 10
+    },
+    {
+      "title": "siddartha",
+      "description": "the way it helps to upskill",
+      "privacy": true,
+      "medium": true,
+      "startDate": "2022-04-17T10:00:00.000Z",
+      "endDate": "2022-04-17T10:00:00.000Z",
+      "duration": "6hrs",
+      "language": "English",
+      "categories": "Sports",
+      "location": "Warangal",
+      "latitude": "88",
+      "longitude": "67",
+      "id": 11
+    },
+    {
+      "title": "demo",
+      "description": "Dsrhouidjciodjci",
+      "privacy": true,
+      "medium": true,
+      "startDate": "2022-04-17T10:00:00.000Z",
+      "endDate": "2022-04-17T10:00:00.000Z",
+      "duration": "6hrs",
+      "language": "English",
+      "categories": "Film",
+      "location": "Warangal",
+      "latitude": "88",
+      "longitude": "67",
+      "id": 12
     }
   ],
   "profile": [

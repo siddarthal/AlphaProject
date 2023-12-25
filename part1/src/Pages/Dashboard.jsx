@@ -9,18 +9,17 @@ const Dashboard = () => {
     <Grid container style={{ height: "100vh" }}>
       <Grid
         item
-        xs={1.5}
+        xs={1.9}
         sx={{
           backgroundColor: "#f0f0f0",
-          paddingTop: 4,
         }}
-
       >
-        <LeftSide />
-        
+        <Box sx={{ position: "sticky", top: 0, paddingTop: 4 }}>
+          <LeftSide />
+        </Box>
       </Grid>
-      <Grid item xs={10.5} sx={{ padding: "16px" }}>
-        <Outlet/>
+      <Grid item xs={10.1} sx={{ padding: "16px" }}>
+        <Outlet />
       </Grid>
     </Grid>
   );
