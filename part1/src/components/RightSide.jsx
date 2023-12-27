@@ -4,33 +4,35 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import image from "../Images/home.jpg";
+import api from "../Services/service";
 import RightSideEvents from "./RighsideEvents";
-const RightSide = ({eventPresent}) => {
-  const [date, setDate] = useState(new Date());
-
-  const [] = useState(false);
-  const navigate = useNavigate();
+import DateOnDashboard from "./Creator/DateOnDashboard";
+const RightSide = () => {
+  const [data,setData] = useState([]);
   useEffect(() => {
-    setInterval(() => {
-      setDate(new Date());
-    }, 1000);
+    
+    const fetchData = async () => {
+      try{
+        const response=await api.userSpecificEvent();
+        console.log(response.data,"hi ra pumka");
+        setData(response.data);
+      }
+      catch{
+       console.log("unable to fetch data");
+
+      }
+     
+    };
+    fetchData();
   }, []);
 
+  const navigate = useNavigate();
+  
   const handleClick = () => {
     navigate("/dashboard/add");
   };
 
-  const options = {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    timeZoneName: "short",
-  };
-  const formattedTime = date.toLocaleString(undefined, options);
+  
   return (
     <Box>
       <Stack spacing={2}>
@@ -51,14 +53,11 @@ const RightSide = ({eventPresent}) => {
               </Button>
             </Box>
           </Grid>
-          <Box sx={{ paddingLeft: 2 }}>
-            <Typography variant="body" fontWeight="light" color="textSecondary">
-              {formattedTime} (Indian Standard Time)
-            </Typography>
-          </Box>
+          <DateOnDashboard/>
+        
         </Grid>
 
-        {eventPresent == 0 ? (
+        {(data.length===0) ? (
           <>
             <Box style={{ textAlign: "center", paddingTop: 74 }}>
               <Typography
@@ -77,7 +76,7 @@ const RightSide = ({eventPresent}) => {
             </Container>
           </>
         ) : (
-          <RightSideEvents/>
+          <RightSideEvents requiredData={data}/>
         )}
       </Stack>
     </Box>

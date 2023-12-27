@@ -20,7 +20,7 @@ const Events = ({ eventdata }) => {
   const maxDescriptionHeight = 400; 
 
   return (
-    <Box>
+    <Box sx={{paddingRight:1}}>
       <Card sx={{}}>
         <CardMedia sx={{ height: 200 }} image={image} title={eventdata.title} />
         <CardContent>

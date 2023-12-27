@@ -14,10 +14,10 @@ import { useState } from "react";
 import ParticularEvent from "./components/Creator/ParticularEvent.jsx";
 import EditExistingEvent from "./components/Creator/EditExistingEvent.jsx";
 import "./app.css";
-
+import Invities from "./components/Creator/Invities.jsx";
+import Notifications from "./components/Creator/Notifications.jsx";
+import Rsvps from "./components/Creator/Rsvps.jsx";
 function App({}) {
-  const [eventPresent, setEventPresent] = useState(0);
-
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
     {
@@ -44,17 +44,12 @@ function App({}) {
       children: [
         {
           path: "/dashboard",
-          element: <RightSide eventPresent={eventPresent} />,
+          element: <RightSide />,
         },
 
         {
           path: "add",
-          element: (
-            <AddEvent
-              eventPresent={eventPresent}
-              setEventPresent={setEventPresent}
-            />
-          ),
+          element: <AddEvent />,
         },
         ,
         {
@@ -72,6 +67,18 @@ function App({}) {
         {
           path: "edit/:id",
           element: <EditExistingEvent />,
+        },
+        {
+          path: "invities",
+          element: <Invities />,
+        },
+        {
+          path: "rsvps",
+          element: <Rsvps />,
+        },
+        {
+          path: "notifications",
+          element: <Notifications />,
         },
       ],
     },

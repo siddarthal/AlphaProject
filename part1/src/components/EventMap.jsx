@@ -7,7 +7,7 @@ const EventMapComponent = ({ latitude, longitude }) => {
   const googleMapsUrl = `https://maps.google.com/maps?q=${latitude},${longitude}&hl=en&output=embed`;
 
   return (
-    <Iframe url={googleMapsUrl} width="100%" height="100%" frameBorder="0" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+    <Iframe url={googleMapsUrl} width="100%" height="40%" frameBorder="0" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
   );
 };
 

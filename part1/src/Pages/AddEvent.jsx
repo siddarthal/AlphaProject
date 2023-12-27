@@ -18,8 +18,8 @@ import EndDateTime from "../components/EndDateTime";
 import ButtonGrouping from "../components/ButtonGrouping";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
-import { useNavigate } from "react-router-dom";
-const AddEvent = ({ eventPresent, setEventPresent }) => {
+import { useNavigate, Link } from "react-router-dom";
+const AddEvent = () => {
   const [privacy, setPrivacy] = useState(true);
   const [medium, setMedium] = useState(true);
   const locationdata = ["location", "latitude", "longitude"];
@@ -100,7 +100,6 @@ const AddEvent = ({ eventPresent, setEventPresent }) => {
         .then((res) => {
           console.log("succesfully data posted");
           console.log(res);
-          setEventPresent(eventPresent + 1);
           setEvent({
             title: "",
             description: "",
@@ -163,13 +162,15 @@ const AddEvent = ({ eventPresent, setEventPresent }) => {
       {generateAlert()}
       <Stack spacing={2.5}>
         <Box>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={6}>
-              <ArrowBackRoundedIcon fontSize="small" />
-              <Typography variant="h6">Go back</Typography>
-            </Grid>
-          </Grid>
+          <ArrowBackRoundedIcon fontSize="small" />
+          <Link
+            to="/dashboard"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
+            <Typography variant="h6">Go back</Typography>
+          </Link>
         </Box>
+
         <Box></Box>
         <Box>
           <Typography variant="h5" fontWeight="bold">

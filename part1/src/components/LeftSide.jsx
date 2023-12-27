@@ -47,14 +47,14 @@ const LeftSide = () => {
 
         <Box>
           <Container>
-            <Button variant="text" startIcon={<PeopleAltOutlinedIcon />}>
+            <Button variant="text" startIcon={<PeopleAltOutlinedIcon />} onClick={() => navigate("rsvps")}>
               RSVPS
             </Button>
           </Container>
         </Box>
         <Box>
           <Container>
-            <Button variant="text" startIcon={<LocalActivityOutlinedIcon />}>
+            <Button variant="text" startIcon={<LocalActivityOutlinedIcon />} onClick={() => navigate("invities")}>
               Invities
             </Button>
           </Container>
@@ -63,7 +63,7 @@ const LeftSide = () => {
           <Container>
             <Button
               variant="text"
-              startIcon={<CircleNotificationsOutlinedIcon />}
+              startIcon={<CircleNotificationsOutlinedIcon />} onClick={() => navigate("notifications")}
             >
               Notifications
             </Button>

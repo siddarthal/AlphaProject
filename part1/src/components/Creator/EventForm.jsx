@@ -1,13 +1,16 @@
 import * as React from "react";
 import dayjs from "dayjs";
 import api from "../../Services/service";
+import { useParams } from "react-router-dom";
 import {
   Box,
+  Stack,
   Button,
   TextField,
   Typography,
   Grid,
   Alert,
+  AlertTitle,
   Snackbar,
 } from "@mui/material";
 import { useState } from "react";
@@ -15,9 +18,10 @@ import StartDateTime from "../StartDateTime";
 import EndDateTime from "../EndDateTime";
 import ButtonGrouping from "../ButtonGrouping";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { useNavigate } from "react-router-dom";
-
-const EventForm = ({ eventPresent, setEventPresent }) => {
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import { useNavigate, Link } from "react-router-dom";
+import { useEffect } from "react";
+const EventForm = () => {
   const [privacy, setPrivacy] = useState(true);
   const [medium, setMedium] = useState(true);
   const locationdata = ["location", "latitude", "longitude"];
@@ -26,6 +30,7 @@ const EventForm = ({ eventPresent, setEventPresent }) => {
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const { id } = useParams();
   const [event, setEvent] = useState({
     title: "",
     description: "",
@@ -40,6 +45,34 @@ const EventForm = ({ eventPresent, setEventPresent }) => {
     latitude: "",
     longitude: "",
   });
+  const categories = [
+    "Music",
+    "Games",
+    "Sports",
+    "Arts",
+    "Film",
+    "Tech",
+    "Fashion",
+    "Lifestyle",
+    "Culture",
+    "Charity",
+    "Kids",
+    "Other",
+  ];
+  useEffect(() => {
+    api.fetchParticularEvent(id).then((res) => {
+      console.log(res);
+      setEvent(res);
+      setPrivacy(res.privacy);
+      setMedium(res.medium);
+      setsDate(res.startDate);
+      seteDate(res.endDate);
+      const index = categories.indexOf(res.categories);
+      const arr = tracker;
+      arr[index] = true;
+      setTracker(arr);
+    });
+  }, []);
   const handlePrivacy = (value) => {
     setPrivacy(value);
   };
@@ -94,11 +127,11 @@ const EventForm = ({ eventPresent, setEventPresent }) => {
     if (formValidation()) {
       setErrors({});
       api
-        .submitEvent(event)
+        .editParticularEvent(id, event)
         .then((res) => {
           console.log("succesfully data posted");
           console.log(res);
-          setEventPresent(eventPresent + 1);
+          // setEventPresent(eventPresent + 1);
           setEvent({
             title: "",
             description: "",
@@ -113,7 +146,7 @@ const EventForm = ({ eventPresent, setEventPresent }) => {
             latitude: "",
             longitude: "",
           });
-          navigate("/dashboard");
+          navigate(`/dashboard/events/${id}`);
         })
         .catch((error) => console.log(error));
     } else {
@@ -157,183 +190,204 @@ const EventForm = ({ eventPresent, setEventPresent }) => {
     }
   };
   return (
-    <>
-      <Box>
+    <Box>
       {generateAlert()}
-        <TextField
-          onChange={handleChange}
-          name="title"
-          sx={{ width: "100%" }}
-          required
-          value={event.title}
-          id="outlined-basic"
-          label="EventTitle"
-          variant="outlined"
-        />
-      </Box>
-      <Box>
-        <TextField
-          onChange={handleChange}
-          name="description"
-          sx={{ width: "100%", borderRadius: "8px" }}
-          required
-          multiline
-          rows={2}
-          value={event.description}
-          id="outlined-basic"
-          label="Description"
-          variant="outlined"
-        />
-      </Box>
-      <Box>
-        <Typography variant="h6">Privacy *</Typography>
-      </Box>
-
-      <Box>
+      <Stack spacing={2.5}>
         <Box>
-          <Grid container spacing={0.2}>
-            <Grid item xs={1}>
-              <Button
-                variant={privacy ? "contained" : "outlined"}
-                onClick={() => handlePrivacy(true)}
-              >
-                Private
-              </Button>
-            </Grid>
-            <Grid item xs={1}>
-              <Button
-                variant={privacy ? "outlined" : "contained"}
-                onClick={() => handlePrivacy(false)}
-              >
-                Public
-              </Button>
-            </Grid>
-          </Grid>
+          <ArrowBackRoundedIcon fontSize="small" />
+          <Link
+            to="/dashboard/events"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
+            <Typography variant="h6">Go back</Typography>
+          </Link>
         </Box>
-      </Box>
-      <Box>
-        <Typography variant="h6">Medium *</Typography>
-      </Box>
-
-      <Box>
+        <Box></Box>
         <Box>
-          <Grid container spacing={0.2}>
-            <Grid item xs={1}>
-              <Button
-                variant={medium ? "contained" : "outlined"}
-                onClick={() => handleMedium(true)}
-              >
-                Online
-              </Button>
-            </Grid>
-            <Grid item xs={1}>
-              <Button
-                variant={medium ? "outlined" : "contained"}
-                onClick={() => handleMedium(false)}
-              >
-                Inperson
-              </Button>
-            </Grid>
-          </Grid>
+          <Typography variant="h5" fontWeight="bold">
+            Edit Event{" "}
+          </Typography>
         </Box>
-      </Box>
-      <Box>
-        <Typography variant="h6">Sart Date-Time *</Typography>
-      </Box>
-      <Box>
-        <StartDateTime value={sdate} setValue={setsDate} />
-      </Box>
-      <Box>
-        <Typography variant="h6">End Date-Time *</Typography>
-      </Box>
-      <Box>
-        <EndDateTime value={edate} setValue={seteDate} />
-      </Box>
-      <Box>
-        <TextField
-          onChange={handleChange}
-          name="duration"
-          sx={{ width: "100%", borderRadius: "8px" }}
-          required
-          value={event.duration}
-          id="outlined-basic"
-          label="Duration"
-          variant="outlined"
-        />
-      </Box>
-      <Box>
-        <TextField
-          onChange={handleChange}
-          name="language"
-          value={event.language}
-          sx={{ width: "100%", borderRadius: "8px" }}
-          id="outlined-basic"
-          label="Language"
-          variant="outlined"
-        />
-      </Box>
-      <Box>
-        <TextField
-          sx={{ width: "100%", borderRadius: "8px" }}
-          id="outlined-basic"
-          label="Max Participants (i.e. RSVPs)"
-          variant="outlined"
-        />
-      </Box>
-      <Box>
-        <Typography variant="h6">Category *</Typography>
-      </Box>
-      <Box>
-        <ButtonGrouping
-          tracker={tracker}
-          // value={event.}
-          setTracker={setTracker}
-          handleClick={handleClick}
-        />
-      </Box>
-      <Box>
-        <TextField
-          sx={{ width: "100%", borderRadius: "8px" }}
-          required
-          multiline
-          rows={2}
-          // value={event.title}
-          id="outlined-basic"
-          label="Terms and Conditions"
-          variant="outlined"
-        />
-      </Box>
-      {locationdata.map((item, idx) => {
-        console.log(item);
-        console.log(event);
-        const obj = item;
-        console.log(event[item], "event item name");
-        return (
+        <Box>
           <TextField
             onChange={handleChange}
-            name={item}
-            key={idx}
-            sx={{ width: "100%", borderRadius: "8px" }}
+            name="title"
+            sx={{ width: "100%" }}
             required
-            value={event[item]}
+            value={event.title}
             id="outlined-basic"
-            label={item}
+            label="EventTitle"
             variant="outlined"
           />
-        );
-      })}
-      <Button
-        sx={{ width: "20%" }}
-        component="label"
-        variant="contained"
-        startIcon={<CloudUploadIcon />}
-      >
-        Upload Image
-      </Button>
-      <Button sx={{ width: "20%" }} variant="contained" onClick={handleCreate}>
-        Submit
-      </Button>
-    </>
+        </Box>
+        <Box>
+          <TextField
+            onChange={handleChange}
+            name="description"
+            sx={{ width: "100%", borderRadius: "8px" }}
+            required
+            multiline
+            rows={2}
+            value={event.description}
+            id="outlined-basic"
+            label="Description"
+            variant="outlined"
+          />
+        </Box>
+        <Box>
+          <Typography variant="h6">Privacy *</Typography>
+        </Box>
+
+        <Box>
+          <Box>
+            <Grid container spacing={0.2}>
+              <Grid item xs={1}>
+                <Button
+                  variant={privacy ? "contained" : "outlined"}
+                  onClick={() => handlePrivacy(true)}
+                >
+                  Private
+                </Button>
+              </Grid>
+              <Grid item xs={1}>
+                <Button
+                  variant={privacy ? "outlined" : "contained"}
+                  onClick={() => handlePrivacy(false)}
+                >
+                  Public
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Box>
+          <Typography variant="h6">Medium *</Typography>
+        </Box>
+
+        <Box>
+          <Box>
+            <Grid container spacing={0.2}>
+              <Grid item xs={1}>
+                <Button
+                  variant={medium ? "contained" : "outlined"}
+                  onClick={() => handleMedium(true)}
+                >
+                  Online
+                </Button>
+              </Grid>
+              <Grid item xs={1}>
+                <Button
+                  variant={medium ? "outlined" : "contained"}
+                  onClick={() => handleMedium(false)}
+                >
+                  Inperson
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Box>
+          <Typography variant="h6">Sart Date-Time *</Typography>
+        </Box>
+        <Box>
+          <StartDateTime value={sdate} setValue={setsDate} />
+        </Box>
+        <Box>
+          <Typography variant="h6">End Date-Time *</Typography>
+        </Box>
+        <Box>
+          <EndDateTime value={edate} setValue={seteDate} />
+        </Box>
+        <Box>
+          <TextField
+            onChange={handleChange}
+            name="duration"
+            sx={{ width: "100%", borderRadius: "8px" }}
+            required
+            value={event.duration}
+            id="outlined-basic"
+            label="Duration"
+            variant="outlined"
+          />
+        </Box>
+        <Box>
+          <TextField
+            onChange={handleChange}
+            name="language"
+            value={event.language}
+            sx={{ width: "100%", borderRadius: "8px" }}
+            id="outlined-basic"
+            label="Language"
+            variant="outlined"
+          />
+        </Box>
+        <Box>
+          <TextField
+            sx={{ width: "100%", borderRadius: "8px" }}
+            id="outlined-basic"
+            label="Max Participants (i.e. RSVPs)"
+            variant="outlined"
+          />
+        </Box>
+        <Box>
+          <Typography variant="h6">Category *</Typography>
+        </Box>
+        <Box>
+          <ButtonGrouping
+            tracker={tracker}
+            // value={event.}
+            setTracker={setTracker}
+            handleClick={handleClick}
+          />
+        </Box>
+        <Box>
+          <TextField
+            sx={{ width: "100%", borderRadius: "8px" }}
+            required
+            multiline
+            rows={2}
+            // value={event.title}
+            id="outlined-basic"
+            label="Terms and Conditions"
+            variant="outlined"
+          />
+        </Box>
+        {locationdata.map((item, idx) => {
+          console.log(item);
+          console.log(event);
+          const obj = item;
+          console.log(event[item], "event item name");
+          return (
+            <TextField
+              onChange={handleChange}
+              name={item}
+              key={idx}
+              sx={{ width: "100%", borderRadius: "8px" }}
+              required
+              value={event[item]}
+              id="outlined-basic"
+              label={item}
+              variant="outlined"
+            />
+          );
+        })}
+        <Button
+          sx={{ width: "20%" }}
+          component="label"
+          variant="contained"
+          startIcon={<CloudUploadIcon />}
+        >
+          Upload Image
+        </Button>
+        <Button
+          sx={{ width: "20%" }}
+          variant="contained"
+          onClick={handleCreate}
+        >
+          Edit Event
+        </Button>
+      </Stack>
+    </Box>
   );
 };
 export default EventForm;

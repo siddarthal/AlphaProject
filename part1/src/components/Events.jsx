@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../Services/service";
-import { Grid } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import EventCard from "./EventCard";
+import Menubar from "./Explore/Menubar";
 const Events = () => {
   const [event, setEvent] = useState([]);
   useEffect(() => {
@@ -14,10 +15,14 @@ const Events = () => {
       .catch((error) => console.log("error", error));
   }, []);
   return (
-    <div>
+    <Stack spacing={3}>
+      <Typography variant="h4" sx={{paddingTop:4 , fontWeight:"bold"}}>
+      Explore the best events happening around you
+      </Typography>
+      <Menubar/>
+      
       <Grid
         container
-        
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
@@ -27,7 +32,7 @@ const Events = () => {
           </Grid>
         ))}
       </Grid>
-    </div>
+    </Stack>
   );
 };
 

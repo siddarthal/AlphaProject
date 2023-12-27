@@ -9,7 +9,7 @@ const UserEventDetails = () => {
   const navigate = useNavigate();
   useEffect(() => {
     api
-      .useSpecificEvent()
+      .userSpecificEvent()
       .then((res) => {
         console.log(res.data);
         setEventData(res.data);

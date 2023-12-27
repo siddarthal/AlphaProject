@@ -18,7 +18,7 @@ const NavBar = ({ handleLog }) => {
 
   return (
     
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2} alignItems="center" sx={{color: '#fff',fontFamily: "sans-serif",}}>
         <Grid container alignItems="center" item xs={4}>
           <EventAvailableRoundedIcon fontSize="large" />
           <Typography
@@ -81,7 +81,7 @@ const NavBar = ({ handleLog }) => {
           </Typography>
         </Grid>
       </Grid>
- 
+  
   );
 };
 

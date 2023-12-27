@@ -1,37 +1,45 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../Services/service";
-import { Container, Grid, Paper, Stack, Typography, Box } from "@mui/material";
+import {
+  Container,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+  Box,
+  Button,
+} from "@mui/material";
 import image from "../Images/R.jpg";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import EventMap from "../components/EventMap";
+import ChatBox from "../components/ChatBox";
 export default function EventDetails() {
   const { id } = useParams();
-  const [event, setEvent] = useState(
-    {
-      title: "Sample Event Authorised NCC unit of usa",
-      description: "This is a sample event description.",
-      medium: "offline",
-      price: 10,
-      category: "Workshop",
-      startDate: "2023-01-01T10:00:00+00:00",
-      endDate: "2023-01-01T14:00:00+00:00",
-      location: ["Higrave maddox mall ,Siddacity", 37.7749, 122.4194],
-      image: "https://example.com/sample-image.jpg",
-      meet: "online",
-      tnc: [
-        "You may not be able to attend the live session if you are late.",
-        "You may face interruptions during the course of the live stream due to internet connectivity issues.",
-        "Show details and the artist lineup are subject to change as per the artist’s discretion.",
-        "No refunds on purchased tickets are possible, even in case of any rescheduling.",
-      ],
-      language: "English",
-      duration: "02:00",
-      otherField: "This is an additional field if needed",
-    },
-  );
+  const [val, setVal] = useState(true);
+  const [event, setEvent] = useState({
+    title: "Sample Event Authorised NCC unit of usa",
+    description: "This is a sample event description.",
+    medium: "offline",
+    price: 10,
+    category: "Workshop",
+    startDate: "2023-01-01T10:00:00+00:00",
+    endDate: "2023-01-01T14:00:00+00:00",
+    location: ["Higrave maddox mall ,Siddacity", 37.7749, 122.4194],
+    image: "https://example.com/sample-image.jpg",
+    meet: "online",
+    tnc: [
+      "You may not be able to attend the live session if you are late.",
+      "You may face interruptions during the course of the live stream due to internet connectivity issues.",
+      "Show details and the artist lineup are subject to change as per the artist’s discretion.",
+      "No refunds on purchased tickets are possible, even in case of any rescheduling.",
+    ],
+    language: "English",
+    duration: "02:00",
+    otherField: "This is an additional field if needed",
+  });
 
   useEffect(() => {
     api
@@ -44,7 +52,9 @@ export default function EventDetails() {
   }, [id]); // Added id as a dependency for useEffect
   const startDateString = event.startDate || "2023-01-01T10:00:00+00:00";
   const startDate = new Date(startDateString);
-
+  const handleChannel = () => {
+    setVal(false);
+  };
   const options = {
     weekday: "short",
     year: "numeric",
@@ -63,7 +73,7 @@ export default function EventDetails() {
       <Grid container spacing={2}>
         {/* Part 1 - Event Image */}
         <Grid item xs={8}>
-          <Paper elevation={3} style={{ height: "50vh" }}>
+          <Paper elevation={3} style={{ height: "60vh" }}>
             <img
               src={image}
               alt=""
@@ -79,7 +89,7 @@ export default function EventDetails() {
 
         {/* Part 2 - Maps */}
         <Grid item xs={4}>
-          <Paper elevation={6} style={{ height: "50vh" }}>
+          <Paper elevation={6} style={{ height: "60vh" }}>
             <Container>
               <Stack spacing={2}>
                 <Typography variant="h5" component="h5">
@@ -109,7 +119,10 @@ export default function EventDetails() {
                     <Typography variant="body1">{event.location[0]}</Typography>
                   </Grid>
                 </Grid>
-                <EventMap latitude={event.location[1]} longitude={event.location[2]}/>
+                <EventMap
+                  latitude={event.location[1]}
+                  longitude={event.location[2]}
+                />
               </Stack>
             </Container>
           </Paper>
@@ -117,7 +130,7 @@ export default function EventDetails() {
 
         {/* Part 3 - About */}
         <Grid item xs={8}>
-          <Paper elevation={3} style={{ height: "50vh" }}>
+          <Paper elevation={3} style={{ height: "400px" }}>
             <Typography sx={{ marginLeft: 3 }} variant="h5" component="h6">
               <b>About</b>
             </Typography>
@@ -140,6 +153,25 @@ export default function EventDetails() {
               </Stack>
             </Container>
           </Paper>
+        </Grid>
+        <Grid item xs={4}>
+          {val ? (
+            <Paper elevation={3} style={{ height: "400px" }}>
+              <Container>
+                <Typography variant="h5">
+                  Want volunteer pls join the announcement channel for further
+                  instructions
+                </Typography>
+                <Button variant="contained" onClick={handleChannel}>
+                  Join channel
+                </Button>
+              </Container>
+            </Paper>
+          ) : (
+            <Container>
+              <ChatBox />
+            </Container>
+          )}
         </Grid>
       </Grid>
     </Container>

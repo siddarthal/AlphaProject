@@ -4,3 +4,15 @@
     margin: 0;
     
 }
+
+.customLink {
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .customLinkPressed {
+    cursor: pointer;
+    opacity: 0.7; 
+    transition: opacity 0.2s ease-in-out;
+  }
+  
