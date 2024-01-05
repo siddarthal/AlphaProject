@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const HomeContent = () => {
   return (
     <>
+    <Stack>
       <Box sx={{ marginLeft: 9, marginTop: 15 }}>
         <Container>
           <Typography
@@ -52,6 +53,28 @@ const HomeContent = () => {
           </Grid>
         </Grid>
       </Box>
+      {/* add content from below */}
+      <Box paddingTop={3}>
+        <Grid container alignContent="center">
+          <Grid item xs={6}>
+            Hi
+          </Grid>
+          <Grid item xs={6}>
+          Bye
+          </Grid>
+        </Grid>
+      </Box>
+      <Box paddingTop={3}>
+        <Grid container alignContent="center">
+          <Grid item xs={6}>
+            Hi
+          </Grid>
+          <Grid item xs={6}>
+          Bye
+          </Grid>
+        </Grid>
+      </Box>
+      </Stack>
     </>
   );
 };
