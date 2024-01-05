@@ -37,7 +37,7 @@ const RightsideEvents = ({ requiredData }) => {
   const handleGridItemHover = (index) => {
     setHoveredIndex(index);
   };
-
+  
   const handleRedirect = (eventId) => {
     console.log(eventId);
     console.log(specificGroupFetch[eventId]);

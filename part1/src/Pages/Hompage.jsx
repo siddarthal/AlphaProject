@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
 
+
 const Homepage = () => {
   return (
     <Box>
@@ -12,9 +13,11 @@ const Homepage = () => {
         <Container>
           <NavBar />
         </Container>
-      </Box>
 
+      </Box>
       <Container>
+     
+
         <Stack>
           <Outlet />
         </Stack>
