@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import api from "../Services/service";
-import { Grid, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import EventCard from "./EventCard";
 import Menubar from "./Explore/Menubar";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
+import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
 const Events = () => {
   const [event, setEvent] = useState([]);
+
   useEffect(() => {
     api
       .getEvents()
@@ -14,24 +20,132 @@ const Events = () => {
       })
       .catch((error) => console.log("error", error));
   }, []);
+  function LeftNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", color: "black" }}
+        onClick={onClick}
+      >
+        <ArrowCircleRightOutlinedIcon />
+      </div>
+    );
+  }
+  function RightNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", color: "black" }}
+        onClick={onClick}
+      >
+        <ArrowCircleLeftOutlinedIcon />
+      </div>
+    );
+  }
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    initialSlide: 0,
+    nextArrow: <LeftNextArrow />,
+    prevArrow: <RightNextArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+  const category = {
+    Music: [],
+    Games: [],
+    Sports: [],
+    Arts: [],
+    Film: [],
+    Tech: [],
+    Fashion: [],
+    Lifestyle: [],
+    Culture: [],
+    Charity: [],
+    Kids: [],
+    Other: [],
+  };
+  function fetchAllCategoriesData() {
+    event.forEach((item) => {
+      // console.log(item.categories);
+      // console.log("hello");
+      // console.log(category[item.categories]);
+      category[item.categories].push(item);
+    });
+
+    Object.keys(category).forEach((categoryName) => {
+      if (category[categoryName].length === 0) {
+        delete category[categoryName];
+      }
+    });
+  }
+  fetchAllCategoriesData();
+
+  console.log(category);
   return (
     <Stack spacing={3}>
-      <Typography variant="h4" sx={{paddingTop:4 , fontWeight:"bold"}}>
-      Explore the best events happening around you
+      <Typography variant="h4" sx={{ paddingTop: 4, fontWeight: "bold" }}>
+        Explore the best events happening around you
       </Typography>
-      <Menubar/>
-      
-      <Grid
-        container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 4, sm: 8, md: 12 }}
-      >
-        {event.map((item, index) => (
-          <Grid item xs={2} sm={4} md={4} key={index}>
-            <EventCard event={item} idx={index} />
-          </Grid>
-        ))}
-      </Grid>
+      <Menubar />
+      <Box>
+        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          All Events
+        </Typography>
+
+        <Slider {...settings}>
+          {event.map((item, index) => (
+            <EventCard key={index} event={item} idx={index} />
+          ))}
+        </Slider>
+      </Box>
+      <Box>
+        {Object.keys(category).map((categoryName, idx) => {
+          return (
+            <Box key={idx}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                {categoryName}
+              </Typography>
+              <Slider {...settings}>
+                {category[categoryName].map((item, index) => {
+                  //  console.log(item,"in the blood");
+                  return <EventCard key={index} event={item} idx={index} />;
+                })}
+              </Slider>
+            </Box>
+          );
+        })}
+      </Box>
     </Stack>
   );
 };
