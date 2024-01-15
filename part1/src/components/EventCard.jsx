@@ -23,7 +23,7 @@ export default function EventCard({ event, idx }) {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {event.title}
+              {event.event_name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Pls Join us for competition

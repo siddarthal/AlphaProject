@@ -32,32 +32,34 @@ const EventForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [event, setEvent] = useState({
-    title: "",
+    event_name: "",
     description: "",
     privacy: true,
-    medium: true,
+    medium: "",
+    require_volunteers:true,
     startDate: sdate,
     endDate: edate,
     duration: "",
+    poster: null,
+    ticket_cost: "",
     language: "",
-    categories: "",
+    category: "",
+    time:"",
     location: "",
     latitude: "",
     longitude: "",
   });
   const categories = [
-    "Music",
-    "Games",
-    "Sports",
-    "Arts",
-    "Film",
-    "Tech",
-    "Fashion",
-    "Lifestyle",
-    "Culture",
-    "Charity",
-    "Kids",
-    "Other",
+    "music",
+    "games",
+    "sports",
+    "arts",
+    "film",
+    "technology",
+    "literature",
+    "fashion",
+    "lifestyle",
+    "other",
   ];
   useEffect(() => {
     api.fetchParticularEvent(id).then((res) => {
@@ -83,7 +85,7 @@ const EventForm = () => {
     const arr = new Array(13).fill(false);
     arr[idx] = true;
     console.log(item);
-    setEvent({ ...event, categories: item });
+    setEvent({ ...event, category: item });
     setTracker(arr);
   };
   const handleChange = (e) => {
@@ -94,7 +96,7 @@ const EventForm = () => {
   const formValidation = () => {
     setOpen(true);
     const newErrors = {};
-    if (!event.title) {
+    if (!event.event_name) {
       newErrors.title = " Title is required";
     }
     if (!event.description) {
@@ -106,7 +108,7 @@ const EventForm = () => {
     if (!event.language) {
       newErrors.language = "Language is required";
     }
-    if (!event.categories) {
+    if (!event.category) {
       newErrors.categories = "Selecting one category is mandatory";
     }
     if (!event.location) {
@@ -133,15 +135,19 @@ const EventForm = () => {
           console.log(res);
           // setEventPresent(eventPresent + 1);
           setEvent({
-            title: "",
+            event_name: "",
             description: "",
             privacy: true,
-            medium: true,
+            medium: "",
+            require_volunteers:true,
             startDate: sdate,
             endDate: edate,
             duration: "",
+            poster: null,
+            ticket_cost: "",
             language: "",
-            categories: "",
+            category: "",
+            time:"",
             location: "",
             latitude: "",
             longitude: "",
@@ -214,7 +220,7 @@ const EventForm = () => {
             name="title"
             sx={{ width: "100%" }}
             required
-            value={event.title}
+            value={event.event_name}
             id="outlined-basic"
             label="EventTitle"
             variant="outlined"

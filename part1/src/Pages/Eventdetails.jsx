@@ -45,29 +45,29 @@ export default function EventDetails() {
     api
       .fetchEvent(id)
       .then((res) => {
-        console.log("response", res.data[0]);
-        setEvent(res.data[0]);
+        console.log("response", res.data);
+        setEvent(res.data);
       })
       .catch((error) => console.log(error));
   }, [id]); // Added id as a dependency for useEffect
-  const startDateString = event.startDate || "2023-01-01T10:00:00+00:00";
-  const startDate = new Date(startDateString);
+  // const startDateString = event.startDate || "2023-01-01T10:00:00+00:00";
+  // const startDate = new Date(startDateString);
   const handleChannel = () => {
     setVal(false);
   };
-  const options = {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZoneName: "short",
-  };
+  // const options = {
+  //   weekday: "short",
+  //   year: "numeric",
+  //   month: "short",
+  //   day: "numeric",
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  //   timeZoneName: "short",
+  // };
 
-  const formattedDate = startDate.toLocaleDateString("en-US", options);
+  // const formattedDate = startDate.toLocaleDateString("en-US", options);
 
-  console.log(formattedDate);
+  // console.log(formattedDate);
   return (
     <Container sx={{ marginTop: 5 }}>
       <Grid container spacing={2}>
@@ -93,7 +93,7 @@ export default function EventDetails() {
             <Container>
               <Stack spacing={2}>
                 <Typography variant="h5" component="h5">
-                  <b>{event.title}</b>
+                  <b>{event.event_name}</b>
                 </Typography>
                 <Grid container alignItems="center">
                   <Grid item xs={2}>
@@ -108,7 +108,7 @@ export default function EventDetails() {
                     <CalendarMonthOutlinedIcon />
                   </Grid>
                   <Grid item xs={10}>
-                    <Typography variant="body1">{formattedDate}</Typography>
+                    <Typography variant="body1">{event.startDate}</Typography>
                   </Grid>
                 </Grid>
                 <Grid container alignItems="center">
@@ -116,12 +116,12 @@ export default function EventDetails() {
                     <LocationOnOutlinedIcon />
                   </Grid>
                   <Grid item xs={10}>
-                    <Typography variant="body1">{event.location[0]}</Typography>
+                    <Typography variant="body1">{event.location}</Typography>
                   </Grid>
                 </Grid>
                 <EventMap
-                  latitude={event.location[1]}
-                  longitude={event.location[2]}
+                  latitude={event.latitude}
+                  longitude={event.longitude}
                 />
               </Stack>
             </Container>
@@ -145,10 +145,28 @@ export default function EventDetails() {
                 </Typography>
                 <Typography variant="h5">Terms and Conditions</Typography>
                 <Typography variant="body">
-                  {console.log("t and c", event.tnc[0])}
-                  {event.tnc.map((item, idx) => (
+                  {/* {console.log("t and c", event.tnc[0])} */}
+                  {/* {event.tnc.map((item, idx) => (
                     <li key={idx}>{item}</li>
-                  ))}
+                  ))} */}
+                  <ul>
+                    <li>
+                      "You may not be able to attend the live session if you are
+                      late.",
+                    </li>
+                    <li>
+                      "You may face interruptions during the course of the live
+                      stream due to internet connectivity issues.",
+                    </li>
+                    <li>
+                      "Show details and the artist lineup are subject to change
+                      as per the artist’s discretion.",
+                    </li>
+                    <li>
+                      "No refunds on purchased tickets are possible, even in
+                      case of any rescheduling."
+                    </li>
+                  </ul>
                 </Typography>
               </Stack>
             </Container>

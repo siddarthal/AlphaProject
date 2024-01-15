@@ -29,18 +29,23 @@ const AddEvent = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const [event, setEvent] = useState({
-    title: "",
+    event_name: "",
     description: "",
     privacy: true,
-    medium: true,
+    medium: "",
+    require_volunteers:true,
     startDate: sdate,
     endDate: edate,
     duration: "",
+    poster: null,
+    ticket_cost: "",
     language: "",
-    categories: "",
+    category: "",
+    time:"",
     location: "",
     latitude: "",
     longitude: "",
+
   });
   const handlePrivacy = (value) => {
     setPrivacy(value);
@@ -63,30 +68,30 @@ const AddEvent = () => {
   const formValidation = () => {
     setOpen(true);
     const newErrors = {};
-    if (!event.title) {
-      newErrors.title = " Title is required";
-    }
-    if (!event.description) {
-      newErrors.description = " Description is required";
-    }
-    if (!event.duration) {
-      newErrors.duration = "Duration is required";
-    }
-    if (!event.language) {
-      newErrors.language = "Language is required";
-    }
-    if (!event.categories) {
-      newErrors.categories = "Selecting one category is mandatory";
-    }
-    if (!event.location) {
-      newErrors.location = "Enter  location";
-    }
-    if (!event.latitude) {
-      newErrors.location = "Enter  latitude";
-    }
-    if (!event.longitude) {
-      newErrors.location = "Enter  longitude";
-    }
+    // if (!event.event_name) {
+    //   newErrors.event_name = " Title is required";
+    // }
+    // if (!event.description) {
+    //   newErrors.description = " Description is required";
+    // }
+    // if (!event.duration) {
+    //   newErrors.duration = "Duration is required";
+    // }
+    // if (!event.language) {
+    //   newErrors.language = "Language is required";
+    // }
+    // if (!event.category) {
+    //   newErrors.categories = "Selecting one category is mandatory";
+    // }
+    // if (!event.location) {
+    //   newErrors.location = "Enter  location";
+    // }
+    // if (!event.latitude) {
+    //   newErrors.location = "Enter  latitude";
+    // }
+    // if (!event.longitude) {
+    //   newErrors.location = "Enter  longitude";
+    // }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -101,15 +106,19 @@ const AddEvent = () => {
           console.log("succesfully data posted");
           console.log(res);
           setEvent({
-            title: "",
+            event_name: "",
             description: "",
             privacy: true,
-            medium: true,
+            medium: "",
+            require_volunteers:true,
             startDate: sdate,
             endDate: edate,
             duration: "",
+            poster: null,
+            ticket_cost: "",
             language: "",
-            categories: "",
+            category: "",
+            time:"",
             location: "",
             latitude: "",
             longitude: "",
@@ -118,7 +127,7 @@ const AddEvent = () => {
         })
         .catch((error) => console.log(error));
     } else {
-      console.log("cannot validate", errors.title);
+      console.log("cannot validate", errors.event_name);
     }
   };
 
@@ -180,10 +189,10 @@ const AddEvent = () => {
         <Box>
           <TextField
             onChange={handleChange}
-            name="title"
+            name="event_name"
             sx={{ width: "100%" }}
             required
-            value={event.title}
+            value={event.event_name}
             id="outlined-basic"
             label="EventTitle"
             variant="outlined"
@@ -230,7 +239,7 @@ const AddEvent = () => {
           </Box>
         </Box>
         <Box>
-          <Typography variant="h6">Medium *</Typography>
+          <Typography variant="h6">Require_volunteers *</Typography>
         </Box>
 
         <Box>
@@ -241,7 +250,7 @@ const AddEvent = () => {
                   variant={medium ? "contained" : "outlined"}
                   onClick={() => handleMedium(true)}
                 >
-                  Online
+                  TRUE
                 </Button>
               </Grid>
               <Grid item xs={1}>
@@ -249,7 +258,7 @@ const AddEvent = () => {
                   variant={medium ? "outlined" : "contained"}
                   onClick={() => handleMedium(false)}
                 >
-                  Inperson
+                  FALSE
                 </Button>
               </Grid>
             </Grid>
@@ -282,19 +291,34 @@ const AddEvent = () => {
         <Box>
           <TextField
             onChange={handleChange}
-            name="language"
-            value={event.language}
+            name="medium"
+            value={event.medium}
             sx={{ width: "100%", borderRadius: "8px" }}
             id="outlined-basic"
-            label="Language"
+            label="Medium"
             variant="outlined"
           />
         </Box>
         <Box>
           <TextField
+            onChange={handleChange}
+            name="ticket_cost"
+            value={event.ticket_cost}
             sx={{ width: "100%", borderRadius: "8px" }}
             id="outlined-basic"
-            label="Max Participants (i.e. RSVPs)"
+            
+            label="ticket_cost"
+            variant="outlined"
+          />
+        </Box>
+        <Box>
+          <TextField
+            onChange={handleChange}
+            name="language"
+            value={event.language}
+            sx={{ width: "100%", borderRadius: "8px" }}
+            id="outlined-basic"
+            label="language"
             variant="outlined"
           />
         </Box>

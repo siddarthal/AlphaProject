@@ -50,7 +50,7 @@ const Events = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
     initialSlide: 0,
     nextArrow: <LeftNextArrow />,
     prevArrow: <RightNextArrow />,
@@ -81,26 +81,40 @@ const Events = () => {
       },
     ],
   };
+  // const category = {
+  //   Music: [],
+  //   Games: [],
+  //   Sports: [],
+  //   Arts: [],
+  //   Film: [],
+  //   Tech: [],
+  //   Fashion: [],
+  //   Lifestyle: [],
+  //   Culture: [],
+  //   Charity: [],
+  //   Kids: [],
+  //   Other: [],
+  // };
   const category = {
-    Music: [],
-    Games: [],
-    Sports: [],
-    Arts: [],
-    Film: [],
-    Tech: [],
-    Fashion: [],
-    Lifestyle: [],
-    Culture: [],
-    Charity: [],
-    Kids: [],
-    Other: [],
+    music: [],
+    games: [],
+    sports: [],
+    arts: [],
+    film: [],
+    technology: [],
+    literature:[],
+    fashion: [],
+    lifestyle: [],
+    other: [],
   };
+  const num=1;
   function fetchAllCategoriesData() {
     event.forEach((item) => {
-      // console.log(item.categories);
+      // console.log(item.category);
       // console.log("hello");
       // console.log(category[item.categories]);
-      category[item.categories].push(item);
+      category[item.category].push(item);
+      // category[item.categories].push(item);
     });
 
     Object.keys(category).forEach((categoryName) => {
@@ -108,6 +122,8 @@ const Events = () => {
         delete category[categoryName];
       }
     });
+    console.log(category);
+    // console.log(num+1);
   }
   fetchAllCategoriesData();
 
@@ -136,10 +152,12 @@ const Events = () => {
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 {categoryName}
               </Typography>
+              {/* {console.log("hi")} */}
+
               <Slider {...settings}>
-                {category[categoryName].map((item, index) => {
-                  //  console.log(item,"in the blood");
-                  return <EventCard key={index} event={item} idx={index} />;
+                {category[categoryName].map((item,idx) => {
+                   console.log("in the blood",item);
+                  return <EventCard key={item.EID} event={item} idx={item.EID} />;
                 })}
               </Slider>
             </Box>
