@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import api from "../Services/service";
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -17,6 +17,7 @@ export default function Signup() {
       [event.target.name]: event.target.value,
     });
   };
+  const navigate= useNavigate();
   const formValidation = () => {
     const newErrors = {};
     if (!formData.name) {
@@ -49,6 +50,7 @@ export default function Signup() {
           console.log("successfull");
           console.log("formData", dataToSend);
           console.log("result", result);
+          navigate("/signin")
           setFormData({ name: "", email: "", password: "", rePassword: "" });
         })
         .catch((err) => {

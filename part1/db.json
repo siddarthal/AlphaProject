@@ -396,7 +396,6 @@
       "privacy": true,
       "medium": true,
       "startDate": "2023-04-08T14:30:00.000Z",
-     
       "endDate": "2023-04-08T18:30:00.000Z",
       "duration": "4 hours",
       "language": "English",
@@ -808,7 +807,6 @@
       "duration": "02:00",
       "otherField": "This is an additional field if needed"
     }
-          
   ],
   "messages": [
     {
@@ -1134,6 +1132,12 @@
       "eventId": 1,
       "userId": 1,
       "id": "ZL9gO_Z"
+    },
+    {
+      "message": "jnbhbgh",
+      "eventId": 1,
+      "userId": 1,
+      "id": "ef5T6Rd"
     }
   ]
 }
