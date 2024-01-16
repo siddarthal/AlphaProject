@@ -123,6 +123,12 @@ export default function EventDetails() {
                   latitude={event.latitude}
                   longitude={event.longitude}
                 />
+                <Box sx={{paddingTop:3 , paddingLeft:3}} >
+                 
+                 <Button  variant="contained">
+                 Buy Ticket
+                 </Button>
+                </Box>
               </Stack>
             </Container>
           </Paper>

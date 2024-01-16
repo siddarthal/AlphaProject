@@ -1,10 +1,11 @@
+import { Box, Typography ,Stack} from '@mui/material'
 import React from 'react'
-
+import ChatBox from '../ChatBox'
 const ConversationWindow = () => {
   return (
-    <div>
-      
-    </div>
+  <Box>
+   
+  </Box>
   )
 }
 
