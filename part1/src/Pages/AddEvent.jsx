@@ -1,6 +1,7 @@
 import * as React from "react";
 import dayjs from "dayjs";
 import api from "../Services/service";
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Stack,
@@ -63,6 +64,17 @@ const AddEvent = () => {
     duration: "",
     privacy: false,
     user: 1,
+  });
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
   });
   const handlePrivacy = (value) => {
     setPrivacy(value);
@@ -128,7 +140,7 @@ const AddEvent = () => {
             description: "",
             privacy: true,
             medium: "",
-            require_volunteers:true,
+            require_volunteers: true,
             startDate: sdate,
             endDate: edate,
             duration: "",
@@ -136,7 +148,7 @@ const AddEvent = () => {
             ticket_cost: "",
             language: "",
             category: "",
-            time:"",
+            time: "",
             location: "",
             latitude: "",
             longitude: "",
@@ -382,12 +394,12 @@ const AddEvent = () => {
           );
         })}
         <Button
-          sx={{ width: "20%" }}
           component="label"
           variant="contained"
           startIcon={<CloudUploadIcon />}
         >
-          Upload Image
+          Upload file
+          <VisuallyHiddenInput type="file" />
         </Button>
         <Button
           sx={{ width: "20%" }}

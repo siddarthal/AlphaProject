@@ -2,6 +2,7 @@ import * as React from "react";
 import dayjs from "dayjs";
 import api from "../../Services/service";
 import { useParams } from "react-router-dom";
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Stack,
@@ -75,6 +76,17 @@ const EventForm = () => {
       setTracker(arr);
     });
   }, []);
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
   const handlePrivacy = (value) => {
     setPrivacy(value);
   };
@@ -383,12 +395,12 @@ const EventForm = () => {
           );
         })}
         <Button
-          sx={{ width: "20%" }}
           component="label"
           variant="contained"
           startIcon={<CloudUploadIcon />}
         >
-          Upload Image
+          Upload file
+          <VisuallyHiddenInput type="file" />
         </Button>
         <Button
           sx={{ width: "20%" }}
