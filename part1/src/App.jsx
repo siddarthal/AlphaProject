@@ -17,6 +17,7 @@ import "./app.css";
 import Invities from "./components/Creator/Invities.jsx";
 import Notifications from "./components/Creator/Notifications.jsx";
 import Rsvps from "./components/Creator/Rsvps.jsx";
+import Channel from "./Pages/Channel.jsx"
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -36,6 +37,7 @@ function App({}) {
           path: "/events/:id",
           element: <EventDetails />,
         },
+    
       ],
     },
     {
@@ -80,6 +82,10 @@ function App({}) {
           path: "notifications",
           element: <Notifications />,
         },
+        {
+          path:"channels",
+          element:<Channel/>
+        }
       ],
     },
 

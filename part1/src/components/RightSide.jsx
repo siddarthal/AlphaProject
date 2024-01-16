@@ -14,7 +14,7 @@ const RightSide = () => {
     const fetchData = async () => {
       try{
         const response=await api.userSpecificEvent();
-        console.log(response.data,"hi ra pumka");
+        console.log(response.data,"hi ");
         setData(response.data);
       }
       catch{

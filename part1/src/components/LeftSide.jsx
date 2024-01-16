@@ -80,6 +80,17 @@ const LeftSide = () => {
             </Button>
           </Container>
         </Box>
+        <Box style={{ bottom: 0 }}>
+          <Container>
+            <Button
+              onClick={() => navigate("channels")}
+              variant="text"
+              startIcon={<PersonOutlineOutlinedIcon />}
+            >
+              Broadcasts
+            </Button>
+          </Container>
+        </Box>
       </Stack>
     </div>
   );

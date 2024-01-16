@@ -155,9 +155,9 @@ const Events = () => {
               {/* {console.log("hi")} */}
 
               <Slider {...settings}>
-                {category[categoryName].map((item,idx) => {
-                   console.log("in the blood",item);
-                  return <EventCard key={item.EID} event={item} idx={item.EID} />;
+                {category[categoryName].map((item) => {
+                   console.log("in the blood",item.EID);
+                  return <EventCard key={item.EID} event={item}  />;
                 })}
               </Slider>
             </Box>

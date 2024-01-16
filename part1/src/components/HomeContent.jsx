@@ -66,7 +66,7 @@ const HomeContent = () => {
           </Grid>
         </Grid>
       </Box> */}
-      <Grid container justifyContent="space-between" spacing={8} marginTop={5} style={{backgroundColor: '#3f51b5', width: '100%', maxWidth: '100%', padding: 0}}>
+      <Grid container justifyContent="space-between" spacing={8} marginTop={5} style={{ width: '100%', maxWidth: '100%', padding: 0}}>
       <Grid item xs={12} md={6} sx={{ py: 8, md: { py: 16, pt: 16 } }}>
         <img src={image} alt="Hero Image" width="100%" />
       </Grid>

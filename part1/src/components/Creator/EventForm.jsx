@@ -36,18 +36,18 @@ const EventForm = () => {
     description: "",
     privacy: true,
     medium: "",
-    require_volunteers:true,
-    startDate: sdate,
-    endDate: edate,
+    require_volunteers: true,
+    startDate: "2024-9-11",
+    endDate: "2024-10-10",
     duration: "",
     poster: null,
     ticket_cost: "",
-    language: "",
     category: "",
-    time:"",
+    time: "9:30",
     location: "",
     latitude: "",
     longitude: "",
+    user: "1",
   });
   const categories = [
     "music",
@@ -67,9 +67,9 @@ const EventForm = () => {
       setEvent(res);
       setPrivacy(res.privacy);
       setMedium(res.medium);
-      setsDate(res.startDate);
-      seteDate(res.endDate);
-      const index = categories.indexOf(res.categories);
+      // setsDate(res.startDate);
+      // seteDate(res.endDate);
+      const index = categories.indexOf(res.category);
       const arr = tracker;
       arr[index] = true;
       setTracker(arr);
@@ -105,9 +105,9 @@ const EventForm = () => {
     if (!event.duration) {
       newErrors.duration = "Duration is required";
     }
-    if (!event.language) {
-      newErrors.language = "Language is required";
-    }
+    // if (!event.language) {
+    //   newErrors.language = "Language is required";
+    // }
     if (!event.category) {
       newErrors.categories = "Selecting one category is mandatory";
     }
@@ -140,8 +140,10 @@ const EventForm = () => {
             privacy: true,
             medium: "",
             require_volunteers:true,
-            startDate: sdate,
-            endDate: edate,
+            // startDate: sdate,
+            // endDate: edate,
+            startDate:"2024-1-3" ,
+            endDate:"2024-1-3" ,
             duration: "",
             poster: null,
             ticket_cost: "",
@@ -267,7 +269,7 @@ const EventForm = () => {
           </Box>
         </Box>
         <Box>
-          <Typography variant="h6">Medium *</Typography>
+          <Typography variant="h6">Require_volunteers *</Typography>
         </Box>
 
         <Box>
@@ -278,7 +280,7 @@ const EventForm = () => {
                   variant={medium ? "contained" : "outlined"}
                   onClick={() => handleMedium(true)}
                 >
-                  Online
+                  TRUE
                 </Button>
               </Grid>
               <Grid item xs={1}>
@@ -286,7 +288,7 @@ const EventForm = () => {
                   variant={medium ? "outlined" : "contained"}
                   onClick={() => handleMedium(false)}
                 >
-                  Inperson
+                  FALSE
                 </Button>
               </Grid>
             </Grid>
@@ -319,19 +321,22 @@ const EventForm = () => {
         <Box>
           <TextField
             onChange={handleChange}
-            name="language"
-            value={event.language}
+            name="medium"
+            value={event.medium}
             sx={{ width: "100%", borderRadius: "8px" }}
             id="outlined-basic"
-            label="Language"
+            label="medium"
             variant="outlined"
           />
         </Box>
         <Box>
           <TextField
+            onChange={handleChange}
+            name="ticket_cost"
+            value={event.ticket_cost}
             sx={{ width: "100%", borderRadius: "8px" }}
             id="outlined-basic"
-            label="Max Participants (i.e. RSVPs)"
+            label="ticket_cost"
             variant="outlined"
           />
         </Box>
@@ -346,7 +351,7 @@ const EventForm = () => {
             handleClick={handleClick}
           />
         </Box>
-        <Box>
+        {/* <Box>
           <TextField
             sx={{ width: "100%", borderRadius: "8px" }}
             required
@@ -357,7 +362,7 @@ const EventForm = () => {
             label="Terms and Conditions"
             variant="outlined"
           />
-        </Box>
+        </Box> */}
         {locationdata.map((item, idx) => {
           console.log(item);
           console.log(event);

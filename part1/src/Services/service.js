@@ -29,22 +29,28 @@ const submitEvent = (body) => {
   return promise.then((res) => res).catch((error) => error);
 };
 const userSpecificEvent = () => {
-  const urlFetchEvent = "http://localhost:3001/submit/";
+  // const urlFetchEvent = "http://localhost:3001/submit/";
+  const urlFetchEvent = urlEvents;
+  
   const promise = axios.get(urlFetchEvent);
   return promise.then((res) => res).catch((error) => error);
 };
 const fetchParticularEvent = (id) => {
-  const urlFetchParticularEvent = `http://localhost:3001/submit/${id}`;
+  // const urlFetchParticularEvent = `http://localhost:3001/submit/${id}`;
+  const urlFetchParticularEvent = urlEvents+id;
   const promise = axios.get(urlFetchParticularEvent);
   return promise.then((res) => res.data).catch((error) => error);
 };
 const editParticularEvent = (id, data) => {
-  const urleditParticularEvent = `http://localhost:3001/submit/${id}`;
+  // const urleditParticularEvent = `http://localhost:3001/submit/${id}`;
+  const urleditParticularEvent =urlEvents+id+"/";
+  
   const promise = axios.put(urleditParticularEvent, data);
   return promise.then((res) => res.data).catch((error) => error);
 };
 const deleteParticularEvent =(id) =>{
-  const urldeleteParticularEvent= `http://localhost:3001/submit/${id}`;
+  // const urldeleteParticularEvent= `http://localhost:3001/submit/${id}`;
+  const urldeleteParticularEvent= urlEvents+id;  
   const promise = axios.delete(urldeleteParticularEvent);
   return promise.then((res) => res).catch((error) => error);
 }

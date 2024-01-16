@@ -43,7 +43,7 @@ export default function UserEventDetails() {
     if (confirmDeletion) {
       try {
         const response = await api.deleteParticularEvent(id);
-        if (response.status === 200) {
+        if (response.status === 204) {
           // Event deletion successful
           console.log(`Event with ID  deleted successfully.`);
           navigate("/dashboard/events");

@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import image from "../../Images/R.jpg";
 
 const Events = ({ eventdata }) => {
-  console.log(eventdata);
+  console.log(eventdata,"hi");
   const navigate = useNavigate();
 
   const maxDescriptionHeight = 400; 
@@ -27,7 +27,7 @@ const Events = ({ eventdata }) => {
           <Grid container>
             <Grid item xs={9}>
               <Typography gutterBottom variant="h5" component="div">
-                {eventdata.title}
+                {eventdata.event_name}
               </Typography>
               <Typography
                 variant="body2"
@@ -51,7 +51,7 @@ const Events = ({ eventdata }) => {
           </Grid>
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={() => navigate(`/dashboard/events/${eventdata.id}`)}>
+          <Button size="small" onClick={() => navigate(`/dashboard/events/${eventdata.EID}`)}>
             More Details
           </Button>
         </CardActions>

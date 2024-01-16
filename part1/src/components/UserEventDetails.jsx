@@ -19,6 +19,7 @@ const UserEventDetails = () => {
   return (
     <>
       <Box>
+      {/* Hi */}
         <Stack spacing={6}>
           <Grid container>
             <Grid item xs={6}>

@@ -6,10 +6,11 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import image from "../Images/R.jpg";
 import { useNavigate } from "react-router-dom";
-export default function EventCard({ event, idx }) {
+export default function EventCard({ event }) {
   const navigate = useNavigate();
   const handleClickOpen = () => {
-    navigate(`/events/${idx}`);
+    console.log(event.EID,"idz");
+    navigate(`/events/${event.EID}`);
   };
   return (
     <div>

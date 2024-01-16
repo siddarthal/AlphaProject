@@ -28,24 +28,41 @@ const AddEvent = () => {
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  // const [event, setEvent] = useState({
+  //   event_name: "",
+  //   startDate: "2024-01-16",
+  //   endDate: "2024-01-17",
+  //   location: "",
+  //   latitude: "",
+  //   longitude: "",
+  //   time: "09:58:00",
+  //   require_volunteers: true,
+  //   poster: null,
+  //   ticket_cost: "",
+  //   description: "T",
+  //   medium: "",
+  //   category: "",
+  //   duration: "",
+  //   privacy: false,
+  //   user: 1,
+  // });
   const [event, setEvent] = useState({
     event_name: "",
-    description: "",
-    privacy: true,
-    medium: "",
-    require_volunteers:true,
-    startDate: sdate,
-    endDate: edate,
-    duration: "",
-    poster: null,
-    ticket_cost: "",
-    language: "",
-    category: "",
-    time:"",
+    startDate: "2024-01-16",
+    endDate: "2024-01-17",
     location: "",
     latitude: "",
     longitude: "",
-
+    time: "09:58:00",
+    require_volunteers: true,
+    poster: null,
+    ticket_cost: "",
+    description: "",
+    medium: "",
+    category: "",
+    duration: "",
+    privacy: false,
+    user: 1,
   });
   const handlePrivacy = (value) => {
     setPrivacy(value);
@@ -57,7 +74,7 @@ const AddEvent = () => {
     const arr = new Array(13).fill(false);
     arr[idx] = true;
     console.log(item);
-    setEvent({ ...event, categories: item });
+    setEvent({ ...event, category: item });
     setTracker(arr);
   };
   const handleChange = (e) => {
@@ -68,30 +85,30 @@ const AddEvent = () => {
   const formValidation = () => {
     setOpen(true);
     const newErrors = {};
-    // if (!event.event_name) {
-    //   newErrors.event_name = " Title is required";
-    // }
-    // if (!event.description) {
-    //   newErrors.description = " Description is required";
-    // }
-    // if (!event.duration) {
-    //   newErrors.duration = "Duration is required";
-    // }
+    if (!event.event_name) {
+      newErrors.event_name = " Title is required";
+    }
+    if (!event.description) {
+      newErrors.description = " Description is required";
+    }
+    if (!event.duration) {
+      newErrors.duration = "Duration is required";
+    }
     // if (!event.language) {
     //   newErrors.language = "Language is required";
     // }
-    // if (!event.category) {
-    //   newErrors.categories = "Selecting one category is mandatory";
-    // }
-    // if (!event.location) {
-    //   newErrors.location = "Enter  location";
-    // }
-    // if (!event.latitude) {
-    //   newErrors.location = "Enter  latitude";
-    // }
-    // if (!event.longitude) {
-    //   newErrors.location = "Enter  longitude";
-    // }
+    if (!event.category) {
+      newErrors.categories = "Selecting one category is mandatory";
+    }
+    if (!event.location) {
+      newErrors.location = "Enter  location";
+    }
+    if (!event.latitude) {
+      newErrors.location = "Enter  latitude";
+    }
+    if (!event.longitude) {
+      newErrors.location = "Enter  longitude";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -105,25 +122,26 @@ const AddEvent = () => {
         .then((res) => {
           console.log("succesfully data posted");
           console.log(res);
-          setEvent({
-            event_name: "",
-            description: "",
-            privacy: true,
-            medium: "",
-            require_volunteers:true,
-            startDate: sdate,
-            endDate: edate,
-            duration: "",
-            poster: null,
-            ticket_cost: "",
-            language: "",
-            category: "",
-            time:"",
-            location: "",
-            latitude: "",
-            longitude: "",
-          });
-          navigate("/dashboard");
+          console.log(event);
+          // setEvent({
+          //   event_name: "",
+          //   description: "",
+          //   privacy: true,
+          //   medium: "",
+          //   require_volunteers:true,
+          //   startDate: sdate,
+          //   endDate: edate,
+          //   duration: "",
+          //   poster: null,
+          //   ticket_cost: "",
+          //   language: "",
+          //   category: "",
+          //   time:"",
+          //   location: "",
+          //   latitude: "",
+          //   longitude: "",
+          // });
+          // navigate("/dashboard");
         })
         .catch((error) => console.log(error));
     } else {
@@ -306,12 +324,11 @@ const AddEvent = () => {
             value={event.ticket_cost}
             sx={{ width: "100%", borderRadius: "8px" }}
             id="outlined-basic"
-            
             label="ticket_cost"
             variant="outlined"
           />
         </Box>
-        <Box>
+        {/* <Box>
           <TextField
             onChange={handleChange}
             name="language"
@@ -321,7 +338,7 @@ const AddEvent = () => {
             label="language"
             variant="outlined"
           />
-        </Box>
+        </Box> */}
         <Box>
           <Typography variant="h6">Category *</Typography>
         </Box>
@@ -333,7 +350,7 @@ const AddEvent = () => {
             handleClick={handleClick}
           />
         </Box>
-        <Box>
+        {/* <Box>
           <TextField
             sx={{ width: "100%", borderRadius: "8px" }}
             required
@@ -344,7 +361,7 @@ const AddEvent = () => {
             label="Terms and Conditions"
             variant="outlined"
           />
-        </Box>
+        </Box> */}
         {locationdata.map((item, idx) => {
           console.log(item);
           console.log(event);
