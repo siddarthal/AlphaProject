@@ -123,25 +123,25 @@ const AddEvent = () => {
           console.log("succesfully data posted");
           console.log(res);
           console.log(event);
-          // setEvent({
-          //   event_name: "",
-          //   description: "",
-          //   privacy: true,
-          //   medium: "",
-          //   require_volunteers:true,
-          //   startDate: sdate,
-          //   endDate: edate,
-          //   duration: "",
-          //   poster: null,
-          //   ticket_cost: "",
-          //   language: "",
-          //   category: "",
-          //   time:"",
-          //   location: "",
-          //   latitude: "",
-          //   longitude: "",
-          // });
-          // navigate("/dashboard");
+          setEvent({
+            event_name: "",
+            description: "",
+            privacy: true,
+            medium: "",
+            require_volunteers:true,
+            startDate: sdate,
+            endDate: edate,
+            duration: "",
+            poster: null,
+            ticket_cost: "",
+            language: "",
+            category: "",
+            time:"",
+            location: "",
+            latitude: "",
+            longitude: "",
+          });
+          navigate("/dashboard");
         })
         .catch((error) => console.log(error));
     } else {
