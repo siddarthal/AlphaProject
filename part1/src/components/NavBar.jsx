@@ -7,6 +7,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Link,useNavigate } from "react-router-dom";
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import { getAuthToken } from "../util/auth";
 const NavBar = ({ handleLog }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -19,7 +20,12 @@ const NavBar = ({ handleLog }) => {
     navigate(str);
     setAnchorEl(null);
   };
-
+  const handleSignout=()=>{
+    localStorage.removeItem('accessToken');
+    navigate("/signin")
+  }
+  const token =getAuthToken();
+  const tokenBool=token!==null;
   return (
     <Grid
       container
@@ -116,7 +122,7 @@ const NavBar = ({ handleLog }) => {
         >
           <MenuItem onClick={()=>handleClose("/dashboard")}>My account</MenuItem>
           <MenuItem onClick={()=>handleClose("/channels")}>Channels</MenuItem>
-          <MenuItem onClick={()=>handleClose("/signin")}>Logout</MenuItem>
+          <MenuItem onClick={handleSignout}>{tokenBool?"signout":"signin"}</MenuItem>
         </Menu>
       </Grid>
     </Grid>

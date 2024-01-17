@@ -19,7 +19,7 @@ import Notifications from "./components/Creator/Notifications.jsx";
 import Rsvps from "./components/Creator/Rsvps.jsx";
 import ParticularChannel from "./components/Creator/ParticularChannel.jsx";
 import Channel from "./Pages/Channel.jsx"
-
+import { checkAuthLoader } from "./util/auth.js";
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -45,6 +45,7 @@ function App({}) {
     {
       path: "/dashboard",
       element: <Dashboard />,
+      loader: checkAuthLoader,
       children: [
         {
           path: "/dashboard",

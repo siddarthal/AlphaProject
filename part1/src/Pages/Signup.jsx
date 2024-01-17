@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import { Link,useNavigate } from "react-router-dom";
+import { Link,useNavigate,useNavigation } from "react-router-dom";
 import api from "../Services/service";
 export default function Signup() {
+  const navigation = useNavigation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,7 +18,10 @@ export default function Signup() {
       [event.target.name]: event.target.value,
     });
   };
+
   const navigate= useNavigate();
+  const isSubmitting = navigation.state === "submitting";
+
   const formValidation = () => {
     const newErrors = {};
     if (!formData.name) {
@@ -172,9 +176,10 @@ export default function Signup() {
           fontSize: 16,
           width: 150,
         }}
+        disabled={isSubmitting}
         onClick={signupHandler}
       >
-        Sign Up
+        {isSubmitting?"signing u up...":"sign up"}
       </Button>
       <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
         Already a member? <Link to="/signin">Signin</Link>

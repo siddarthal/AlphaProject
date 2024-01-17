@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, json, useNavigation } from "react-router-dom";
 import api from "../Services/service";
 
 export default function Signin() {
@@ -8,9 +8,10 @@ export default function Signin() {
     email: "",
     password: "",
   });
-
+  const navigation = useNavigation();
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const isSubmitting = navigation.state === "submitting";
   const signValidation = () => {
     let newErrors = {};
     if (!formData.email) {
@@ -35,7 +36,7 @@ export default function Signin() {
           console.log("successfull");
           console.log("result", res);
           // onLogin();
-          localStorage.setItem("accessToken", res);
+          localStorage.setItem("accessToken", res.access_token);
           setFormData({ email: "", password: "" });
           navigate("/events");
         })
@@ -116,6 +117,7 @@ export default function Signin() {
       )}
       <Button
         variant="contained"
+        disabled={isSubmitting}
         disableElevation
         sx={{
           py: 1.5,
@@ -125,7 +127,7 @@ export default function Signin() {
         }}
         onClick={signinHandler}
       >
-        Login
+        {isSubmitting?"logging you in":"login"}
       </Button>
       <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
         New to Website <Link to="/signup">Signup</Link>
