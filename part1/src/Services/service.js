@@ -31,7 +31,7 @@ const fetchEvent = (id) => {
 const submitEvent = (body) => {
   const urlSubmitEvent = urlEvents;
   // const urlSubmitEvent = "http://localhost:3001/submit/";
-  const promise = axios.post(urlSubmitEvent, body,{headers:header});
+  const promise = axios.post(urlSubmitEvent, body);
   return promise.then((res) => res).catch((error) => error);
 };
 const urlEvents2 = "http://127.0.0.1:8000/api/events/self/";

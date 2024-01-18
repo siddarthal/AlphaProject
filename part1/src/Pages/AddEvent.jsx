@@ -1,7 +1,7 @@
 import * as React from "react";
 import dayjs from "dayjs";
 import api from "../Services/service";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import {
   Box,
   Stack,
@@ -28,6 +28,7 @@ const AddEvent = () => {
   const [edate, seteDate] = useState(dayjs("2022-04-17T15:30"));
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [errors, setErrors] = useState({});
+  const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
   // const [event, setEvent] = useState({
   //   event_name: "",
@@ -65,15 +66,15 @@ const AddEvent = () => {
     privacy: false,
     user: 1,
   });
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
     height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
+    overflow: "hidden",
+    position: "absolute",
     bottom: 0,
     left: 0,
-    whiteSpace: 'nowrap',
+    whiteSpace: "nowrap",
     width: 1,
   });
   const handlePrivacy = (value) => {
@@ -92,7 +93,13 @@ const AddEvent = () => {
   const handleChange = (e) => {
     console.log(e.target.value);
     console.log(e.target.name);
-    setEvent({ ...event, [e.target.name]: e.target.value });
+    if (e.target.name === "poster") {
+      console.log("uploaded");
+      setSelectedFile(e.target.files[0]);
+      console.log("uploaded");
+    } else {
+      setEvent({ ...event, [e.target.name]: e.target.value });
+    }
   };
   const formValidation = () => {
     setOpen(true);
@@ -129,8 +136,16 @@ const AddEvent = () => {
     console.log("clicked");
     if (formValidation()) {
       setErrors({});
+      const formData = new FormData();
+      for (const key in event) {
+        formData.append(key, event[key]);
+      }
+      if (selectedFile) {
+        formData.append("poster", selectedFile);
+      }
+      console.log(formData);
       api
-        .submitEvent(event)
+        .submitEvent(formData)
         .then((res) => {
           console.log("succesfully data posted");
           console.log(res);
@@ -399,7 +414,11 @@ const AddEvent = () => {
           startIcon={<CloudUploadIcon />}
         >
           Upload file
-          <VisuallyHiddenInput type="file" />
+          <VisuallyHiddenInput
+            type="file"
+            name="poster"
+            onChange={handleChange}
+          />
         </Button>
         <Button
           sx={{ width: "20%" }}
