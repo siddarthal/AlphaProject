@@ -44,8 +44,8 @@ const Footer = () => {
     marginTop : '15px',
     width: '100%',
     padding: '16px',
-    backgroundColor: '#3f51b5', // Customize the background color
-    color: '#fff', // Customize the text color
+    backgroundColor: '#0d162e', // Customize the background color
+    color: '#F1EFE7', // Customize the text color
     textAlign: 'center',
   };
 
@@ -97,7 +97,7 @@ const Footer = () => {
 
           {/* Copyright text at the bottom, centered */}
           <Box mt={2} mb={2} textAlign="center">
-            <Typography variant="caption" color="textSecondary">
+            <Typography variant="caption" color="#F9F5F6">
               © Rel-Event 2023 | All rights reserved
             </Typography>
           </Box>

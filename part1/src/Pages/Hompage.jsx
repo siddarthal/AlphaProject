@@ -7,21 +7,21 @@ import Footer from "../components/Footer";
 
 const Homepage = () => {
   return (
-    <Box>
-      <Box sx={{ width: "100%" ,backgroundColor: '#3f51b5', height:"12vh", paddingTop:"25px"}}>
+    <Box sx={{ backgroundColor:"#F9F5F6"}}>  
+      <Box sx={{ width: "100%" ,backgroundColor: '#0D162E', height:"12vh", paddingTop:"25px"}}>
         {/* <Box sx={{bgcolor:"yellow"}}> */}
         <Container>
           <NavBar />
         </Container>
 
       </Box>
-      <Container>
+      <Container >
      
 
         <Stack>
           <Outlet />
         </Stack>
-      </Container>
+      </Container >
 
       <Footer />
     </Box>

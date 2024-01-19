@@ -14,19 +14,19 @@ export default function EventCard({ event }) {
   };
   return (
     <div>
-      <Card sx={{ maxWidth: 345, marginTop: 6 }}>
+      <Card sx={{ maxWidth: 345, marginTop: 6, backgroundColor: "#F9F5F6", boxShadow: 0}}>
         <CardActionArea onClick={handleClickOpen}>
           <CardMedia
             component="img"
-            height="140"
+            height="220"
             image={image}
             alt="song music"
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h5" component="div" color="#000000"  fontWeight= "bold">
               {event.event_name}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="#000000" fontFamily="sans-serif">
               Pls Join us for competition
             </Typography>
           </CardContent>

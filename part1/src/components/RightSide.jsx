@@ -44,10 +44,13 @@ const RightSide = () => {
           </Grid>
           <Grid item xs={6}>
             <Box sx={{ paddingLeft: 65 }}>
-              <Button
+              <Button sx={{ borderRadius: 7,backgroundColor:"#0D162E",'&:hover': {
+                  backgroundColor: "#0D162E", // Set the hover background color to the same color
+                },}}
                 variant="contained"
                 startIcon={<CreateOutlinedIcon />}
                 onClick={handleClick}
+                //sx={{ color: '#F9F5F6', fontFamily: 'sans-serif' }}
               >
                 Create
               </Button>

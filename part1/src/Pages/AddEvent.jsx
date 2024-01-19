@@ -29,6 +29,8 @@ const AddEvent = () => {
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  
   // const [event, setEvent] = useState({
   //   event_name: "",
   //   startDate: "2024-01-16",
@@ -196,6 +198,7 @@ const AddEvent = () => {
       }
     }
   };
+
   return (
     <Box>
       {generateAlert()}
@@ -250,7 +253,19 @@ const AddEvent = () => {
           <Box>
             <Grid container spacing={0.2}>
               <Grid item xs={1}>
-                <Button
+                <Button sx={{
+    borderRadius: '25px', // Adjust the value to control the roundness (half of the desired height),
+    backgroundColor: privacy ? "#0D162E" : "#f9f5f6",
+    color: privacy ? "#f9f5f6" : "#0D162E",
+    '&:hover': {
+      backgroundColor: privacy ? "#f9f5f6" : "#0D162E",
+      color: privacy ? "#0D162E" : "#f9f5f6",
+    },
+    '&:active': {
+      backgroundColor: privacy ? "#f9f5f6" : "#od162e",
+      color: privacy ? "#0D162E" : "#f9f5f6",
+    },
+  }}
                   variant={privacy ? "contained" : "outlined"}
                   onClick={() => handlePrivacy(true)}
                 >
@@ -258,9 +273,21 @@ const AddEvent = () => {
                 </Button>
               </Grid>
               <Grid item xs={1}>
-                <Button
+                <Button sx={{
+    borderRadius: '25px', // Adjust the value to control the roundness (half of the desired height),
+    backgroundColor: !privacy ? "#0D162E" : "#f9f5f6",
+    color: !privacy ? "#f9f5f6" : "#0D162E",
+    '&:hover': {
+      backgroundColor: !privacy ? "#f9f5f6" : "#0D162E",
+      color: !privacy ? "#0D162E" : "#f9f5f6",
+    },
+    '&:active': {
+      backgroundColor: !privacy ? "#f9f5f6" : "#od162e",
+      color: !privacy ? "#0D162E" : "#f9f5f6",
+    },
+  }}
                   variant={privacy ? "outlined" : "contained"}
-                  onClick={() => handlePrivacy(false)}
+                  onClick={() => handlePrivacy(false) }
                 >
                   Public
                 </Button>
@@ -276,7 +303,19 @@ const AddEvent = () => {
           <Box>
             <Grid container spacing={0.2}>
               <Grid item xs={1}>
-                <Button
+                <Button  sx={{
+    borderRadius: '25px', // Adjust the value to control the roundness (half of the desired height),
+    backgroundColor: medium ? "#0D162E" : "#f9f5f6",
+    color: medium ? "#f9f5f6" : "#0D162E",
+    '&:hover': {
+      backgroundColor: medium ? "#f9f5f6" : "#0D162E",
+      color: medium ? "#0D162E" : "#f9f5f6",
+    },
+    '&:active': {
+      backgroundColor: medium ? "#f9f5f6" : "#od162e",
+      color: medium ? "#0D162E" : "#f9f5f6",
+    },
+  }}
                   variant={medium ? "contained" : "outlined"}
                   onClick={() => handleMedium(true)}
                 >
@@ -284,7 +323,19 @@ const AddEvent = () => {
                 </Button>
               </Grid>
               <Grid item xs={1}>
-                <Button
+                <Button  sx={{
+    borderRadius: '25px', // Adjust the value to control the roundness (half of the desired height),
+    backgroundColor: !medium ? "#0D162E" : "#f9f5f6",
+    color: !medium ? "#f9f5f6" : "#0D162E",
+    '&:hover': {
+      backgroundColor: !medium ? "#f9f5f6" : "#0D162E",
+      color: !medium ? "#0D162E" : "#f9f5f6",
+    },
+    '&:active': {
+      backgroundColor: !medium ? "#f9f5f6" : "#od162e",
+      color: !medium ? "#0D162E" : "#f9f5f6",
+    },
+  }}
                   variant={medium ? "outlined" : "contained"}
                   onClick={() => handleMedium(false)}
                 >
@@ -340,17 +391,6 @@ const AddEvent = () => {
             variant="outlined"
           />
         </Box>
-        {/* <Box>
-          <TextField
-            onChange={handleChange}
-            name="language"
-            value={event.language}
-            sx={{ width: "100%", borderRadius: "8px" }}
-            id="outlined-basic"
-            label="language"
-            variant="outlined"
-          />
-        </Box> */}
         <Box>
           <Typography variant="h6">Category *</Typography>
         </Box>
@@ -362,18 +402,6 @@ const AddEvent = () => {
             handleClick={handleClick}
           />
         </Box>
-        {/* <Box>
-          <TextField
-            sx={{ width: "100%", borderRadius: "8px" }}
-            required
-            multiline
-            rows={2}
-            // value={event.title}
-            id="outlined-basic"
-            label="Terms and Conditions"
-            variant="outlined"
-          />
-        </Box> */}
         {locationdata.map((item, idx) => {
           console.log(item);
           console.log(event);
@@ -393,7 +421,7 @@ const AddEvent = () => {
             />
           );
         })}
-        <Button
+        <Button  sx ={{borderRadius: '25px',}}
           component="label"
           variant="contained"
           startIcon={<CloudUploadIcon />}
@@ -401,8 +429,8 @@ const AddEvent = () => {
           Upload file
           <VisuallyHiddenInput type="file" />
         </Button>
-        <Button
-          sx={{ width: "20%" }}
+        <Button 
+          sx={{ width: "15%", borderRadius:'25px',fontFamily:"sans-serif" }}
           variant="contained"
           onClick={handleCreate}
         >
@@ -412,4 +440,6 @@ const AddEvent = () => {
     </Box>
   );
 };
+
 export default AddEvent;
+

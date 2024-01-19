@@ -19,26 +19,28 @@ const LeftSide = () => {
       <Stack spacing={4}>
         <Container>
           <Link to="/">
-            <EventAvailableRoundedIcon fontSize="large" />
+            <EventAvailableRoundedIcon fontSize="large" style={{ color: '#F9F5F6' }}/>
           </Link>
-        </Container>
+        </Container >
         <Box>
-          <Container>
-            <Button
+          <Container >
+            <Button 
               variant="text"
               startIcon={<HomeIcon />}
               onClick={handleeHome}
+              sx={{ color: '#F9F5F6', fontFamily: 'sans-serif' }}
             >
               Home
             </Button>
           </Container>
         </Box>
         <Box>
-          <Container>
+          <Container >
             <Button
               onClick={() => navigate("events")}
               variant="text"
               startIcon={<EventAvailableOutlinedIcon />}
+              sx={{ color: '#F9F5F6', fontFamily: 'sans-serif' }}
             >
               Events
             </Button>
@@ -47,14 +49,15 @@ const LeftSide = () => {
 
         <Box>
           <Container>
-            <Button variant="text" startIcon={<PeopleAltOutlinedIcon />} onClick={() => navigate("rsvps")}>
+            <Button variant="text" startIcon={<PeopleAltOutlinedIcon />} onClick={() => navigate("rsvps")} sx={{ color: '#F9F5F6', fontFamily: 'sans-serif' }}>
+              
               RSVPS
             </Button>
           </Container>
         </Box>
         <Box>
           <Container>
-            <Button variant="text" startIcon={<LocalActivityOutlinedIcon />} onClick={() => navigate("invities")}>
+            <Button variant="text" startIcon={<LocalActivityOutlinedIcon />} onClick={() => navigate("invities")} sx={{ color: '#F9F5F6', fontFamily: 'sans-serif' }}>
               Invities
             </Button>
           </Container>
@@ -64,6 +67,7 @@ const LeftSide = () => {
             <Button
               variant="text"
               startIcon={<CircleNotificationsOutlinedIcon />} onClick={() => navigate("notifications")}
+              sx={{ color: '#F9F5F6', fontFamily: 'sans-serif' }}
             >
               Notifications
             </Button>
@@ -75,6 +79,7 @@ const LeftSide = () => {
               onClick={() => navigate("accounts")}
               variant="text"
               startIcon={<PersonOutlineOutlinedIcon />}
+              sx={{ color: '#F9F5F6', fontFamily: 'sans-serif' }}
             >
               Account
             </Button>
@@ -86,6 +91,7 @@ const LeftSide = () => {
               onClick={() => navigate("channels")}
               variant="text"
               startIcon={<PersonOutlineOutlinedIcon />}
+              sx={{ color: '#F9F5F6', fontFamily: 'sans-serif' }}
             >
               Broadcasts
             </Button>

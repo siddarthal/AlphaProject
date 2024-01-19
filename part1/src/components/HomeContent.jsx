@@ -33,7 +33,9 @@ const HomeContent = () => {
             <Box sx={{ paddingLeft: 47 }}>
               <Button
                 variant="contained"
-                sx={{ borderRadius: 7 }}
+                sx={{ borderRadius: 7,backgroundColor:"#CC785C",'&:hover': {
+                  backgroundColor: "#CC785C", // Set the hover background color to the same color
+                },}}
                 component={Link}
                 size="large"
                 to="/events"
@@ -45,7 +47,9 @@ const HomeContent = () => {
           <Grid item xs={6}>
             <Button
               variant="contained"
-              sx={{ borderRadius: 7 }}
+              sx={{ borderRadius: 7,backgroundColor:"#CC785C",'&:hover': {
+                backgroundColor: "#CC785C", // Set the hover background color to the same color
+              },}}
               component={Link}
               size="large"
               to="/dashboard"
@@ -88,7 +92,8 @@ const HomeContent = () => {
           <Grid item xs={6}>
             <Button
               variant="contained"
-              sx={{ borderRadius: 7 }}
+              sx={{ borderRadius: 7 ,backgroundColor:"#CC785C",'&:hover': {
+                backgroundColor: "#CC785C", }}}
               component={Link}
               size="large"
               to="/dashboard"
@@ -128,7 +133,8 @@ const HomeContent = () => {
           <Grid item xs={6}>
             <Button
               variant="contained"
-              sx={{ borderRadius: 7 }}
+              sx={{ borderRadius: 7 ,backgroundColor:"#CC785C",'&:hover': {
+                backgroundColor: "#CC785C",}}}
               component={Link}
               size="large"
               to="/dashboard"

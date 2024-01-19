@@ -130,7 +130,7 @@ const Events = () => {
   console.log(category);
   return (
     <Stack spacing={3}>
-      <Typography variant="h4" sx={{ paddingTop: 4, fontWeight: "bold" }}>
+      <Typography variant="h4" sx={{ paddingTop: 4, fontWeight: "bold"   }}>
         Explore the best events happening around you
       </Typography>
       <Menubar />

@@ -31,7 +31,7 @@ const NavBar = ({ handleLog }) => {
       container
       spacing={2}
       alignItems="center"
-      sx={{ color: "#fff", fontFamily: "sans-serif" }}
+      sx={{ color: "#F1EFE7", fontFamily: "sans-serif" }}
     >
       <Grid container alignItems="center" item xs={4}>
         <EventAvailableRoundedIcon fontSize="large" />
