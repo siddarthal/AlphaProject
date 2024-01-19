@@ -10,6 +10,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Iframe from "react-iframe";
 import ChatBox from "../ChatBox";
+import AnnouncementChannelCreator from "../ChattNew/AnnouncementChannelCreator ";
 export default function UserEventDetails() {
   const { id } = useParams();
   const [details, setDetails] = useState({});
@@ -127,7 +128,7 @@ export default function UserEventDetails() {
         </Grid>
         <Stack direction="row" gap={1}>
           <Box flex={1}>
-            <ChatBox />
+            <AnnouncementChannelCreator idx={id}/>
           </Box>
           <Box
             sx={{

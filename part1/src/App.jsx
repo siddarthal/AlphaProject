@@ -20,6 +20,7 @@ import Rsvps from "./components/Creator/Rsvps.jsx";
 import ParticularChannel from "./components/Creator/ParticularChannel.jsx";
 import Channel from "./Pages/Channel.jsx"
 import { checkAuthLoader } from "./util/auth.js";
+import RightSideChannels from "./components/Creator/RightSideChannels.jsx";
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -87,12 +88,19 @@ function App({}) {
         },
         {
           path:"channels",
-          element:<Channel/>
+          element:<Channel/>,
+          children: [
+            {
+              path:"",
+              element:<RightSideChannels/>
+            },
+            {
+              path:"ind/:id",
+              element:<RightSideChannels />
+            }
+          ]
         },
-        {
-          path:"channels/:id",
-          element:<ParticularChannel/>
-        }
+        
       ],
     },
 

@@ -24,7 +24,7 @@ const ChannelEvents = ({ eventdata }) => {
   return (
     <Box sx={{paddingRight:1}}>
       <Card sx={{}}>
-        <CardMedia sx={{ height: 200 }} image={image} title={eventdata.title} />
+        <CardMedia sx={{ height: 200 }} image={image} title={eventdata.event_name} />
         <CardContent>
           <Grid container>
             <Grid item xs={9}>

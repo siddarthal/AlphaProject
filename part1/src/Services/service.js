@@ -62,17 +62,16 @@ const deleteParticularEvent =(id) =>{
   return promise.then((res) => res).catch((error) => error);
 }
 const getEventMessages = (eventId) => {
-  const url = `http://localhost:3001/messages?eventId=${eventId}`;
-  return axios.get(url,{headers:header});
+  const url = `http://127.0.0.1:8000/api/announcements/`;
+  return axios.get(url);
 };
 const createEventMessage = (eventId, message) => {
-  const url = `http://localhost:3001/messages`;
+  const url = `http://127.0.0.1:8000/api/announcements/`;
   const body = {
-    message: message,
-    eventId: eventId,
-    userId: 1,
+    content: message,
+    broadcast: eventId,
   };
-  return axios.post(url, body,{headers:header});
+  return axios.post(url, body);
 };
 export default {
   signin: signin,
