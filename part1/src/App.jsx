@@ -20,6 +20,7 @@ import Rsvps from "./components/Creator/Rsvps.jsx";
 import ParticularChannel from "./components/Creator/ParticularChannel.jsx";
 import Channel from "./Pages/Channel.jsx"
 import { checkAuthLoader } from "./util/auth.js";
+import BuyTicket from "./Tickets/BuyTicket.jsx"
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -39,6 +40,10 @@ function App({}) {
           path: "/events/:id",
           element: <EventDetails />,
         },
+        {
+          path: "/events/tickets/:id",
+          element: <BuyTicket/>
+        }
     
       ],
     },
