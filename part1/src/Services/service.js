@@ -62,17 +62,29 @@ const deleteParticularEvent =(id) =>{
   return promise.then((res) => res).catch((error) => error);
 }
 const getEventMessages = (eventId) => {
-  const url = `http://127.0.0.1:8000/api/announcements/`;
+  // const url = `http://127.0.0.1:8000/api/announcements/`;
+  const url = `http://localhost:3001/messages?eventId=${eventId}`;
   return axios.get(url);
 };
 const createEventMessage = (eventId, message) => {
-  const url = `http://127.0.0.1:8000/api/announcements/`;
+  // const url = `http://127.0.0.1:8000/api/announcements/`;
+  const url = `http://localhost:3001/messages`;
+  // const body = {
+  //   content: message,
+  //   broadcast: eventId,
+  // };
   const body = {
-    content: message,
-    broadcast: eventId,
-  };
+    content : message,
+    eventId: eventId,
+    timeStamp: "12:22:00"
+
+  }
   return axios.post(url, body);
 };
+const handleDeleteMessage=(eventId)=>{
+  const url = `http://localhost:3001/messages?eventId=${eventId}`;
+  return axios.delete(url);
+}
 export default {
   signin: signin,
   getEvents: getEvents,
@@ -85,4 +97,5 @@ export default {
   getEventMessages,
   createEventMessage,
   deleteParticularEvent,
+  handleDeleteMessage
 };

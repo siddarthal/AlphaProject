@@ -36,7 +36,7 @@ const AnnouncementChannelCreator = ({ idx }) => {
   const sendMessage = async (messageContent) => {
     try {
       const res = await api.createEventMessage(idx, messageContent);
-      if (res.status === 200) {
+      if (res.status === 201) {
         setNewMessage("");
         fetchMessages();
       }
