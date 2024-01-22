@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../Services/service";
 import {
@@ -19,6 +19,7 @@ import ChatBox from "../components/ChatBox";
 export default function EventDetails() {
   const { id } = useParams();
   const [val, setVal] = useState(true);
+  const navigate = useNavigate();
   const [event, setEvent] = useState({
     title: "Sample Event Authorised NCC unit of usa",
     description: "This is a sample event description.",
@@ -54,6 +55,10 @@ export default function EventDetails() {
   // const startDate = new Date(startDateString);
   const handleChannel = () => {
     setVal(false);
+  };
+  const handleBuyTicket = () => {
+    console.log("clicked buy");
+    navigate(`/events/tickets/${id}`);
   };
   // const options = {
   //   weekday: "short",
@@ -123,11 +128,10 @@ export default function EventDetails() {
                   latitude={event.latitude}
                   longitude={event.longitude}
                 />
-                <Box sx={{paddingTop:3 , paddingLeft:3}} >
-                 
-                 <Button  variant="contained">
-                 Buy Ticket
-                 </Button>
+                <Box sx={{ paddingTop: 3, paddingLeft: 3 }}>
+                  <Button variant="contained" onClick={handleBuyTicket}>
+                    Buy Ticket
+                  </Button>
                 </Box>
               </Stack>
             </Container>
