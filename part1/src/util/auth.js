@@ -11,3 +11,6 @@ export function checkAuthLoader(){
     }
     return null;
 }
+export function userIdGetter(){
+    
+}

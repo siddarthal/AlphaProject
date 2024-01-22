@@ -12,11 +12,14 @@ import service from "../Services/service";
 const BuyTicket = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  
   const [numPeople, setNumPeople] = useState(10);
   const [attending, setAttending] = useState(3);
   const [details, setDetails] = useState({
     category:"",
-    ticket_cost:0
+    ticket_cost:0,
+    user:0,
+    event:id,
   });
   const eventName = details.category;
   useEffect(() => {
