@@ -21,10 +21,12 @@ const BuyTicket = () => {
     user: 0,
     event: id,
   });
+  const [user,setUser]=useState();
   const eventName = details.category;
   useEffect(() => {
     api.userAccountDatails().then((res) => {
-        console.log(res);
+        console.log("uid",res.data.id);
+        setUser(parseInt(res.data.id));
     });
     api
       .fetchParticularEvent(id)
@@ -43,12 +45,16 @@ const BuyTicket = () => {
   const handleConfirmation = () => {
     const totalFare = calculateTotalFare();
     const confirmationDetails = {
-      numPeople,
-      attending,
-      eventName,
-      totalFare,
+      num_people: numPeople,
+      attending:attending,
+      user:user,
+      event: id,
     };
-    navigate("/payment", { state: confirmationDetails });
+    console.log("confirmationDetails",confirmationDetails);
+    api.buyTicketUrl(confirmationDetails).then((res)=>{
+      console.log("res",res)
+    })
+    // navigate("/payment", { state: confirmationDetails });
   };
 
   return (

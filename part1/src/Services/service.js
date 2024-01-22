@@ -95,6 +95,10 @@ const handleDeleteMessage = (eventId) => {
   const url = `http://localhost:3001/messages?eventId=${eventId}`;
   return axios.delete(url);
 };
+const buyTicketUrl =(body)=>{
+  const url ="http://localhost:8000/api/tickets/";
+  return axios.post(url,body);
+}
 export default {
   signin: signin,
   getEvents: getEvents,
@@ -109,5 +113,6 @@ export default {
   deleteParticularEvent,
   handleDeleteMessage,
   userAccountDatails,
-  editAccountDetails
+  editAccountDetails,
+  buyTicketUrl
 };
