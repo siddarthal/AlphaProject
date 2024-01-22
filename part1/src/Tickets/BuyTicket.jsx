@@ -8,22 +8,25 @@ import {
   Container,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import service from "../Services/service";
+import api from "../Services/service";
 const BuyTicket = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  
+
   const [numPeople, setNumPeople] = useState(10);
   const [attending, setAttending] = useState(3);
   const [details, setDetails] = useState({
-    category:"",
-    ticket_cost:0,
-    user:0,
-    event:id,
+    category: "",
+    ticket_cost: 0,
+    user: 0,
+    event: id,
   });
   const eventName = details.category;
   useEffect(() => {
-    service
+    api.userAccountDatails().then((res) => {
+        console.log(res);
+    });
+    api
       .fetchParticularEvent(id)
       .then((res) => {
         console.log(res);
