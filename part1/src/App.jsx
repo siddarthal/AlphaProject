@@ -1,6 +1,6 @@
 import Signup from "./Pages/Signup.jsx";
 import Signin from "./Pages/Signin.jsx";
-import Mainpage from "./Pages/Mainpage.jsx";
+// import Mainpage from "./Pages/Mainpage.jsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Homepage from "./Pages/Hompage.jsx";
 import EventDetails from "./Pages/Eventdetails.jsx";
@@ -24,7 +24,9 @@ import { checkAuthLoader } from "./util/auth.js";
 import RightSideChannels from "./components/Creator/RightSideChannels.jsx";
 
 import BuyTicket from "./Tickets/BuyTicket.jsx"
-
+import FilterEvents from "./components/Explore/FilterEvents.jsx";
+import Events from "./components/Events.jsx";
+import AllEvents from "./components/Explore/AllEvents.jsx";
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -38,12 +40,28 @@ function App({}) {
         },
         {
           path: "/events",
-          element: <Mainpage />,
+          element: <Events />,
+          children:[
+            {
+              path: "/events",
+              element: <AllEvents />,
+            },
+            {
+              path: "/events/all",
+              element: <AllEvents />,
+            },
+            {
+              path: "/events/eventName/:eventName",
+              element:<FilterEvents/>
+    
+            },
+          ]
         },
         {
           path: "/events/:id",
           element: <EventDetails />,
         },
+       
         {
           path: "/events/tickets/:id",
           element: <BuyTicket/>

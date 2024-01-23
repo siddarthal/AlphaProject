@@ -4,27 +4,26 @@ import { useNavigate } from "react-router-dom";
 const Menubar = () => {
   const categories = [
     "All",
-    "Music",
-    "Games",
-    "Sports",
-    "Arts",
-    "Film",
-    "Tech",
-    "Fashion",
-    "Lifestyle",
-    "Culture",
-    "Charity",
-    "Kids",
-    "Other",
+    "music",
+    "games",
+    "sports",
+    "arts",
+    "film",
+    "technology",
+    "literature",
+    "fashion",
+    "lifestyle",
+    "other",
   ];
   const navigate = useNavigate();
   const [pressedItem, setPressedItem] = useState(null);
   const handleClick = (idx) => {
     setPressedItem(idx);
     if (idx === 0) {
-      navigate("/events");
+      navigate("/events/all");
+    } else {
+      navigate(`/events/eventName/${categories[idx]}`);
     }
-    
   };
   return (
     <Box>
