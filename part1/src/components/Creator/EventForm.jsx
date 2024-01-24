@@ -497,7 +497,7 @@ const EventForm = () => {
           variant="contained"
           onClick={handleCreate}
         >
-          Edit Event
+          Save Changes
         </Button>
       </Stack>
     </Box>
