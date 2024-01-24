@@ -18,11 +18,11 @@ const Events = ({ eventdata }) => {
   const navigate = useNavigate();
 
   const maxDescriptionHeight = 400; 
-
+  const imgUrl="http://127.0.0.1:8000"+eventdata.poster
   return (
     <Box sx={{paddingRight:1}}>
       <Card sx={{}}>
-        <CardMedia sx={{ height: 200 }} image={image} title={eventdata.title} />
+        <CardMedia sx={{ height: 200 }} image={imgUrl} title={eventdata.title} />
         <CardContent>
           <Grid container>
             <Grid item xs={9}>
