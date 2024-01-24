@@ -19,8 +19,8 @@ export default function EventCard({ event }) {
           <CardMedia
             component="img"
             height="140"
-            image={image}
-            alt="song music"
+            image={event.poster}
+            alt={event.event_name}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">

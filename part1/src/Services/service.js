@@ -50,7 +50,7 @@ const editParticularEvent = (id, data) => {
   // const urleditParticularEvent = `http://localhost:3001/submit/${id}`;
   const urleditParticularEvent = urlEvents + id + "/";
 
-  const promise = axios.put(urleditParticularEvent, data, { headers: header });
+  const promise = axios.put(urleditParticularEvent, data);
   return promise.then((res) => res.data).catch((error) => error);
 };
 const getEventMessages = (eventId) => {

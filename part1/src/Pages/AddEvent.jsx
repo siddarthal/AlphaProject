@@ -30,24 +30,6 @@ const AddEvent = () => {
   const [errors, setErrors] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
-  // const [event, setEvent] = useState({
-  //   event_name: "",
-  //   startDate: "2024-01-16",
-  //   endDate: "2024-01-17",
-  //   location: "",
-  //   latitude: "",
-  //   longitude: "",
-  //   time: "09:58:00",
-  //   require_volunteers: true,
-  //   poster: null,
-  //   ticket_cost: "",
-  //   description: "T",
-  //   medium: "",
-  //   category: "",
-  //   duration: "",
-  //   privacy: false,
-  //   user: 1,
-  // });
   const [event, setEvent] = useState({
     event_name: "",
     startDate: "2024-01-16",

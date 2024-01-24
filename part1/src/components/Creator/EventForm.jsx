@@ -30,6 +30,7 @@ const EventForm = () => {
   const [edate, seteDate] = useState(dayjs("2022-04-17T15:30"));
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [errors, setErrors] = useState({});
+  const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
   const [event, setEvent] = useState({
@@ -103,7 +104,13 @@ const EventForm = () => {
   const handleChange = (e) => {
     console.log(e.target.value);
     console.log(e.target.name);
-    setEvent({ ...event, [e.target.name]: e.target.value });
+    if (e.target.name === "poster") {
+      console.log("uploaded");
+      setSelectedFile(e.target.files[0]);
+      console.log("uploaded");
+    } else {
+      setEvent({ ...event, [e.target.name]: e.target.value });
+    }
   };
   const formValidation = () => {
     setOpen(true);
@@ -139,9 +146,17 @@ const EventForm = () => {
   const handleCreate = () => {
     console.log("clicked");
     if (formValidation()) {
+      const formData = new FormData();
+      for (const key in event) {
+        formData.append(key, event[key]);
+      }
+      if (selectedFile) {
+        formData.append("poster", selectedFile);
+      }
+      console.log(formData);
       setErrors({});
       api
-        .editParticularEvent(id, event)
+        .editParticularEvent(id, formData)
         .then((res) => {
           console.log("succesfully data posted");
           console.log(res);
@@ -400,7 +415,11 @@ const EventForm = () => {
           startIcon={<CloudUploadIcon />}
         >
           Upload file
-          <VisuallyHiddenInput type="file" />
+          <VisuallyHiddenInput 
+            type="file"
+            name="poster"
+            onChange={handleChange}
+          />
         </Button>
         <Button
           sx={{ width: "20%" }}

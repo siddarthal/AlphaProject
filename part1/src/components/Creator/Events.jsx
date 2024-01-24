@@ -22,7 +22,7 @@ const Events = ({ eventdata }) => {
   return (
     <Box sx={{paddingRight:1}}>
       <Card sx={{}}>
-        <CardMedia sx={{ height: 200 }} image={imgUrl} title={eventdata.title} />
+        <CardMedia sx={{ height: 200 }} image={imgUrl} title={eventdata.title} alt={eventdata.title}/>
         <CardContent>
           <Grid container>
             <Grid item xs={9}>

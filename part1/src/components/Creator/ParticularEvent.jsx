@@ -114,7 +114,7 @@ export default function UserEventDetails() {
           <Grid item xs={4}>
           <Paper elevation={6} sx={{height:"35vh", borderRadius: "7px"}}>
               <img
-                src={img}
+                src={details.poster}
                 alt="Event"
                 width="100%"
                 style={{
