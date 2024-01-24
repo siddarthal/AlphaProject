@@ -75,7 +75,7 @@ export default function EventDetails() {
         <Grid item xs={8}>
           <Paper elevation={3} style={{ height: "60vh" }}>
             <img
-              src={image}
+              src={event.poster}
               alt=""
               style={{
                 width: "100%",

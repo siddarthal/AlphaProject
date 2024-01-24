@@ -18,13 +18,13 @@ import image from "../../Images/R.jpg";
 const ChannelEvents = ({ eventdata }) => {
   console.log(eventdata,"hi");
   const navigate = useNavigate();
-
+  const imgUrl="http://127.0.0.1:8000"+eventdata.poster;
   const maxDescriptionHeight = 400; 
 
   return (
     <Box sx={{paddingRight:1}}>
       <Card sx={{}}>
-        <CardMedia sx={{ height: 200 }} image={image} title={eventdata.title} />
+        <CardMedia sx={{ height: 200 }} image={eventdata.poster} title={eventdata.title} />
         <CardContent>
           <Grid container>
             <Grid item xs={9}>

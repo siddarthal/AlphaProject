@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import image from "../Images/R.jpg";
+// import image from "../Images/R.jpg";
 import { useNavigate } from "react-router-dom";
 export default function EventCard({ event }) {
   const navigate = useNavigate();
@@ -12,6 +12,7 @@ export default function EventCard({ event }) {
     console.log(event.EID,"idz");
     navigate(`/events/${event.EID}`);
   };
+  // const image = "http://127.0.0.1:8000/media/event_posters/Screenshot_8.png"
   return (
     <div>
       <Card sx={{ maxWidth: 345, marginTop: 6 }}>
@@ -19,7 +20,7 @@ export default function EventCard({ event }) {
           <CardMedia
             component="img"
             height="140"
-            image={image}
+            image={event.poster}
             alt="song music"
           />
           <CardContent>

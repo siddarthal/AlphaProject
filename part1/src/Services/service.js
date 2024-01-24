@@ -25,7 +25,7 @@ const getEvents = () => {
 };
 const fetchEvent = (id) => {
   const urlEachEvent = urlEvents+id;
-  const promise = axios.get(urlEachEvent,{headers:header});
+  const promise = axios.get(urlEachEvent);
   return promise.then((res) => res).catch((error) => error);
 };
 const submitEvent = (body) => {
