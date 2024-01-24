@@ -2,7 +2,9 @@ import * as React from "react";
 import dayjs from "dayjs";
 import api from "../../Services/service";
 import { useParams } from "react-router-dom";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import CancelIcon from "@mui/icons-material/Cancel";
 import {
   Box,
   Stack,
@@ -26,7 +28,7 @@ const EventForm = () => {
   const [privacy, setPrivacy] = useState(true);
   const [medium, setMedium] = useState(true);
   const locationdata = ["location", "latitude", "longitude"];
-  const [sdate, setsDate] = useState(dayjs("2022-04-17T15:30"));
+  const [sdate, setsDate] = useState(dayjs("2027-04-17T19:50"));
   const [edate, seteDate] = useState(dayjs("2022-04-17T15:30"));
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [errors, setErrors] = useState({});
@@ -69,30 +71,40 @@ const EventForm = () => {
       setEvent(res);
       setPrivacy(res.privacy);
       setMedium(res.medium);
-      // setsDate(res.startDate);
-      // seteDate(res.endDate);
       const index = categories.indexOf(res.category);
       const arr = tracker;
       arr[index] = true;
       setTracker(arr);
+      const formattedStartDate = dayjs(res.startDate + " " + res.time).format(
+        "YYYY-MM-DDTHH:mm"
+      );
+      const formattedEndDate = dayjs(res.endDate + " " + res.time).format(
+        "YYYY-MM-DDTHH:mm"
+      );
+
+      setsDate(dayjs(formattedStartDate));
+      seteDate(dayjs(formattedEndDate));
+      console.log(formattedStartDate, "formattedStartDate");
     });
-  }, []);
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
+  }, [id]);
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
     height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
+    overflow: "hidden",
+    position: "absolute",
     bottom: 0,
     left: 0,
-    whiteSpace: 'nowrap',
+    whiteSpace: "nowrap",
     width: 1,
   });
   const handlePrivacy = (value) => {
     setPrivacy(value);
+    setEvent({ ...event, privacy: privacy });
   };
   const handleMedium = (value) => {
     setMedium(value);
+    setEvent({ ...event, require_volunteers: !medium });
   };
   const handleClick = (item, idx) => {
     const arr = new Array(13).fill(false);
@@ -100,6 +112,25 @@ const EventForm = () => {
     console.log(item);
     setEvent({ ...event, category: item });
     setTracker(arr);
+  };
+  const handelDateChange = (value, name) => {
+    console.log(value, "value");
+    console.log(name, "name");
+    const dateValue = dayjs(value);
+    const formattedDate = dateValue.format("YYYY-MM-DD");
+    const formattedTime = dateValue.format("HH:mm:ss");
+    if (name === "endDate") {
+      setEvent({
+        ...event,
+        [name]: formattedDate,
+      });
+    } else {
+      setEvent({
+        ...event,
+        [name]: formattedDate,
+        time: formattedTime,
+      });
+    }
   };
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -166,17 +197,17 @@ const EventForm = () => {
             description: "",
             privacy: true,
             medium: "",
-            require_volunteers:true,
+            require_volunteers: true,
             // startDate: sdate,
             // endDate: edate,
-            startDate:"2024-1-3" ,
-            endDate:"2024-1-3" ,
+            startDate: "2024-1-3",
+            endDate: "2024-1-3",
             duration: "",
             poster: null,
             ticket_cost: "",
             language: "",
             category: "",
-            time:"",
+            time: "",
             location: "",
             latitude: "",
             longitude: "",
@@ -325,13 +356,13 @@ const EventForm = () => {
           <Typography variant="h6">Sart Date-Time *</Typography>
         </Box>
         <Box>
-          <StartDateTime value={sdate} setValue={setsDate} />
+          <StartDateTime value={sdate} handelDateChange={handelDateChange} />
         </Box>
         <Box>
           <Typography variant="h6">End Date-Time *</Typography>
         </Box>
         <Box>
-          <EndDateTime value={edate} setValue={seteDate} />
+          <EndDateTime value={edate} handelDateChange={handelDateChange} />
         </Box>
         <Box>
           <TextField
@@ -414,13 +445,53 @@ const EventForm = () => {
           variant="contained"
           startIcon={<CloudUploadIcon />}
         >
-          Upload file
-          <VisuallyHiddenInput 
+          Upload new file
+          <VisuallyHiddenInput
             type="file"
             name="poster"
             onChange={handleChange}
           />
         </Button>
+        {selectedFile === null ? (
+          <div style={{ marginTop: "20px", position: "relative" }}>
+            <Typography variant="body1">File uploaded:</Typography>
+            <img
+              src={event.poster}
+              alt="Uploaded File"
+              style={{
+                maxWidth: "100%",
+                maxHeight: "200px",
+                marginTop: "10px",
+              }}
+            />
+          </div>
+        ) : (
+          <div style={{ marginTop: "20px", position: "relative" }}>
+            <Typography variant="body1">File uploaded:</Typography>
+            <img
+              src={URL.createObjectURL(selectedFile)}
+              alt="Uploaded File"
+              style={{
+                maxWidth: "100%",
+                maxHeight: "200px",
+                marginTop: "10px",
+              }}
+            />
+            <IconButton
+              onClick={() => {
+                setSelectedFile(null);
+              }}
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                zIndex: 1,
+              }}
+            >
+              <CancelIcon />
+            </IconButton>
+          </div>
+        )}
         <Button
           sx={{ width: "20%" }}
           variant="contained"

@@ -5,7 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
-export default function EndDateTime({value,setValue}) {
+export default function EndDateTime({value,handelDateChange}) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -13,7 +13,7 @@ export default function EndDateTime({value,setValue}) {
         <DateTimePicker
           label="Enter End date time"
           value={value}
-          onChange={(newValue) => setValue(newValue)}
+          onChange={(newValue) => handelDateChange(newValue,"endDate")}
         />
       </DemoContainer>
     </LocalizationProvider>

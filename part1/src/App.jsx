@@ -18,15 +18,16 @@ import Invities from "./components/Creator/Invities.jsx";
 import Notifications from "./components/Creator/Notifications.jsx";
 import Rsvps from "./components/Creator/Rsvps.jsx";
 import ParticularChannel from "./components/Creator/ParticularChannel.jsx";
-import Channel from "./Pages/Channel.jsx"
+import Channel from "./Pages/Channel.jsx";
 import { checkAuthLoader } from "./util/auth.js";
 
 import RightSideChannels from "./components/Creator/RightSideChannels.jsx";
-
-import BuyTicket from "./Tickets/BuyTicket.jsx"
+import RightsideEvents from "./components/RighsideEvents.jsx";
+import BuyTicket from "./Tickets/BuyTicket.jsx";
 import FilterEvents from "./components/Explore/FilterEvents.jsx";
 import Events from "./components/Events.jsx";
 import AllEvents from "./components/Explore/AllEvents.jsx";
+import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -41,7 +42,7 @@ function App({}) {
         {
           path: "/events",
           element: <Events />,
-          children:[
+          children: [
             {
               path: "/events",
               element: <AllEvents />,
@@ -52,21 +53,19 @@ function App({}) {
             },
             {
               path: "/events/eventName/:eventName",
-              element:<FilterEvents/>
-    
+              element: <FilterEvents />,
             },
-          ]
+          ],
         },
         {
           path: "/events/:id",
           element: <EventDetails />,
         },
-       
+
         {
           path: "/events/tickets/:id",
-          element: <BuyTicket/>
-        }
-    
+          element: <BuyTicket />,
+        },
       ],
     },
     {
@@ -113,20 +112,23 @@ function App({}) {
           element: <Notifications />,
         },
         {
-          path:"channels",
-          element:<Channel/>,
+          path: "eventGroupings/:eventType",
+          element: <FilterEvents1 />,
+        },
+        {
+          path: "channels",
+          element: <Channel />,
           children: [
             {
-              path:"",
-              element:<RightSideChannels/>
+              path: "",
+              element: <RightSideChannels />,
             },
             {
-              path:"ind/:id",
-              element:<RightSideChannels />
-            }
-          ]
+              path: "ind/:id",
+              element: <RightSideChannels />,
+            },
+          ],
         },
-        
       ],
     },
 

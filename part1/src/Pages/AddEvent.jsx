@@ -13,6 +13,8 @@ import {
   AlertTitle,
   Snackbar,
 } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useState } from "react";
 import StartDateTime from "../components/StartDateTime";
 import EndDateTime from "../components/EndDateTime";
@@ -61,9 +63,11 @@ const AddEvent = () => {
   });
   const handlePrivacy = (value) => {
     setPrivacy(value);
+    setEvent({ ...event, privacy:privacy});
   };
   const handleMedium = (value) => {
     setMedium(value);
+    setEvent({ ...event,require_volunteers:!medium });
   };
   const handleClick = (item, idx) => {
     const arr = new Array(13).fill(false);
@@ -72,6 +76,26 @@ const AddEvent = () => {
     setEvent({ ...event, category: item });
     setTracker(arr);
   };
+  const handelDateChange=(value,name)=>{
+    console.log(value,"value");
+    console.log(name,"name");
+    const dateValue = dayjs(value);
+    const formattedDate = dateValue.format("YYYY-MM-DD");
+    const formattedTime = dateValue.format("HH:mm:ss");
+    if(name==="endDate"){
+      setEvent({
+        ...event,
+        [name]: formattedDate,
+      });
+    }else{
+      setEvent({
+        ...event,
+        [name]: formattedDate,
+        time: formattedTime,
+      });
+    }
+    
+  }
   const handleChange = (e) => {
     console.log(e.target.value);
     console.log(e.target.name);
@@ -95,9 +119,6 @@ const AddEvent = () => {
     if (!event.duration) {
       newErrors.duration = "Duration is required";
     }
-    // if (!event.language) {
-    //   newErrors.language = "Language is required";
-    // }
     if (!event.category) {
       newErrors.categories = "Selecting one category is mandatory";
     }
@@ -295,13 +316,13 @@ const AddEvent = () => {
           <Typography variant="h6">Sart Date-Time *</Typography>
         </Box>
         <Box>
-          <StartDateTime value={sdate} setValue={setsDate} />
+          <StartDateTime value={sdate} handelDateChange={handelDateChange} />
         </Box>
         <Box>
           <Typography variant="h6">End Date-Time *</Typography>
         </Box>
         <Box>
-          <EndDateTime value={edate} setValue={seteDate} />
+          <EndDateTime value={edate} handelDateChange={handelDateChange} />
         </Box>
         <Box>
           <TextField
@@ -402,6 +423,27 @@ const AddEvent = () => {
             onChange={handleChange}
           />
         </Button>
+        {selectedFile && (
+          <div style={{ marginTop: '20px', position: 'relative' }}>
+          <Typography variant="body1">File uploaded:</Typography>
+          <img
+            src={URL.createObjectURL(selectedFile)}
+            alt="Uploaded File"
+            style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }}
+          />
+          <IconButton
+            onClick={()=>{setSelectedFile(null)}}
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              zIndex: 1,
+            }}
+          >
+            <CancelIcon />
+          </IconButton>
+        </div>
+        )}
         <Button
           sx={{ width: "20%" }}
           variant="contained"
