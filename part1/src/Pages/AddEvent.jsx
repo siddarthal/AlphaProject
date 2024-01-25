@@ -48,7 +48,7 @@ const AddEvent = () => {
     category: "",
     duration: "",
     privacy: false,
-    user: 1,
+    user: 8,
   });
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",

@@ -9,9 +9,14 @@ import {
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../Services/service";
+import axios from "axios";
+import useRazorpay from "react-razorpay";
+
 const BuyTicket = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [Razorpay] = useRazorpay();
+
 
   const [numPeople, setNumPeople] = useState(10);
   const [attending, setAttending] = useState(3);
@@ -44,16 +49,67 @@ const BuyTicket = () => {
 
   const handleConfirmation = () => {
     const totalFare = calculateTotalFare();
+    // const confirmationDetails = {
+    //   num_people: numPeople,
+    //   attending:attending,
+    //   user:user,
+    //   event: id,
+    // };
     const confirmationDetails = {
-      num_people: numPeople,
-      attending:attending,
-      user:user,
-      event: id,
-    };
+      amount: totalFare,
+      ticket:1,
+      status: "success"
+  }
     console.log("confirmationDetails",confirmationDetails);
-    api.buyTicketUrl(confirmationDetails).then((res)=>{
-      console.log("res",res)
-    })
+    // api.buyTicketUrl(confirmationDetails).then((res)=>{
+    //   console.log("res",res)
+    // })
+    axios.post('http://127.0.0.1:8000/api/pay-now/', 
+      confirmationDetails
+    ).then(function (response){
+      console.log(response);
+      const order_id = response.data.order_id
+      const options = {
+        key: "rzp_test_6gVqKVhbGkiCBm", 
+        name: "RelEvent",
+        description: "Test Transaction",
+        image: "https://example.com/your_logo",
+        order_id: order_id, //This is a sample Order ID. Pass the `id` obtained in the response of createOrder().
+        handler: function (response) {
+          alert(response.razorpay_payment_id);
+          alert(response.razorpay_order_id);
+          alert(response.razorpay_signature);
+        },
+        prefill: {
+          name: "Piyush Garg",
+          email: "youremail@example.com",
+          contact: "9999999999",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+    
+      const rzp1 = new Razorpay(options);
+    
+      rzp1.on("payment.failed", function (response) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+      });
+    
+      rzp1.open();
+    
+    }).catch(function (error){
+      console.log(error);
+    });
     // navigate("/payment", { state: confirmationDetails });
   };
 
