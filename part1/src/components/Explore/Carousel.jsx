@@ -35,7 +35,7 @@ const Carousel = ({ category, categoryName }) => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: Math.min(3, category[categoryName].length),
     slidesToScroll: 1,
     initialSlide: 0,
     nextArrow: <LeftNextArrow />,

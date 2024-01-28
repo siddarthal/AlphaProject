@@ -48,8 +48,8 @@ const AllEvents = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToShow: Math.min(3, event.length),
+    slidesToScroll: 3,
     initialSlide: 0,
     nextArrow: <LeftNextArrow />,
     prevArrow: <RightNextArrow />,
@@ -57,7 +57,7 @@ const AllEvents = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
           slidesToScroll: 1,
           infinite: true,
           dots: true,

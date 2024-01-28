@@ -36,9 +36,14 @@ export default function Signin() {
           console.log("successfull");
           console.log("result", res);
           // onLogin();
-          localStorage.setItem("accessToken", res.access_token);
-          setFormData({ email: "", password: "" });
-          navigate("/events");
+          if (res.access_token !== undefined) {
+            localStorage.setItem("accessToken", res.access_token);
+            setFormData({ email: "", password: "" });
+            navigate("/events");
+          }
+          else{
+            alert("wrong credentials");
+          }
         })
         .catch((err) => {
           console.error(err);
@@ -127,7 +132,7 @@ export default function Signin() {
         }}
         onClick={signinHandler}
       >
-        {isSubmitting?"logging you in":"login"}
+        {isSubmitting ? "logging you in" : "login"}
       </Button>
       <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
         New to Website <Link to="/signup">Signup</Link>

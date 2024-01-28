@@ -8,14 +8,16 @@ import api from "../Services/service";
 import RightSideEvents from "./RighsideEvents";
 import DateOnDashboard from "./Creator/DateOnDashboard";
 const RightSide = () => {
-  const [data,setData] = useState([]);
+  const [data,setData] = useState(null);
   useEffect(() => {
-    
+    console.log("useeffect");
     const fetchData = async () => {
       try{
         const response=await api.userSpecificEvent();
         console.log(response.data,"hi ");
-        setData(response.data);
+        if(response.data!== undefined){
+          setData(response.data);
+          }
       }
       catch{
        console.log("unable to fetch data");
@@ -32,7 +34,7 @@ const RightSide = () => {
     navigate("/dashboard/add");
   };
 
-  
+  const value=data===null;
   return (
     <Box>
       <Stack spacing={2}>
@@ -57,7 +59,7 @@ const RightSide = () => {
         
         </Grid>
 
-        {(data.length===0) ? (
+        { value? (
           <>
             <Box style={{ textAlign: "center", paddingTop: 74 }}>
               <Typography
