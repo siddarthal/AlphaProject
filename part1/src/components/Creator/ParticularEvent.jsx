@@ -90,29 +90,9 @@ export default function UserEventDetails() {
             </Button>
           </Box>
         </Box>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems="center">
           <Grid item xs={8}>
-            <Paper elevation={6} sx={{height:"35vh" , bgcolor: "primary.light",borderRadius: "7px"}} >
-              <Box
-                sx={{
-                  bgcolor: "primary.light",
-                  borderRadius: 2,
-                  padding:2
-                }}
-              >
-                <Typography variant="h4">{details.title}</Typography>
-                <Typography
-                  variant="body1"
-                  color="common.white"
-                  sx={{ paddingTop: 2 }}
-                >
-                  {details.description}
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
-          <Grid item xs={4}>
-          <Paper elevation={6} sx={{height:"35vh", borderRadius: "7px"}}>
+            <Paper elevation={6} sx={{ height: "40vh", borderRadius: "7px" }}>
               <img
                 src={details.poster}
                 alt="Event"
@@ -125,53 +105,99 @@ export default function UserEventDetails() {
               />
             </Paper>
           </Grid>
+          <Grid item xs={4}>
+            <Paper elevation={6} sx={{ height: "40vh", borderRadius: "7px" }}>
+              <Box
+                sx={{
+                  borderRadius: 2,
+                  padding: 2,
+                }}
+              >
+                <Typography
+                  variant="h4"
+                  sx={{
+                    paddingTop: 2,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {details.event_name}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    paddingTop: 2,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {details.description}
+                </Typography>
+              </Box>
+            </Paper>
+          </Grid>
         </Grid>
-        <Stack direction="row" gap={1}>
-          <Box flex={1}>
-            <AnnouncementChannelCreator idx={id}/>
-          </Box>
-          <Box
-            sx={{
-              width: 300,
-              p: 2,
-              bgcolor: "error.main",
-              color: "white",
-              borderRadius: 2,
-            }}
-          >
-            <Box sx={{ width: "100%" }}>
-              <Iframe
-                url={googleMapsUrl}
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </Box>
+        <Grid  container spacing={2} alignItems="flex-start">
+          <Grid item xs={8}>
+            <AnnouncementChannelCreator idx={id} />
+          </Grid>
+          <Grid item xs={4}>
+            <Box
+               sx={{
+                p: 2,
+                bgcolor: "error.main",
+                color: "white",
+                borderRadius: 2,
+                height: "100%", 
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box sx={{ width: "100%" }}>
+                <Iframe
+                  url={googleMapsUrl}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </Box>
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 2 }}>
-              <PlaceIcon />
-              <Typography>1234 Example Street</Typography>
-            </Box>
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 2 }}
+              >
+                <PlaceIcon />
+                <Typography>1234 Example Street</Typography>
+              </Box>
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
-              <AttachMoneyIcon />
-              <Typography>Free</Typography>
-            </Box>
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
+              >
+                <AttachMoneyIcon />
+                <Typography>Free</Typography>
+              </Box>
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
-              <GroupIcon />
-              <Typography>No members</Typography>
-            </Box>
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
+              >
+                <GroupIcon />
+                <Typography>No members</Typography>
+              </Box>
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
-              <CheckCircleIcon />
-              <Typography>No max participation limit</Typography>
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
+              >
+                <CheckCircleIcon />
+                <Typography>No max participation limit</Typography>
+              </Box>
             </Box>
-          </Box>
-        </Stack>
+          </Grid>
+        </Grid>
       </Stack>
     </Box>
   );

@@ -15,9 +15,8 @@ const Homepage = () => {
         </Container>
 
       </Box>
-      <Container>
+      <Container >
      
-
         <Stack>
           <Outlet />
         </Stack>

@@ -51,7 +51,7 @@ export default function EventCard({ event }) {
   };
 
   return (
-    <div>
+    <div style={{paddingLeft:14}}>
       <Card sx={{ maxWidth: 345, marginTop: 6 }}>
         <CardActionArea onClick={handleClickOpen}>
           <div style={{ position: "relative" }}>

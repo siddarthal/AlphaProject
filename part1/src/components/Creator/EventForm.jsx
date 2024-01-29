@@ -183,46 +183,62 @@ const EventForm = () => {
       }
       if (selectedFile) {
         formData.append("poster", selectedFile);
-      }
-      console.log(formData);
-      setErrors({});
-      api
-        .editParticularEvent(id, formData)
-        .then((res) => {
-          console.log("succesfully data posted");
-          console.log(formData);
-          console.log(res);
-          // setEventPresent(eventPresent + 1);
-          setEvent({
-            event_name: "",
-            description: "",
-            privacy: true,
-            medium: "",
-            require_volunteers: true,
-            // startDate: sdate,
-            // endDate: edate,
-            startDate: "2024-1-3",
-            endDate: "2024-1-3",
-            duration: "",
-            poster: null,
-            ticket_cost: "",
-            language: "",
-            category: "",
-            time: "",
-            location: "",
-            latitude: "",
-            longitude: "",
+        sendFormData(formData);
+      } else {
+        fetch(event.poster)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch default image");
+            }
+            return response.blob();
+          })
+          .then((blob) => {
+            formData.append("poster", blob, "default-image.jpg");
+            sendFormData(formData);
+          })
+          .catch((error) => {
+            console.error("Error fetching default image:", error);
           });
-          navigate(`/dashboard/events/${id}`);
-        })
-        .catch((error) => console.log(error));
+      }
     } else {
       console.log("cannot validate", errors.title);
     }
   };
-
+  const sendFormData = (formData) => {
+    console.log(formData);
+    setErrors({});
+    api
+      .editParticularEvent(id, formData)
+      .then((res) => {
+        console.log("succesfully data posted");
+        console.log(formData);
+        console.log(res);
+        // setEventPresent(eventPresent + 1);
+        setEvent({
+          event_name: "",
+          description: "",
+          privacy: true,
+          medium: "",
+          require_volunteers: true,
+          // startDate: sdate,
+          // endDate: edate,
+          startDate: "2024-1-3",
+          endDate: "2024-1-3",
+          duration: "",
+          poster: null,
+          ticket_cost: "",
+          language: "",
+          category: "",
+          time: "",
+          location: "",
+          latitude: "",
+          longitude: "",
+        });
+        navigate(`/dashboard/events/${id}`);
+      })
+      .catch((error) => console.log(error));
+  };
   const handlePress = () => {
-
     navigate("/dashboard");
     console.log("Button clicked!");
   };

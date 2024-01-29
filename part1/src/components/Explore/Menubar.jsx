@@ -26,16 +26,29 @@ const Menubar = () => {
     }
   };
   return (
-    <Box>
-      <Grid container spacing={0.01} alignContent="center">
+    <Box sx={{ paddingLeft: 0 }}>
+      <Grid container spacing={3} alignItems="center">
         {categories.map((items, idx) => (
-          <Grid item xs={0.9} key={idx}>
+          <Grid
+            item
+            key={idx}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Typography
               variant="body"
               className={
                 pressedItem === idx ? "customLinkPressed" : "customLink"
               }
-              sx={{ fontWeight: "light" }}
+              sx={{
+                fontWeight: "light",
+                cursor: "pointer",
+                fontFamily: "Arial, sans-serif",
+                textDecoration: "none", // Remove text decoration
+                color: pressedItem === idx ? "blue" : "inherit", // Change color to blue if pressed
+                "&:hover": {
+                  textDecoration: "underline",
+                },
+              }}
               onClick={() => handleClick(idx)}
             >
               {items}

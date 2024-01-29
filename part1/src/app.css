@@ -22,3 +22,24 @@
   .listInside{
     padding-bottom: 7%;
   }
+
+  .category-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    color: black;
+    padding: 4px 8px;
+    z-index: 1;
+  }
+  
+  .date-box {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: white;
+    color: black;
+    padding: 4px 8px;
+    z-index: 1;
+  }
+  
