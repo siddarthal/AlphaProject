@@ -62,7 +62,7 @@ const NavBar = () => {
             color: "inherit",
             fontWeight: "bold",
             fontFamily: "sans-serif",
-            fontSize: isWideScreen ? "1.5rem" : "1rem",
+            fontSize: isWideScreen ? "1.5rem" : "1.26rem",
           }}
         >
           RelEvent
@@ -127,7 +127,7 @@ const NavBar = () => {
           color="inherit"
           sx={{ paddingLeft: 4.9 }}
         >
-          <AccountCircle />
+          <AccountCircle fontSize={isWideScreen?"small":"medium"} />
         </IconButton>
         <Menu
           id="menu-appbar"

@@ -22,7 +22,7 @@ const Events = () => {
   return (
     <Container>
     <Stack spacing={3}>
-      <Typography variant={isWideScreen?"h4":"h6" }sx={{ paddingTop: 10, fontWeight: "bold",paddingBottom:3 }}>
+      <Typography variant={isWideScreen?"h4":"h5" }sx={{ paddingTop: 10, fontWeight: "bold",paddingBottom:3 }}>
         Explore the best events happening around you
       </Typography>
       <Menubar />
