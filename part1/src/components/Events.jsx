@@ -1,9 +1,11 @@
 
-import { Box, Stack, Typography,Container } from "@mui/material";
+import { Box, Stack, Typography,Container,useMediaQuery } from "@mui/material";
 import api from "../Services/service";
 import Menubar from "./Explore/Menubar";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
+import { useTheme } from '@mui/material/styles';
+
 const Events = () => {
   const [event, setEvent] = useState([]);
   useEffect(() => {
@@ -15,10 +17,12 @@ const Events = () => {
       })
       .catch((error) => console.log("error", error));
   }, []);
+  const theme = useTheme();
+  const isWideScreen = useMediaQuery(theme.breakpoints.up("sm"));
   return (
     <Container>
     <Stack spacing={3}>
-      <Typography variant="h4" sx={{ paddingTop: 4, fontWeight: "bold" }}>
+      <Typography variant={isWideScreen?"h4":"h6" }sx={{ paddingTop: 10, fontWeight: "bold",paddingBottom:3 }}>
         Explore the best events happening around you
       </Typography>
       <Menubar />
