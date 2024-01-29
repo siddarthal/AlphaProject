@@ -50,7 +50,7 @@ const editParticularEvent = (id, data) => {
   // const urleditParticularEvent = `http://localhost:3001/submit/${id}`;
   const urleditParticularEvent = urlEvents + id + "/";
 
-  const promise = axios.put(urleditParticularEvent, data);
+  const promise = axios.put(urleditParticularEvent, data,{ headers: header });
   return promise.then((res) => res.data).catch((error) => error);
 };
 const getEventMessages = (eventId) => {
@@ -66,7 +66,7 @@ const deleteParticularEvent = (id) => {
   return promise.then((res) => res).catch((error) => error);
 };
 
-const createEventMessage = (eventId, message) => {
+const createEventMessage = (eventId, message,timestamp) => {
   // const url = `http://127.0.0.1:8000/api/announcements/`;
   const url = `http://localhost:3001/messages`;
   // const body = {
@@ -76,7 +76,7 @@ const createEventMessage = (eventId, message) => {
   const body = {
     content: message,
     eventId: eventId,
-    timeStamp: "12:22:00",
+    timeStamp: timestamp,
   };
   return axios.post(url, body);
 };

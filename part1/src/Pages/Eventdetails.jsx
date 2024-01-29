@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../Services/service";
+import WalletIcon from "@mui/icons-material/Wallet";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import {
   Container,
   Grid,
@@ -78,7 +80,7 @@ export default function EventDetails() {
       <Grid container spacing={2}>
         {/* Part 1 - Event Image */}
         <Grid item xs={8}>
-          <Paper elevation={3} style={{ height: "60vh" }}>
+          <Paper elevation={3} style={{ height: "50vh" }}>
             <img
               src={event.poster}
               alt="poster.jpg"
@@ -94,11 +96,21 @@ export default function EventDetails() {
 
         {/* Part 2 - Maps */}
         <Grid item xs={4}>
-          <Paper elevation={6} style={{ height: "60vh" }}>
+          <Paper elevation={6} style={{ height: "50vh" }}>
             <Container>
               <Stack spacing={2}>
-                <Typography variant="h5" component="h5">
-                  <b>{event.event_name}</b>
+                <Typography
+                  variant="h5"
+                  component="h5"
+                  sx={{
+                    fontWeight: "bold",
+                    fontFamily: "Arial, sans-serif",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {event.event_name}
                 </Typography>
                 <Grid container alignItems="center">
                   <Grid item xs={2}>
@@ -129,9 +141,23 @@ export default function EventDetails() {
                   longitude={event.longitude}
                 />
                 <Box sx={{ paddingTop: 3, paddingLeft: 3 }}>
-                  <Button variant="contained" onClick={handleBuyTicket}>
-                    Buy Ticket
-                  </Button>
+                  <Grid container alignItems="center">
+                    <Grid item xs={6} container allignItems="center">
+                      <WalletIcon />
+                      <CurrencyRupeeIcon />
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", lineHeight: "inherit" }}
+                      >
+                        {event.ticket_cost}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button variant="contained" onClick={handleBuyTicket}>
+                        Buy Ticket
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Box>
               </Stack>
             </Container>
@@ -140,41 +166,42 @@ export default function EventDetails() {
 
         {/* Part 3 - About */}
         <Grid item xs={8}>
-          <Paper elevation={3} style={{ height: "400px" }}>
-            <Typography sx={{ marginLeft: 3 }} variant="h5" component="h6">
+          <Paper elevation={3} style={{ height: "40vh", padding: "20px" }}>
+            <Typography
+              sx={{ marginLeft: 3, marginBottom: 2 }}
+              variant="h5"
+              component="h6"
+            >
               <b>About</b>
             </Typography>
             <Container>
               <Stack spacing={2}>
-                <Typography variant="body">
-                  Prepare to loosen up for an extravagant, exclusive show where
-                  fans get to dive into the vibrant world of Vikram! Join in the
-                  live interaction, fire away your questions, and indulge in
-                  delightful chitchat with your beloved star! Youtube video -
-                  https://youtube.com/shorts/X6opPQpwMfI?feature=share
+                <Typography
+                  variant="body"
+                  sx={{ lineHeight: 1.6, marginBottom: 2 }}
+                >
+                  {event.description}
                 </Typography>
-                <Typography variant="h5">Terms and Conditions</Typography>
-                <Typography variant="body">
-                  {/* {console.log("t and c", event.tnc[0])} */}
-                  {/* {event.tnc.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))} */}
-                  <ul>
-                    <li>
-                      "You may not be able to attend the live session if you are
-                      late.",
+                <Typography variant="h5" sx={{ marginBottom: 1 }}>
+                  Terms and Conditions
+                </Typography>
+                <Typography variant="body" sx={{ marginBottom: 2 }}>
+                  <ul style={{ paddingLeft: "20px" }}>
+                    <li style={{ marginBottom: "5px" }}>
+                      You may not be able to attend the live session if you are
+                      late.
                     </li>
-                    <li>
-                      "You may face interruptions during the course of the live
-                      stream due to internet connectivity issues.",
+                    <li style={{ marginBottom: "5px" }}>
+                      You may face interruptions during the course of the live
+                      stream due to internet connectivity issues.
                     </li>
-                    <li>
-                      "Show details and the artist lineup are subject to change
-                      as per the artist’s discretion.",
+                    <li style={{ marginBottom: "5px" }}>
+                      Show details and the artist lineup are subject to change
+                      as per the artist’s discretion.
                     </li>
-                    <li>
-                      "No refunds on purchased tickets are possible, even in
-                      case of any rescheduling."
+                    <li style={{ marginBottom: "5px" }}>
+                      No refunds on purchased tickets are possible, even in case
+                      of any rescheduling.
                     </li>
                   </ul>
                 </Typography>
@@ -182,7 +209,7 @@ export default function EventDetails() {
             </Container>
           </Paper>
         </Grid>
-        <Grid item xs={4}>
+        {/* <Grid item xs={4}>
           {val ? (
             <Paper elevation={3} style={{ height: "400px" }}>
               <Container>
@@ -200,7 +227,7 @@ export default function EventDetails() {
               <ChatBox />
             </Container>
           )}
-        </Grid>
+        </Grid> */}
       </Grid>
     </Container>
   );

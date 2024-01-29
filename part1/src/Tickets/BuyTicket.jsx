@@ -64,6 +64,7 @@ const BuyTicket = () => {
     // api.buyTicketUrl(confirmationDetails).then((res)=>{
     //   console.log("res",res)
     // })
+
     axios.post('http://127.0.0.1:8000/api/pay-now/', 
       confirmationDetails
     ).then(function (response){

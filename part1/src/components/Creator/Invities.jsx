@@ -8,7 +8,7 @@ const Invites = () => {
   return (
     <Box>
       {noInvites ? (
-        <Typography>No Invites</Typography>
+        <Typography variant='h5'>No Tickets</Typography>
       ) : (
         /* Display invite-related content here */
         <Typography>Invites Content</Typography>

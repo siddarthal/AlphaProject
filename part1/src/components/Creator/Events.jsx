@@ -11,7 +11,6 @@ import {
   Stack,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import image from "../../Images/R.jpg";
 
 const Events = ({ eventdata }) => {
   console.log(eventdata,"hi");

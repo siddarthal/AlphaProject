@@ -190,6 +190,7 @@ const EventForm = () => {
         .editParticularEvent(id, formData)
         .then((res) => {
           console.log("succesfully data posted");
+          console.log(formData);
           console.log(res);
           // setEventPresent(eventPresent + 1);
           setEvent({
@@ -221,7 +222,7 @@ const EventForm = () => {
   };
 
   const handlePress = () => {
-    // Handle click action here
+
     navigate("/dashboard");
     console.log("Button clicked!");
   };
@@ -277,7 +278,7 @@ const EventForm = () => {
         <Box>
           <TextField
             onChange={handleChange}
-            name="title"
+            name="event_name"
             sx={{ width: "100%" }}
             required
             value={event.event_name}

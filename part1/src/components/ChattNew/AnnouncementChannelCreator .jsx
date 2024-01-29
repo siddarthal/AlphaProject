@@ -23,19 +23,23 @@ const AnnouncementChannelCreator = ({ idx }) => {
 
   const fetchMessages = () => {
     api.getEventMessages(idx).then((res) => {
+      console.log("h",res.data);
       setMessages(res.data);
     });
   };
 
   const handleSendMessage = () => {
+    const timestamp = new Date().toLocaleTimeString();
     if (newMessage.trim() !== "") {
+
       sendMessage(newMessage);
     }
   };
-
+  
   const sendMessage = async (messageContent) => {
     try {
-      const res = await api.createEventMessage(idx, messageContent);
+      const timestamp = new Date().toLocaleTimeString();
+      const res = await api.createEventMessage(idx, messageContent,timestamp);
       if (res.status === 201) {
         setNewMessage("");
         fetchMessages();
@@ -58,13 +62,13 @@ const AnnouncementChannelCreator = ({ idx }) => {
   const handleDeleteMessage = async () => {
     if (selectedMessageId) {
       try {
-        const res = await api.deleteEventMessage(idx, selectedMessageId);
+        const res = await api.handleDeleteMessage(idx, selectedMessageId);
         if (res.status === 200) {
           fetchMessages();
           handleCloseMenu();
         }
       } catch (error) {
-        // Handle error
+    
       }
     }
   };
@@ -89,7 +93,7 @@ const AnnouncementChannelCreator = ({ idx }) => {
             <div style={{ flex: 1, marginRight: "10px" }}>
               <Typography>{message.content}</Typography>
               <Typography variant="caption" color="textSecondary">
-                {new Date(message.timestamp).toLocaleString()}
+              {message.timeStamp}
               </Typography>
             </div>
             <IconButton onClick={(e) => handleOpenMenu(e, message.id)}>

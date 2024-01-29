@@ -45,21 +45,21 @@ const LeftSide = () => {
           </Container>
         </Box>
 
-        <Box>
+        {/* <Box>
           <Container>
             <Button variant="text" startIcon={<PeopleAltOutlinedIcon />} onClick={() => navigate("rsvps")}>
               RSVPS
             </Button>
           </Container>
-        </Box>
+        </Box> */}
         <Box>
           <Container>
             <Button variant="text" startIcon={<LocalActivityOutlinedIcon />} onClick={() => navigate("invities")}>
-              Invities
+              Tickets
             </Button>
           </Container>
         </Box>
-        <Box>
+        {/* <Box>
           <Container>
             <Button
               variant="text"
@@ -68,7 +68,7 @@ const LeftSide = () => {
               Notifications
             </Button>
           </Container>
-        </Box>
+        </Box> */}
         <Box style={{ bottom: 0 }}>
           <Container>
             <Button
