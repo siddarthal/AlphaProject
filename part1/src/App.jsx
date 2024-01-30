@@ -28,6 +28,7 @@ import FilterEvents from "./components/Explore/FilterEvents.jsx";
 import Events from "./components/Events.jsx";
 import AllEvents from "./components/Explore/AllEvents.jsx";
 import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
+import ForgotPassword from "./Pages/ForgotPassword.jsx";
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -139,6 +140,10 @@ function App({}) {
     {
       path: "/signup",
       element: <Signup />,
+    },
+    {
+      path:"/resetPassword",
+      element:<ForgotPassword/>
     },
   ]);
 

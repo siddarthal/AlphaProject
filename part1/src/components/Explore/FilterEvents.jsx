@@ -35,7 +35,7 @@ const FilterEvents = () => {
         {category[eventName].map((item) => {
           console.log("in the blood", item.EID);
           return (
-            <Grid item xs={4} key={item.EID}>
+            <Grid item xs={12} md={4}key={item.EID}>
               <EventCard event={item} />
             </Grid>
           );
