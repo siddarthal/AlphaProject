@@ -58,7 +58,8 @@ const RightsideEvents = ({ requiredData }) => {
         {arrayDisplay.map((item, idx) => (
           <Grid
             item
-            xs={2.3}
+            xs={12}
+            md={2.3}
             key={idx}
             onMouseEnter={() => handleGridItemHover(idx)}
             onMouseLeave={() => handleGridItemHover(null)}
