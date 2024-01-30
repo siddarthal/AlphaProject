@@ -99,6 +99,10 @@ const buyTicketUrl =(body)=>{
   const url ="http://localhost:8000/api/tickets/";
   return axios.post(url,body);
 }
+const fetchTickets =(id)=>{
+  const url =`http://localhost:8000/api/tickets/user/${id}`;
+return axios.get(url);
+}
 export default {
   signin: signin,
   getEvents: getEvents,
@@ -114,5 +118,6 @@ export default {
   handleDeleteMessage,
   userAccountDatails,
   editAccountDetails,
-  buyTicketUrl
+  buyTicketUrl,
+  fetchTickets
 };
