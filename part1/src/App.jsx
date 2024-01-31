@@ -28,6 +28,7 @@ import FilterEvents from "./components/Explore/FilterEvents.jsx";
 import Events from "./components/Events.jsx";
 import AllEvents from "./components/Explore/AllEvents.jsx";
 import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
+import Alltickets from "./components/Creator/Alltickets.jsx";
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
   const router = createBrowserRouter([
@@ -65,6 +66,24 @@ function App({}) {
         {
           path: "/events/tickets/:id",
           element: <BuyTicket />,
+        },
+        {
+          path: "/events/tickets",
+          element: <Alltickets />,
+        },
+        {
+          path: "/events/channels",
+          element: <Channel />,
+          children: [
+            {
+              path: "",
+              element: <RightSideChannels />,
+            },
+            {
+              path: "ind/:id",
+              element: <RightSideChannels />,
+            },
+          ],
         },
       ],
     },
@@ -114,20 +133,6 @@ function App({}) {
         {
           path: "eventGroupings/:eventType",
           element: <FilterEvents1 />,
-        },
-        {
-          path: "channels",
-          element: <Channel />,
-          children: [
-            {
-              path: "",
-              element: <RightSideChannels />,
-            },
-            {
-              path: "ind/:id",
-              element: <RightSideChannels />,
-            },
-          ],
         },
       ],
     },

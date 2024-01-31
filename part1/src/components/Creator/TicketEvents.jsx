@@ -2,29 +2,19 @@ import React from "react";
 import {
   Box,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
+  Grid,
+  Paper,
   Typography,
-  Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const TicketEvents = ({ eventdata }) => {
+const TicketEvents = ({ eventdata, ticket }) => {
   const navigate = useNavigate();
 
   const maxDescriptionHeight = 400;
-  const imgUrl =  eventdata.poster;
-  const boxStyle = {
-    position: "absolute",
-    bottom: 8,
-    right: 8,
-    background: "#fff",
-    padding: "12px 24px",
-    borderRadius: 4,
-    zIndex: 1,
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // Added a box shadow for better visibility
-  };
+  const imgUrl = "http://127.0.0.1:8000" + eventdata.poster;
   const typoStyle = {
     maxHeight: maxDescriptionHeight,
     overflow: "hidden",
@@ -39,67 +29,66 @@ const TicketEvents = ({ eventdata }) => {
     fontSize: 16,
     fontWeight: "bold",
     marginRight: 4,
-    color: "#333", 
+    color: "#333",
   };
 
   const dateStyle = {
     fontSize: 16,
-    color: "#555", 
+    color: "#555",
   };
 
   return (
     <Box sx={{ paddingRight: 1 }}>
-      <Card sx={{ position: "relative" }}>
-        <Box sx={boxStyle}>
-          <Box>
+      <Paper elevation={10} sx={{ height: "20vh" }}>
+        <Grid container alignItems="center">
+          <Grid item xs={4}>
+            <img
+              src={imgUrl}
+              alt={eventdata.title}
+              style={{
+                padding: 10,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              sx={typoStyle}
+            >
+              {eventdata.event_name}
+            </Typography>
             <Typography variant="body1" sx={monthStyle}>
               {month}
             </Typography>
             <Typography variant="body1" sx={dateStyle}>
               {date}
             </Typography>
-          </Box>
-        </Box>
-        <CardMedia
-          sx={{
-            position: "relative",
-            height: 200,
-          }}
-          image={imgUrl}
-          title={eventdata.title}
-          alt={eventdata.title}
-        >
-          <Box
-            sx={{
-              position: "absolute",
-              top: 16,
-              left: 16,
-              background: "#fff",
-              padding: "8px 16px",
-              borderRadius: 4,
-              zIndex: 1,
-            }}
-          >
-            <Typography variant="body1">{eventdata.category}</Typography>
-          </Box>
-        </CardMedia>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div" sx={typoStyle}>
-            {eventdata.event_name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={typoStyle}>
-            {eventdata.description}
-          </Typography>
-        </CardContent>
-        {/* <CardActions>
-          <Button
-            size="small"
-            onClick={() => navigate(`/dashboard/events/${eventdata.EID}`)}
-          >
-            More Details
-          </Button>
-        </CardActions> */}
-      </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              sx={typoStyle}
+            >
+              {ticket.attending}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              sx={typoStyle}
+            >
+              {ticket.num_people}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
     </Box>
   );
 };

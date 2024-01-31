@@ -29,7 +29,7 @@ const LeftSideChannels = ({ eventdata }) => {
         {eventdata.map((item, idx) => {
           return (
             <li key={idx} className="listInside">
-              <Button onClick={()=>handleClick(item.EID)}>{item.event_name}</Button>
+              <Button onClick={()=>handleClick(item.BID)}>{item.broadcast_name}</Button>
             </li>
           );
         })}

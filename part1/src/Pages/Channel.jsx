@@ -48,10 +48,10 @@ const Channel = () => {
 
   useEffect(() => {
     api
-      .getEvents()
+      .userChannel(1)
       .then((res) => {
         console.log(res);
-        setEvents(res);
+        setEvents(res.data);
       })
       .catch((error) => {
         console.log(error);

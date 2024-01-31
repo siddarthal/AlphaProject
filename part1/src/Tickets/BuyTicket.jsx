@@ -43,7 +43,7 @@ const BuyTicket = () => {
       });
   }, []);
   const calculateTotalFare = () => {
-    return numPeople * details.ticket_cost + attending * 5;
+    return numPeople * details.ticket_cost ;
   };
 
   const handleConfirmation = () => {
@@ -93,7 +93,7 @@ const BuyTicket = () => {
               .post("http://127.0.0.1:8000/api/payments/", data)
               .then(function (response2) {
                 if ((response2.status = 200)) {
-                  navigate("/dashboard/invities");
+                  navigate("/events/tickets");
                 } else {
                   console.log("res status", response2.status);
                 }

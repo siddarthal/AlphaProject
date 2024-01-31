@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../Services/service";
+import axios from "axios";
 import WalletIcon from "@mui/icons-material/Wallet";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import {
@@ -56,7 +57,17 @@ export default function EventDetails() {
   // const startDateString = event.startDate || "2023-01-01T10:00:00+00:00";
   // const startDate = new Date(startDateString);
   const handleChannel = () => {
-    setVal(false);
+    // setVal(false);
+    const url=`http://127.0.0.1:8000/api/volunteers/`
+    const data={
+      user:1,
+      event:id
+    }
+    axios.post(url,data).then((res)=>{
+      console.log("res",res);
+    }).catch((error)=>{
+      console.log("error",error);
+    })
   };
   const handleBuyTicket = () => {
     console.log("clicked buy");
@@ -209,25 +220,11 @@ export default function EventDetails() {
             </Container>
           </Paper>
         </Grid>
-        {/* <Grid item xs={4}>
-          {val ? (
-            <Paper elevation={3} style={{ height: "400px" }}>
-              <Container>
-                <Typography variant="h5">
-                  Want volunteer pls join the announcement channel for further
-                  instructions
-                </Typography>
-                <Button variant="contained" onClick={handleChannel}>
-                  Join channel
-                </Button>
-              </Container>
-            </Paper>
-          ) : (
-            <Container>
-              <ChatBox />
-            </Container>
-          )}
-        </Grid> */}
+        <Grid item xs={4}>
+          <Button variant="contained" onClick={handleChannel}>
+            Join channel
+          </Button>
+        </Grid>
       </Grid>
     </Container>
   );
