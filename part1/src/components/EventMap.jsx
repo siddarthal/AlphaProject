@@ -3,7 +3,7 @@ import React from "react";
 import Iframe from "react-iframe";
 
 const EventMapComponent = ({ latitude, longitude }) => {
-    console.log('lATT',latitude,'LONG',longitude);
+    // console.log('lATT',latitude,'LONG',longitude);
   const googleMapsUrl = `https://maps.google.com/maps?q=${latitude},${longitude}&hl=en&output=embed`;
 
   return (

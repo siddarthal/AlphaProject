@@ -3,7 +3,8 @@ import { Box, Paper, Card, CardContent, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const Ticket = ({ eventdata, ticket }) => {
-  const imgUrl = "http://127.0.0.1:8000" + eventdata.poster;
+  const imgUrl =  eventdata.poster;
+  // const imgUrl = "http://127.0.0.1:8000" + eventdata.poster;
   const dateString = eventdata.startDate;
   const dateObj = new Date(dateString);
   const weekdays = [

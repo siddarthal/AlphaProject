@@ -1,7 +1,7 @@
 import React from "react";
-import { Grid, Typography, Box, Container, Stack, Button } from "@mui/material";
+import { Grid,Box } from "@mui/material";
 import LeftSide from "../components/LeftSide";
-import RightSide from "../components/RightSide";
+
 import { Outlet } from "react-router-dom";
 // import useState from "react";
 const Dashboard = () => {

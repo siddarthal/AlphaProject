@@ -10,7 +10,7 @@ import RightSide from "./components/RightSide.jsx";
 import HomeContent from "./components/HomeContent.jsx";
 import AccountDetails from "./components/AccountDetails.jsx";
 import UserEventDetails from "./components/UserEventDetails.jsx";
-import { useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import ParticularEvent from "./components/Creator/ParticularEvent.jsx";
 import EditExistingEvent from "./components/Creator/EditExistingEvent.jsx";
 import "./app.css";
@@ -29,8 +29,21 @@ import Events from "./components/Events.jsx";
 import AllEvents from "./components/Explore/AllEvents.jsx";
 import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
 import Alltickets from "./components/Creator/Alltickets.jsx";
-function App({}) {
-  const accessToken = localStorage.getItem("accessToken");
+function App() {
+  const [token, setToken] = useState(null);
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    const storedToken = localStorage.getItem('accessToken');
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    console.log("storedToken", storedToken);
+    if (storedToken) {
+      setToken(storedToken);
+  
+    }
+  }, []);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -60,7 +73,7 @@ function App({}) {
         },
         {
           path: "/events/:id",
-          element: <EventDetails />,
+          element: <EventDetails token={token}/>,
         },
 
         {
@@ -69,11 +82,11 @@ function App({}) {
         },
         {
           path: "/events/tickets",
-          element: <Alltickets />,
+          element: <Alltickets token={token}/>,
         },
         {
           path: "/events/channels",
-          element: <Channel />,
+          element: <Channel token={token} />,
           children: [
             {
               path: "",
@@ -94,29 +107,29 @@ function App({}) {
       children: [
         {
           path: "/dashboard",
-          element: <RightSide />,
+          element: <RightSide token={token}/>,
         },
 
         {
           path: "add",
-          element: <AddEvent />,
+          element: <AddEvent token={token} />,
         },
         ,
         {
           path: "events",
-          element: <UserEventDetails />,
+          element: <UserEventDetails token={token}/>,
         },
         {
           path: "accounts",
-          element: <AccountDetails />,
+          element: <AccountDetails token={token} />,
         },
         {
           path: "events/:id",
-          element: <ParticularEvent />,
+          element: <ParticularEvent token={token}/>,
         },
         {
           path: "edit/:id",
-          element: <EditExistingEvent />,
+          element: <EditExistingEvent token={token} />,
         },
         {
           path: "invities",
@@ -139,15 +152,13 @@ function App({}) {
 
     {
       path: "/signin",
-      element: <Signin />,
+      element: <Signin setToken={setToken} />,
     },
     {
       path: "/signup",
       element: <Signup />,
     },
   ]);
-
-  console.log("accessToken", accessToken);
 
   return (
     <>

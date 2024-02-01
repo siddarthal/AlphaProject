@@ -4,12 +4,12 @@ import { Box, Grid, Typography, Button, Stack } from "@mui/material";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { useNavigate } from "react-router-dom";
 import Events from "./Creator/Events";
-const UserEventDetails = () => {
+const UserEventDetails = ({token}) => {
   const [eventData, setEventData] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     api
-      .userSpecificEvent()
+      .userSpecificEvent(token)
       .then((res) => {
         console.log(res.data);
         setEventData(res.data);

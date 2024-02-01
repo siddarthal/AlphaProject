@@ -3,12 +3,12 @@ import { Box, Typography, Grid } from "@mui/material";
 import api from "../../Services/service";
 
 import Ticket from "./Ticket";
-const AllTickets = () => {
+const AllTickets = ({token}) => {
   const [ticket, setTicket] = useState([]);
   const [data, setData] = useState(null);
   useEffect(() => {
     api
-      .userAccountDatails()
+      .userAccountDatails(token)
       .then((res) => {
         console.log(res.data.id);
         if (res.status === 200) {
@@ -24,17 +24,17 @@ const AllTickets = () => {
       .fetchTickets(id)
       .then((res2) => {
         console.log(res2.data);
-        if (res2.status == 200) {
+        if (res2.status === 200) {
           console.log("hi");
           setTicket(res2.data);
           api
-            .userSpecificEvent()
+            .getEventsOne()
             .then((res) => {
-              console.log(res.data);
+              console.log(res.status, "status");
               if (res.status === 200) {
                 filterFunc(res2.data, res.data);
               } else {
-                console.log("unable to fetch data of event from server");
+                console.log("unable to fetch data of event from server", res2);
               }
             })
             .catch((error) => console.log(error));
@@ -45,8 +45,9 @@ const AllTickets = () => {
       .catch((error) => console.log(error));
   };
   const noInvites = ticket.length == 0;
-  let eventObj = {};
+
   const filterFunc = (tickets, events) => {
+    let eventObj = {};
     const setTick = new Set();
     tickets.forEach((element) => {
       setTick.add(element.event);
@@ -63,15 +64,20 @@ const AllTickets = () => {
   return (
     <Box>
       {noInvites ? (
-        <Typography variant="h4" sx={{fontWeight:"bold" ,pt:4}} >No Tickets Booked</Typography>
+        <Typography variant="h4" sx={{ fontWeight: "bold", pt: 4 }}>
+          No Tickets Booked
+        </Typography>
       ) : (
         <Box>
-          <Typography variant="h5" sx={{fontWeight:"bold" ,pt:4 ,pb:4}}>Tickets Booked </Typography>
+          <Typography variant="h5" sx={{ fontWeight: "bold", pt: 4, pb: 4 }}>
+            Tickets Booked{" "}
+          </Typography>
           <Box sx={{ pt: 2 }}>
             <Grid container alignItems="center" spacing={2}>
               {ticket.map((item) => {
                 return (
                   <Grid item xs={12} md={6} key={item.TID}>
+                    {console.log(data, "data")}
                     {data !== null && (
                       // <TicketEvents eventdata={data[item.event]} ticket={ticket} />
                       <Ticket eventdata={data[item.event]} ticket={item} />

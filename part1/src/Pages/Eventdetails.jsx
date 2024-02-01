@@ -1,7 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../Services/service";
-import axios from "axios";
 import WalletIcon from "@mui/icons-material/Wallet";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import {
@@ -13,79 +12,62 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import image from "../Images/R.jpg";
+
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import EventMap from "../components/EventMap";
-import ChatBox from "../components/ChatBox";
-export default function EventDetails() {
+
+export default function EventDetails({ token }) {
   const { id } = useParams();
-  const [val, setVal] = useState(true);
+
   const navigate = useNavigate();
-  const [event, setEvent] = useState({
-    title: "Sample Event Authorised NCC unit of usa",
-    description: "This is a sample event description.",
-    medium: "offline",
-    price: 10,
-    category: "Workshop",
-    startDate: "2023-01-01T10:00:00+00:00",
-    endDate: "2023-01-01T14:00:00+00:00",
-    location: ["Higrave maddox mall ,Siddacity", 37.7749, 122.4194],
-    image: "https://example.com/sample-image.jpg",
-    meet: "online",
-    tnc: [
-      "You may not be able to attend the live session if you are late.",
-      "You may face interruptions during the course of the live stream due to internet connectivity issues.",
-      "Show details and the artist lineup are subject to change as per the artist’s discretion.",
-      "No refunds on purchased tickets are possible, even in case of any rescheduling.",
-    ],
-    language: "English",
-    duration: "02:00",
-    otherField: "This is an additional field if needed",
-  });
+  const [event, setEvent] = useState({});
+  const [userId, setUserId] = useState(1);
 
   useEffect(() => {
     api
       .fetchEvent(id)
       .then((res) => {
-        console.log("response", res.data);
-        setEvent(res.data);
+        if (res.status === 200) {
+          console.log("response", res.data);
+          setEvent(res.data);
+        } else {
+          alert("problem in fetching data please try again");
+        }
       })
       .catch((error) => console.log(error));
-  }, [id]); // Added id as a dependency for useEffect
-  // const startDateString = event.startDate || "2023-01-01T10:00:00+00:00";
-  // const startDate = new Date(startDateString);
+  }, [id]);
+  useEffect(() => {
+    api.userAccountDatails(token).then((res) => {
+      if (res.status === 200) {
+        setUserId(res.data.id);
+      }
+    });
+  }, [token]);
+
   const handleChannel = () => {
-    // setVal(false);
-    const url=`http://127.0.0.1:8000/api/volunteers/`
-    const data={
-      user:1,
-      event:id
-    }
-    axios.post(url,data).then((res)=>{
-      console.log("res",res);
-    }).catch((error)=>{
-      console.log("error",error);
-    })
+    api
+      .handleChannelSubscribe(userId, id)
+      .then((res) => {
+        console.log("res", res);
+        if (res.status === 201) {
+          navigate("/events/channels");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        alert(
+          "already party of this channel press okay to continue to the channel"
+        );
+        navigate("/events/channels");
+      });
   };
   const handleBuyTicket = () => {
     console.log("clicked buy");
     navigate(`/events/tickets/${id}`);
   };
-  // const options = {
-  //   weekday: "short",
-  //   year: "numeric",
-  //   month: "short",
-  //   day: "numeric",
-  //   hour: "2-digit",
-  //   minute: "2-digit",
-  //   timeZoneName: "short",
-  // };
 
-  // const formattedDate = startDate.toLocaleDateString("en-US", options);
-
-  // console.log(formattedDate);
   return (
     <Container sx={{ marginTop: 5 }}>
       <Grid container spacing={2}>
@@ -153,7 +135,7 @@ export default function EventDetails() {
                 />
                 <Box sx={{ paddingTop: 3, paddingLeft: 3 }}>
                   <Grid container alignItems="center">
-                    <Grid item xs={6} container allignItems="center">
+                    <Grid item xs={6} container alignItems="center">
                       <WalletIcon />
                       <CurrencyRupeeIcon />
                       <Typography
