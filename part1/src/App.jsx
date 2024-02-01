@@ -10,7 +10,7 @@ import RightSide from "./components/RightSide.jsx";
 import HomeContent from "./components/HomeContent.jsx";
 import AccountDetails from "./components/AccountDetails.jsx";
 import UserEventDetails from "./components/UserEventDetails.jsx";
-import { useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import ParticularEvent from "./components/Creator/ParticularEvent.jsx";
 import EditExistingEvent from "./components/Creator/EditExistingEvent.jsx";
 import "./app.css";
@@ -28,9 +28,22 @@ import FilterEvents from "./components/Explore/FilterEvents.jsx";
 import Events from "./components/Events.jsx";
 import AllEvents from "./components/Explore/AllEvents.jsx";
 import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
-import ForgotPassword from "./Pages/ForgotPassword.jsx";
-function App({}) {
-  const accessToken = localStorage.getItem("accessToken");
+import Alltickets from "./components/Creator/Alltickets.jsx";
+function App() {
+  const [token, setToken] = useState(null);
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    const storedToken = localStorage.getItem('accessToken');
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    console.log("storedToken", storedToken);
+    if (storedToken) {
+      setToken(storedToken);
+  
+    }
+  }, []);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -60,12 +73,30 @@ function App({}) {
         },
         {
           path: "/events/:id",
-          element: <EventDetails />,
+          element: <EventDetails token={token}/>,
         },
 
         {
           path: "/events/tickets/:id",
-          element: <BuyTicket />,
+          element: <BuyTicket token={token}/>,
+        },
+        {
+          path: "/events/tickets",
+          element: <Alltickets token={token}/>,
+        },
+        {
+          path: "/events/channels",
+          element: <Channel token={token} />,
+          children: [
+            {
+              path: "",
+              element: <RightSideChannels />,
+            },
+            {
+              path: "ind/:id/:eventName",
+              element: <RightSideChannels />,
+            },
+          ],
         },
       ],
     },
@@ -76,29 +107,29 @@ function App({}) {
       children: [
         {
           path: "/dashboard",
-          element: <RightSide />,
+          element: <RightSide token={token}/>,
         },
 
         {
           path: "add",
-          element: <AddEvent />,
+          element: <AddEvent token={token} />,
         },
         ,
         {
           path: "events",
-          element: <UserEventDetails />,
+          element: <UserEventDetails token={token}/>,
         },
         {
           path: "accounts",
-          element: <AccountDetails />,
+          element: <AccountDetails token={token} />,
         },
         {
           path: "events/:id",
-          element: <ParticularEvent />,
+          element: <ParticularEvent token={token}/>,
         },
         {
           path: "edit/:id",
-          element: <EditExistingEvent />,
+          element: <EditExistingEvent token={token} />,
         },
         {
           path: "invities",
@@ -116,26 +147,12 @@ function App({}) {
           path: "eventGroupings/:eventType",
           element: <FilterEvents1 />,
         },
-        {
-          path: "channels",
-          element: <Channel />,
-          children: [
-            {
-              path: "",
-              element: <RightSideChannels />,
-            },
-            {
-              path: "ind/:id",
-              element: <RightSideChannels />,
-            },
-          ],
-        },
       ],
     },
 
     {
       path: "/signin",
-      element: <Signin />,
+      element: <Signin setToken={setToken} />,
     },
     {
       path: "/signup",
@@ -146,8 +163,6 @@ function App({}) {
       element:<ForgotPassword/>
     },
   ]);
-
-  console.log("accessToken", accessToken);
 
   return (
     <>

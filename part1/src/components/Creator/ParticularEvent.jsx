@@ -11,13 +11,13 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Iframe from "react-iframe";
 import ChatBox from "../ChatBox";
 import AnnouncementChannelCreator from "../ChattNew/AnnouncementChannelCreator ";
-export default function UserEventDetails() {
+export default function UserEventDetails({token}) {
   const { id } = useParams();
   const [details, setDetails] = useState({});
-  const [affirmation, setAffirmation] = [];
+
   console.log(id);
   useEffect(() => {
-    api.fetchParticularEvent(id).then((res) => {
+    api.fetchParticularEvent(id,token).then((res) => {
       console.log(res);
       setDetails(res);
     });

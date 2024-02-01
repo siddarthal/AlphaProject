@@ -1,0 +1,108 @@
+
+.ticket-container {
+    margin: auto;
+    display: flex;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  }
+  
+  .image-container {
+    height: 250px;
+    width: 250px;
+    background-size: cover;
+    opacity: 0.85;
+  }
+  
+  .admit-one {
+    position: absolute;
+    color: darkgray;
+    height: 250px;
+    padding: 0 10px;
+    letter-spacing: 0.15em;
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    writing-mode: vertical-rl;
+    transform: rotate(-180deg);
+  }
+  
+  .admit-one span:nth-child(2) {
+    color: white;
+    font-weight: 700;
+  }
+  
+  .ticket-number {
+    height: 250px;
+    width: 250px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 5px;
+  }
+  
+  .ticket-info {
+    padding: 10px 30px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .date {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding: 5px 0;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .date span {
+    width: 100px;
+  }
+  
+  .date span:first-child {
+    text-align: left;
+  }
+  
+  .date span:last-child {
+    text-align: right;
+  }
+  
+  .date .june-29 {
+    color: #d83565;
+    font-size: 20px;
+  }
+  
+  .show-name {
+    font-size: 32px;
+  }
+  
+  .time {
+    padding: 10px 0;
+    color: #4a437e;
+  }
+  
+  .time span {
+    font-weight: 400;
+    color: gray;
+  }
+  
+  .additional-info {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid gray;
+    padding-top: 8px;
+  }
+  
+  .smile-icon {
+    font-size: 20px;
+    padding-left: 1px;
+  }
+  
+  .location-link {
+    text-decoration: none;
+  }
+  

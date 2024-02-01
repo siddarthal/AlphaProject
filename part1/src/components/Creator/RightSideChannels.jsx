@@ -5,9 +5,9 @@ import { Box, Typography, Paper, List, Avatar } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person'; // Import the person icon
 
 const RightSideChannels = () => {
-  const { id } = useParams();
+  const { id ,eventName } = useParams();
   const [messages, setMessages] = useState([]);
-
+  console.log(id,"id");
   useEffect(() => {
     api
       .getEventMessages(id)
@@ -24,7 +24,8 @@ const RightSideChannels = () => {
     <Paper elevation={3} style={{ height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <Box p={2}>
         <Typography variant="h5">
-          Event Chat - {id}
+          {(id===undefined)&&("Browse through channels to get latest info")}
+          {eventName}
         </Typography>
       </Box>
       <Box flexGrow={1} overflowY="auto" p={2}>

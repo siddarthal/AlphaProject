@@ -160,10 +160,11 @@ const NavBar = () => {
               CreateEvents
             </MenuItem>
           )}
-          <MenuItem onClick={() => handleClose("/dashboard")}>
+          <MenuItem onClick={() => handleClose("/dashboard/accounts")}>
             My account
           </MenuItem>
-          <MenuItem onClick={() => handleClose("/channels")}>Channels</MenuItem>
+          <MenuItem onClick={() => handleClose("/events/channels")}>Channels</MenuItem>
+          <MenuItem onClick={() => handleClose("/events/tickets")}>Tickets</MenuItem>
           <MenuItem onClick={handleSignout}>
             {tokenBool ? "signout" : "signin"}
           </MenuItem>

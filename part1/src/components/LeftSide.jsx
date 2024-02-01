@@ -54,8 +54,8 @@ const LeftSide = () => {
         </Box> */}
         <Box>
           <Container>
-            <Button variant="text" startIcon={<LocalActivityOutlinedIcon />} onClick={() => navigate("invities")}>
-              Tickets
+            <Button variant="text" startIcon={<LocalActivityOutlinedIcon />} onClick={() => navigate("rsvps")}>
+              RSVPS
             </Button>
           </Container>
         </Box>
@@ -80,17 +80,7 @@ const LeftSide = () => {
             </Button>
           </Container>
         </Box>
-        <Box style={{ bottom: 0 }}>
-          <Container>
-            <Button
-              onClick={() => navigate("channels")}
-              variant="text"
-              startIcon={<PersonOutlineOutlinedIcon />}
-            >
-              Broadcasts
-            </Button>
-          </Container>
-        </Box>
+        
       </Stack>
     </div>
   );

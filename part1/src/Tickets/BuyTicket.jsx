@@ -12,11 +12,10 @@ import api from "../Services/service";
 import axios from "axios";
 import useRazorpay from "react-razorpay";
 
-const BuyTicket = () => {
+const BuyTicket = ({token}) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [Razorpay] = useRazorpay();
-
 
   const [numPeople, setNumPeople] = useState(10);
   const [attending, setAttending] = useState(3);
@@ -26,15 +25,15 @@ const BuyTicket = () => {
     user: 0,
     event: id,
   });
-  const [user,setUser]=useState();
+  const [user, setUser] = useState();
   const eventName = details.category;
   useEffect(() => {
-    api.userAccountDatails().then((res) => {
-        console.log("uid",res.data.id);
-        setUser(parseInt(res.data.id));
+    api.userAccountDatails(token).then((res) => {
+      console.log("uid", res.data.id);
+      setUser(parseInt(res.data.id));
     });
     api
-      .fetchParticularEvent(id)
+      .fetchParticularEvent(id,token)
       .then((res) => {
         console.log(res);
         setDetails(res);
@@ -44,73 +43,96 @@ const BuyTicket = () => {
       });
   }, []);
   const calculateTotalFare = () => {
-    return numPeople * details.ticket_cost + attending * 5;
+    return numPeople * details.ticket_cost ;
   };
 
   const handleConfirmation = () => {
     const totalFare = calculateTotalFare();
-    // const confirmationDetails = {
-    //   num_people: numPeople,
-    //   attending:attending,
-    //   user:user,
-    //   event: id,
-    // };
     const confirmationDetails = {
+      num_people: numPeople,
+      attending: attending,
+      user: user,
+      event: id,
       amount: totalFare,
-      ticket:1,
-      status: "success"
-  }
-    console.log("confirmationDetails",confirmationDetails);
+      order_id: "temp",
+    };
+    // const confirmationDetails = {
+    //   amount: totalFare,
+    //   ticket:1,
+    //   status: "success"
+    // }
+    console.log("confirmationDetails", confirmationDetails);
     // api.buyTicketUrl(confirmationDetails).then((res)=>{
     //   console.log("res",res)
     // })
 
-    axios.post('http://127.0.0.1:8000/api/pay-now/', 
-      confirmationDetails
-    ).then(function (response){
-      console.log(response);
-      const order_id = response.data.order_id
-      const options = {
-        key: "rzp_test_6gVqKVhbGkiCBm", 
-        name: "RelEvent",
-        description: "Test Transaction",
-        image: "https://example.com/your_logo",
-        order_id: order_id, //This is a sample Order ID. Pass the `id` obtained in the response of createOrder().
-        handler: function (response) {
-          alert(response.razorpay_payment_id);
-          alert(response.razorpay_order_id);
-          alert(response.razorpay_signature);
-        },
-        prefill: {
-          name: "Piyush Garg",
-          email: "youremail@example.com",
-          contact: "9999999999",
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
-    
-      const rzp1 = new Razorpay(options);
-    
-      rzp1.on("payment.failed", function (response) {
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
+    axios
+      .post("http://127.0.0.1:8000/api/tickets/", confirmationDetails)
+      .then(function (response) {
+        console.log(response);
+        const order_id = response.data.order_id;
+        const options = {
+          key: "rzp_test_6gVqKVhbGkiCBm",
+          name: "RelEvent",
+          description: "Test Transaction",
+          image: "https://example.com/your_logo",
+          order_id: order_id,
+          handler: function (response1) {
+            // alert(response1.razorpay_payment_id);
+            // alert(response1.razorpay_order_id);
+            // alert(response1.razorpay_signature);
+            console.log("re", response);
+            const data = {
+              PID: response1.razorpay_payment_id,
+              ticket: response.data.TID,
+              amount: totalFare,
+              status: "success",
+            };
+            console.log(data, "data");
+            axios
+              .post("http://127.0.0.1:8000/api/payments/", data)
+              .then(function (response2) {
+                if ((response2.status = 200)) {
+                  navigate("/events/tickets");
+                } else {
+                  console.log("res status", response2.status);
+                }
+                console.log(response2);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          },
+          prefill: {
+            name: "Piyush Garg",
+            email: "youremail@example.com",
+            contact: "9999999999",
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+
+        const rzp1 = new Razorpay(options);
+
+        rzp1.on("payment.failed", function (response) {
+          alert(response.error.code);
+          alert(response.error.description);
+          alert(response.error.source);
+          alert(response.error.step);
+          alert(response.error.reason);
+          alert(response.error.metadata.order_id);
+          alert(response.error.metadata.payment_id);
+        });
+
+        rzp1.open();
+      })
+      .catch(function (error) {
+        console.log(error);
       });
-    
-      rzp1.open();
-    
-    }).catch(function (error){
-      console.log(error);
-    });
     // navigate("/payment", { state: confirmationDetails });
   };
 

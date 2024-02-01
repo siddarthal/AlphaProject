@@ -15,14 +15,14 @@ import {
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import StartDateTime from "../components/StartDateTime";
 import EndDateTime from "../components/EndDateTime";
 import ButtonGrouping from "../components/ButtonGrouping";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { useNavigate, Link } from "react-router-dom";
-const AddEvent = () => {
+const AddEvent = ({token}) => {
   const [privacy, setPrivacy] = useState(true);
   const [medium, setMedium] = useState(true);
   const locationdata = ["location", "latitude", "longitude"];
@@ -50,6 +50,19 @@ const AddEvent = () => {
     privacy: false,
     user: 8,
   });
+  useEffect(()=>{
+    api
+    .userAccountDatails(token)
+    .then((res) => {
+      if (res.status == 200) {
+        console.log(res.data);
+        setEvent({...event,user:res.data.id})
+      } else {
+        alert("cant fetch user id");
+      }
+    })
+    .catch((error) => console.log(error));
+  },[])
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
@@ -63,11 +76,11 @@ const AddEvent = () => {
   });
   const handlePrivacy = (value) => {
     setPrivacy(value);
-    setEvent({ ...event, privacy:privacy});
+    setEvent({ ...event, privacy: privacy });
   };
   const handleMedium = (value) => {
     setMedium(value);
-    setEvent({ ...event,require_volunteers:!medium });
+    setEvent({ ...event, require_volunteers: !medium });
   };
   const handleClick = (item, idx) => {
     const arr = new Array(13).fill(false);
@@ -76,26 +89,25 @@ const AddEvent = () => {
     setEvent({ ...event, category: item });
     setTracker(arr);
   };
-  const handelDateChange=(value,name)=>{
-    console.log(value,"value");
-    console.log(name,"name");
+  const handelDateChange = (value, name) => {
+    console.log(value, "value");
+    console.log(name, "name");
     const dateValue = dayjs(value);
     const formattedDate = dateValue.format("YYYY-MM-DD");
     const formattedTime = dateValue.format("HH:mm:ss");
-    if(name==="endDate"){
+    if (name === "endDate") {
       setEvent({
         ...event,
         [name]: formattedDate,
       });
-    }else{
+    } else {
       setEvent({
         ...event,
         [name]: formattedDate,
         time: formattedTime,
       });
     }
-    
-  }
+  };
   const handleChange = (e) => {
     console.log(e.target.value);
     console.log(e.target.name);
@@ -147,9 +159,16 @@ const AddEvent = () => {
         formData.append("poster", selectedFile);
       }
       console.log(formData);
-      api
-        .submitEvent(formData)
-        .then((res) => {
+      redirectSubmit(formData);
+    } else {
+      console.log("cannot validate", errors.event_name);
+    }
+  };
+  const redirectSubmit = (formData) => {
+    api
+      .submitEvent(formData)
+      .then((res) => {
+        if (res.status === 201) {
           console.log("succesfully data posted");
           console.log(res);
           console.log(event);
@@ -172,13 +191,12 @@ const AddEvent = () => {
             longitude: "",
           });
           navigate("/dashboard");
-        })
-        .catch((error) => console.log(error));
-    } else {
-      console.log("cannot validate", errors.event_name);
-    }
+        } else {
+          alert("issue in submitting the event");
+        }
+      })
+      .catch((error) => console.log(error));
   };
-
   const handlePress = () => {
     // Handle click action here
     navigate("/dashboard");
@@ -424,25 +442,31 @@ const AddEvent = () => {
           />
         </Button>
         {selectedFile && (
-          <div style={{ marginTop: '20px', position: 'relative' }}>
-          <Typography variant="body1">File uploaded:</Typography>
-          <img
-            src={URL.createObjectURL(selectedFile)}
-            alt="Uploaded File"
-            style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }}
-          />
-          <IconButton
-            onClick={()=>{setSelectedFile(null)}}
-            style={{
-              position: 'absolute',
-              top: '10px',
-              right: '10px',
-              zIndex: 1,
-            }}
-          >
-            <CancelIcon />
-          </IconButton>
-        </div>
+          <div style={{ marginTop: "20px", position: "relative" }}>
+            <Typography variant="body1">File uploaded:</Typography>
+            <img
+              src={URL.createObjectURL(selectedFile)}
+              alt="Uploaded File"
+              style={{
+                maxWidth: "100%",
+                maxHeight: "200px",
+                marginTop: "10px",
+              }}
+            />
+            <IconButton
+              onClick={() => {
+                setSelectedFile(null);
+              }}
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                zIndex: 1,
+              }}
+            >
+              <CancelIcon />
+            </IconButton>
+          </div>
         )}
         <Button
           sx={{ width: "20%" }}

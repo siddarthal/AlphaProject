@@ -7,34 +7,33 @@ import image from "../Images/home.jpg";
 import api from "../Services/service";
 import RightSideEvents from "./RighsideEvents";
 import DateOnDashboard from "./Creator/DateOnDashboard";
-const RightSide = () => {
-  const [data,setData] = useState(null);
+const RightSide = ({ token }) => {
+  const [data, setData] = useState([]);
   useEffect(() => {
     console.log("useeffect");
     const fetchData = async () => {
-      try{
-        const response=await api.userSpecificEvent();
-        console.log(response.data,"hi ");
-        if(response.data!== undefined){
+      try {
+        const response = await api.userSpecificEvent(token);
+        console.log(response.data, "hi ");
+        if (response.status === 200) {
           setData(response.data);
-          }
+        } else {
+          alert("unable to fetch data now try again later");
+        }
+      } catch {
+        console.log("unable to fetch data");
       }
-      catch{
-       console.log("unable to fetch data");
-
-      }
-     
     };
     fetchData();
-  }, []);
+  }, [token]);
 
   const navigate = useNavigate();
-  
+
   const handleClick = () => {
     navigate("/dashboard/add");
   };
 
-  const value=data===null;
+
   return (
     <Box>
       <Stack spacing={2}>
@@ -55,11 +54,10 @@ const RightSide = () => {
               </Button>
             </Box>
           </Grid>
-          <DateOnDashboard/>
-        
+          <DateOnDashboard />
         </Grid>
 
-        { value? (
+        {data.length ===0 ? (
           <>
             <Box style={{ textAlign: "center", paddingTop: 74 }}>
               <Typography
@@ -78,10 +76,10 @@ const RightSide = () => {
             </Container>
           </>
         ) : (
-          <RightSideEvents requiredData={data}/>
+          <RightSideEvents requiredData={data} />
         )}
       </Stack>
     </Box>
   );
 };
-export default RightSide;
+export default React.memo(RightSide);

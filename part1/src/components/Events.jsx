@@ -7,16 +7,7 @@ import { Outlet } from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
 
 const Events = () => {
-  const [event, setEvent] = useState([]);
-  useEffect(() => {
-    api
-      .getEvents()
-      .then((res) => {
-        console.log(res);
-        setEvent(res);
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
+  
   const theme = useTheme();
   const isWideScreen = useMediaQuery(theme.breakpoints.up("sm"));
   return (
@@ -26,7 +17,7 @@ const Events = () => {
         Explore the best events happening around you
       </Typography>
       <Menubar />
-      <Outlet event={event}/>
+      <Outlet/>
     </Stack>
     </Container>
   );

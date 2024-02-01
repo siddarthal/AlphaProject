@@ -1,20 +1,18 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
+
+import { Box, Typography, Grid } from "@mui/material";
 
 const Invites = () => {
-  // Placeholder condition for no invites
-  const noInvites = true;
-
-  return (
+  const noInvites=true;
     <Box>
       {noInvites ? (
-        <Typography variant='h5'>No Tickets</Typography>
+        <Typography variant="h5">No Invities</Typography>
       ) : (
-        /* Display invite-related content here */
-        <Typography>Invites Content</Typography>
+        <Box>
+          Invities
+        </Box>
       )}
     </Box>
-  );
+
 };
 
 export default Invites;

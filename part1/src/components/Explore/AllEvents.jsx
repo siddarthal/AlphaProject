@@ -7,18 +7,20 @@ import api from "../../Services/service";
 import { useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import EventCard from "../EventCard";
-import { Box, Stack, Typography, Container } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 const AllEvents = () => {
-    const [event, setEvent] = useState([]);
-    useEffect(() => {
-      api
-        .getEvents()
-        .then((res) => {
-          console.log(res);
-          setEvent(res);
-        })
-        .catch((error) => console.log("error", error));
-    }, []);
+  const [event, setEvent] = useState([]);
+  useEffect(() => {
+    api
+      .getEventsOne()
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res, "in response 2000000");
+          setEvent(res.data);
+        }
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
   function LeftNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -96,11 +98,7 @@ const AllEvents = () => {
 
   function fetchAllCategoriesData() {
     event.forEach((item) => {
-      // console.log(item.category);
-      // console.log("hello");
-      // console.log(category[item.categories]);
       category[item.category].push(item);
-      // category[item.categories].push(item);
     });
 
     Object.keys(category).forEach((categoryName) => {
@@ -108,14 +106,11 @@ const AllEvents = () => {
         delete category[categoryName];
       }
     });
-    console.log(category);
-    // console.log(num+1);
   }
   fetchAllCategoriesData();
-
-  console.log(category);
+  console.log("hi");
   return (
- <>
+    <>
       <Box>
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
           All Events
@@ -127,13 +122,12 @@ const AllEvents = () => {
           ))}
         </Slider>
       </Box>
-      {
-        Object.keys(category).map((categoryName, idx) => {
-          return  <Carousel category={category} categoryName={categoryName} key={idx}/>
-        })
-      }
-      
-      </>
+      {Object.keys(category).map((categoryName, idx) => {
+        return (
+          <Carousel category={category} categoryName={categoryName} key={idx} />
+        );
+      })}
+    </>
   );
 };
 export default AllEvents;

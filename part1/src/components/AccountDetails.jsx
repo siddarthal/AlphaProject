@@ -21,7 +21,7 @@ const getRandomColor = () => {
   return colors[randomIndex];
 };
 
-const AccountDetails = () => {
+const AccountDetails = ({token}) => {
   const userData = {
     name: "",
     email: "",
@@ -29,11 +29,11 @@ const AccountDetails = () => {
   };
   const [user, setUser] = useState(userData);
   useEffect(() => {
-    api.userAccountDatails().then((res) => {
+    api.userAccountDatails(token).then((res) => {
       console.log(res.data);
       setUser(res.data);
     });
-  }, []);
+  }, [token]);
 
   const handleUsernameChange = (event) => {
     console.log(event.target.value);

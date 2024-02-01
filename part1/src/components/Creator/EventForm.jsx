@@ -24,7 +24,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
-const EventForm = () => {
+const EventForm = ({token}) => {
   const [privacy, setPrivacy] = useState(true);
   const [medium, setMedium] = useState(true);
   const locationdata = ["location", "latitude", "longitude"];
@@ -53,6 +53,19 @@ const EventForm = () => {
     longitude: "",
     user: "1",
   });
+  useEffect(()=>{
+    api
+    .userAccountDatails(token)
+    .then((res) => {
+      if (res.status == 200) {
+        console.log(res.data);
+        setEvent({...event,user:res.data.id})
+      } else {
+        alert("cant fetch user id");
+      }
+    })
+    .catch((error) => console.log(error));
+  },[])
   const categories = [
     "music",
     "games",
@@ -66,7 +79,7 @@ const EventForm = () => {
     "other",
   ];
   useEffect(() => {
-    api.fetchParticularEvent(id).then((res) => {
+    api.fetchParticularEvent(id,token).then((res) => {
       console.log(res);
       setEvent(res);
       setPrivacy(res.privacy);
@@ -208,7 +221,7 @@ const EventForm = () => {
     console.log(formData);
     setErrors({});
     api
-      .editParticularEvent(id, formData)
+      .editParticularEvent(id, formData,token)
       .then((res) => {
         console.log("succesfully data posted");
         console.log(formData);
