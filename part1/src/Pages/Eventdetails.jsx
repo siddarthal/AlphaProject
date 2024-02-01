@@ -45,8 +45,9 @@ export default function EventDetails({ token }) {
       }
     });
   }, [token]);
-
+  
   const handleChannel = () => {
+    const eventName=event.event_name+" Broadcast";
     api
       .handleChannelSubscribe(userId, id)
       .then((res) => {
@@ -60,7 +61,7 @@ export default function EventDetails({ token }) {
         alert(
           "already party of this channel press okay to continue to the channel"
         );
-        navigate("/events/channels");
+        navigate(`/events/channels/ind/${id}/${eventName}`);
       });
   };
   const handleBuyTicket = () => {

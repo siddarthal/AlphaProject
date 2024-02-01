@@ -78,7 +78,7 @@ function App() {
 
         {
           path: "/events/tickets/:id",
-          element: <BuyTicket />,
+          element: <BuyTicket token={token}/>,
         },
         {
           path: "/events/tickets",
@@ -93,7 +93,7 @@ function App() {
               element: <RightSideChannels />,
             },
             {
-              path: "ind/:id",
+              path: "ind/:id/:eventName",
               element: <RightSideChannels />,
             },
           ],

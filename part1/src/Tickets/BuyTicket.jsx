@@ -12,7 +12,7 @@ import api from "../Services/service";
 import axios from "axios";
 import useRazorpay from "react-razorpay";
 
-const BuyTicket = () => {
+const BuyTicket = ({token}) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [Razorpay] = useRazorpay();
@@ -28,12 +28,12 @@ const BuyTicket = () => {
   const [user, setUser] = useState();
   const eventName = details.category;
   useEffect(() => {
-    api.userAccountDatails().then((res) => {
+    api.userAccountDatails(token).then((res) => {
       console.log("uid", res.data.id);
       setUser(parseInt(res.data.id));
     });
     api
-      .fetchParticularEvent(id)
+      .fetchParticularEvent(id,token)
       .then((res) => {
         console.log(res);
         setDetails(res);
@@ -78,9 +78,9 @@ const BuyTicket = () => {
           image: "https://example.com/your_logo",
           order_id: order_id,
           handler: function (response1) {
-            alert(response1.razorpay_payment_id);
-            alert(response1.razorpay_order_id);
-            alert(response1.razorpay_signature);
+            // alert(response1.razorpay_payment_id);
+            // alert(response1.razorpay_order_id);
+            // alert(response1.razorpay_signature);
             console.log("re", response);
             const data = {
               PID: response1.razorpay_payment_id,
