@@ -158,10 +158,7 @@ function App() {
       path: "/signup",
       element: <Signup />,
     },
-    {
-      path:"/resetPassword",
-      element:<ForgotPassword/>
-    },
+   
   ]);
 
   return (
