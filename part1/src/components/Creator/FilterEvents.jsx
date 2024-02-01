@@ -5,7 +5,7 @@ import { useParams,useNavigate } from "react-router-dom";
 import Events from "./Events";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 
-const FilterEvents1 = () => {
+const FilterEvents1 = ({token}) => {
   const [requiredData, setRequiredData] = useState([]);
   const [arrayDisplay, setArrayDisplay] = useState([]);
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const FilterEvents1 = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.userSpecificEvent();
+        const response = await api.userSpecificEvent(token);
         console.log(response.data, "hi ");
         setRequiredData(response.data);
       } catch {

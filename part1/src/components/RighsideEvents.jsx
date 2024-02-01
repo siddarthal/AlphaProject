@@ -2,7 +2,7 @@ import { Box, Grid, Paper, Typography, Button, Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const RightsideEvents = ({ requiredData }) => {
+const RightsideEvents = ({ requiredData ,token}) => {
   const navigate = useNavigate();
   const [arrayDisplay, setArrayDisplay] = useState([]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
