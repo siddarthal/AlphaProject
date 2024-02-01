@@ -1,11 +1,12 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
 import api from "../../Services/service";
 import { useEffect, useState } from "react";
 import Carousel from "./Carousel";
+import EventCard from "../EventCard";
 const FilterEvents = () => {
-    const [event, setEvent] = useState([]);
- 
+  const [event, setEvent] = useState([]);
+
   const { eventName } = useParams();
   useEffect(() => {
     api
@@ -18,7 +19,7 @@ const FilterEvents = () => {
   }, []);
   console.log(eventName);
   console.log(event);
-  const category ={ [eventName]:[]};
+  const category = { [eventName]: [] };
   event.forEach((item) => {
     if (item.category === eventName) {
       category[item.category].push(item);
@@ -27,8 +28,20 @@ const FilterEvents = () => {
   console.log(category);
   return (
     <Box>
-
-      <Carousel category={category} categoryName={eventName}/>
+      <Typography variant="h5" fontStyle="bold">
+        {eventName}
+      </Typography>
+      <Grid container spacing={1} alignItems="center">
+        {category[eventName].map((item) => {
+          console.log("in the blood", item.EID);
+          return (
+            <Grid item xs={12} md={4}key={item.EID}>
+              <EventCard event={item} />
+            </Grid>
+          );
+        })}
+      </Grid>
+      {/* <Carousel category={category} categoryName={eventName}/> */}
     </Box>
   );
 };

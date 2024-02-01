@@ -28,6 +28,7 @@ import FilterEvents from "./components/Explore/FilterEvents.jsx";
 import Events from "./components/Events.jsx";
 import AllEvents from "./components/Explore/AllEvents.jsx";
 import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
+import ForgotPassword from "./Pages/ForgotPassword.jsx";
 import Alltickets from "./components/Creator/Alltickets.jsx";
 function App({}) {
   const accessToken = localStorage.getItem("accessToken");
@@ -144,6 +145,10 @@ function App({}) {
     {
       path: "/signup",
       element: <Signup />,
+    },
+    {
+      path:"/resetPassword",
+      element:<ForgotPassword/>
     },
   ]);
 

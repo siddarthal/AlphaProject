@@ -91,7 +91,7 @@ export default function UserEventDetails() {
           </Box>
         </Box>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Paper elevation={6} sx={{ height: "40vh", borderRadius: "7px" }}>
               <img
                 src={details.poster}
@@ -105,7 +105,7 @@ export default function UserEventDetails() {
               />
             </Paper>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Paper elevation={6} sx={{ height: "40vh", borderRadius: "7px" }}>
               <Box
                 sx={{
@@ -140,10 +140,10 @@ export default function UserEventDetails() {
           </Grid>
         </Grid>
         <Grid  container spacing={2} alignItems="flex-start">
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <AnnouncementChannelCreator idx={id} />
           </Grid>
-          <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
             <Box
                sx={{
                 p: 2,

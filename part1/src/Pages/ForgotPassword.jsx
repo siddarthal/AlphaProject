@@ -1,65 +1,68 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { Link, useNavigate, json, useNavigation } from "react-router-dom";
+import axios from "axios";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import api from "../Services/service";
 
-export default function Signin() {
+const ForgotPassword = () => {
+  const navigation = useNavigation();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    rePassword: "",
   });
-  const navigation = useNavigation();
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
-  const isSubmitting = navigation.state === "submitting";
-  const signValidation = () => {
-    let newErrors = {};
-    if (!formData.email) {
-      newErrors.email = "Email must be entered";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Enter a valid email address";
-    }
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const signinHandler = async (e) => {
-    e.preventDefault();
-    if (signValidation()) {
-      setErrors({});
-      api
-        .signin(formData)
-        .then((res) => {
-          console.log("successfull");
-          console.log("result", res);
-          // onLogin();
-          if (res.access_token !== undefined) {
-            localStorage.setItem("accessToken", res.access_token);
-            setFormData({ email: "", password: "" });
-            navigate("/events");
-          }
-          else{
-            alert("wrong credentials");
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          alert("wrong credentials");
-        });
-    } else {
-      console.error(`can't validate`);
-    }
-  };
-
   const handleInputChange = (event) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
   };
+
+  const navigate = useNavigate();
+  const isSubmitting = navigation.state === "submitting";
+
+  const formValidation = () => {
+    const newErrors = {};
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Enter a valid email address";
+    }
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    }
+    if (!formData.rePassword) {
+      newErrors.rePassword = "Password should be rentered";
+    } else if (formData.password !== formData.rePassword) {
+      newErrors.rePassword = "Both the passwords should match";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  async function signupHandler(e) {
+    e.preventDefault();
+    if (formValidation()) {
+      setErrors({});
+      const { rePassword, ...dataToSend } = formData;
+      api
+        .signUp(dataToSend)
+        .then((result) => {
+          console.log("successfull");
+          console.log("formData", dataToSend);
+          console.log("result", result);
+          navigate("/signin");
+          setFormData({ name: "", email: "", password: "", rePassword: "" });
+        })
+        .catch((err) => {
+          console.error(err);
+          alert(`email adress is already registered`);
+        });
+    } else {
+      console.error(`can't validate`);
+    }
+  }
 
   return (
     <Box
@@ -79,10 +82,10 @@ export default function Signin() {
         variant="h4"
         fontWeight="600"
         sx={{
-          mb: 3,
+          mb: 1,
         }}
       >
-        Login
+        Reset Password
       </Typography>
 
       <TextField
@@ -120,9 +123,33 @@ export default function Signin() {
           {errors.password}
         </Typography>
       )}
+      <TextField
+        label="Password Again"
+        type="password"
+        placeholder="re-enter password"
+        variant="outlined"
+        fullWidth
+        sx={{
+          mb: 3,
+        }}
+        name="rePassword"
+        value={formData.rePassword}
+        onChange={handleInputChange}
+      />
+      <>
+        {errors.rePassword && (
+          <Typography
+            sx={{ marginBottom: "10px" }}
+            variant="body2"
+            fontWeight="600"
+            className="flex-start"
+          >
+            {errors.rePassword}
+          </Typography>
+        )}
+      </>
       <Button
         variant="contained"
-        disabled={isSubmitting}
         disableElevation
         sx={{
           py: 1.5,
@@ -130,16 +157,17 @@ export default function Signin() {
           fontSize: 16,
           width: 150,
         }}
-        onClick={signinHandler}
+        disabled={isSubmitting}
+        onClick={signupHandler}
       >
-        {isSubmitting ? "logging you in" : "login"}
+        {isSubmitting ? "signing u up..." : "Reset "}
       </Button>
       <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
-        New to Website <Link to="/signup">Signup</Link>
+        Already a member? <Link to="/signin">Signin</Link>
       </Typography>
-      <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
-        Forgot Password? <Link to="/resetPassword">Reset Password</Link>
-      </Typography>
+     
     </Box>
   );
-}
+};
+
+export default ForgotPassword;
