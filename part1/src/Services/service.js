@@ -1,21 +1,20 @@
 import axios from "axios";
-import { getAuthToken } from "../util/auth";
-let token = getAuthToken();
 
-const header = {
-  Authorization: "Bearer " + token,
-};
-const urlSignin = "api/login/";
+const backendURL =
+  import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost:8000";
+console.log(backendURL, "backendURL");
+
+const urlSignin = backendURL + "/api/login/";
 const signin = (body) => {
   const promise = axios.post(urlSignin, body);
   return promise.then((res) => res.data).catch((error) => error);
 };
-const urlSignup = "api/signup/";
+const urlSignup = backendURL + "/api/signup/";
 const signUp = (body) => {
   const promise = axios.post(urlSignup, body);
   return promise.then((res) => res.data).catch((error) => error);
 };
-const urlEvents = "http://127.0.0.1:8000/api/events/";
+const urlEvents = backendURL + "/api/events/";
 const getEvents = () => {
   const promise = axios.get(urlEvents);
   return promise.then((res) => res.data).catch((error) => error);
@@ -25,8 +24,8 @@ const getEventsOne = () => {
   return promise.then((res) => res).catch((error) => error);
 };
 const fetchEvent = (id) => {
-  const urlEachEvent = urlEvents + id;
-  const promise = axios.get(urlEachEvent + "/", { headers: header });
+  const urlEachEvent = urlEvents + id + "/";
+  const promise = axios.get(urlEachEvent);
   return promise.then((res) => res).catch((error) => error);
 };
 const submitEvent = (body) => {
@@ -35,7 +34,7 @@ const submitEvent = (body) => {
   const promise = axios.post(urlSubmitEvent, body);
   return promise.then((res) => res).catch((error) => error);
 };
-const urlEvents2 = "http://127.0.0.1:8000/api/events/self/";
+const urlEvents2 = backendURL + "/api/events/self/";
 const userSpecificEvent = (tokens) => {
   const headerS = {
     Authorization: "Bearer " + tokens,
@@ -63,7 +62,7 @@ const editParticularEvent = (id, data, tokens) => {
   return promise.then((res) => res.data).catch((error) => error);
 };
 const getEventMessages = (eventId, tokens) => {
-  const url = `http://127.0.0.1:8000/api/messages/${eventId}`;
+  const url = backendURL + `/api/messages/${eventId}`;
   const headerS = {
     Authorization: "Bearer " + tokens,
   };
@@ -71,14 +70,17 @@ const getEventMessages = (eventId, tokens) => {
   return axios.get(url, { headers: headerS });
 };
 
-const deleteParticularEvent = (id) => {
+const deleteParticularEvent = (id, tokens) => {
+  const headerS = {
+    Authorization: "Bearer " + tokens,
+  };
   const urldeleteParticularEvent = urlEvents + id;
-  const promise = axios.delete(urldeleteParticularEvent, { headers: header });
+  const promise = axios.delete(urldeleteParticularEvent, { headers: headerS });
   return promise.then((res) => res).catch((error) => error);
 };
 
 const createEventMessage = (eventId, message, tokens) => {
-  const url = `http://127.0.0.1:8000/api/announcements/`;
+  const url = backendURL + `/api/announcements/`;
   const headerS = {
     Authorization: "Bearer " + tokens,
   };
@@ -88,7 +90,7 @@ const createEventMessage = (eventId, message, tokens) => {
   };
   return axios.post(url, body, { headers: headerS });
 };
-const urserAccountUrl = "http://localhost:8000/api/user-data/";
+const urserAccountUrl = backendURL + "/api/user-data/";
 
 const userAccountDatails = (token1) => {
   const header1 = {
@@ -107,22 +109,22 @@ const handleDeleteMessage = (AID, token1) => {
   const header1 = {
     Authorization: "Bearer " + token1,
   };
-  const url = `http://localhost:8000/api/announcements/${AID}`;
+  const url = backendURL + `/api/announcements/${AID}`;
   return axios.delete(url, { headers: header1 });
 };
 const buyTicketUrl = (body) => {
-  const url = "http://localhost:8000/api/tickets/";
+  const url = backendURL + "/api/tickets/";
   return axios.post(url, body);
 };
 const userChannel = (uid, token1) => {
   const header1 = {
     Authorization: "Bearer " + token1,
   };
-  const url = `http://localhost:8000/api/self-channels/${uid}`;
+  const url = backendURL + `/api/self-channels/${uid}`;
   return axios.get(url, { headers: header1 });
 };
 const fetchTickets = (id, token) => {
-  const url = `http://localhost:8000/api/tickets/user/${id}`;
+  const url = backendURL + `/api/tickets/user/${id}`;
   const header1 = {
     Authorization: "Bearer " + token,
   };
@@ -130,7 +132,7 @@ const fetchTickets = (id, token) => {
 };
 
 const handleChannelSubscribe = (user, id, token) => {
-  const url = `http://127.0.0.1:8000/api/volunteers/`;
+  const url = backendURL + `/api/volunteers/`;
   const header1 = {
     Authorization: "Bearer " + token,
   };
