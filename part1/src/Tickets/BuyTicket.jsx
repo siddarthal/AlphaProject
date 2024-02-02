@@ -155,19 +155,19 @@ const BuyTicket = ({token}) => {
             label="Number of People"
             type="number"
             value={numPeople}
-            onChange={(e) => setNumPeople(e.target.value)}
+            onChange={(e) =>{ setNumPeople(e.target.value);setAttending(e.target.value);}}
             variant="outlined"
             sx={{ marginBottom: 2 }}
           />
-          <TextField
+          {/* <TextField
             fullWidth
             label="Number Attending"
             type="number"
             value={attending}
-            onChange={(e) => setAttending(e.target.value)}
+            onChange={(e) => }
             variant="outlined"
             sx={{ marginBottom: 2 }}
-          />
+          /> */}
           <Typography variant="h6" sx={{ marginBottom: 1 }}>
             Total Fare:
           </Typography>

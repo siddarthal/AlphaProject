@@ -4,21 +4,23 @@ import api from "../../Services/service";
 import { Box, Typography, Paper, List, Avatar } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person'; // Import the person icon
 
-const RightSideChannels = () => {
+const RightSideChannels = ({token}) => {
   const { id ,eventName } = useParams();
   const [messages, setMessages] = useState([]);
   console.log(id,"id");
   useEffect(() => {
-    api
-      .getEventMessages(id)
-      .then((res) => {
-        setMessages(res.data);
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [id]);
+    if(id!==undefined){
+      api
+        .getEventMessages(id)
+        .then((res) => {
+          setMessages(res.data);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [token,id]);
 
   return (
     <Paper elevation={3} style={{ height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -28,7 +30,7 @@ const RightSideChannels = () => {
           {eventName}
         </Typography>
       </Box>
-      <Box flexGrow={1} overflowY="auto" p={2}>
+      <Box flexGrow={1} sx={{ overflowY: 'auto' }} p={2}>
         <List>
           {messages.map((message, index) => (
             <React.Fragment key={index}>

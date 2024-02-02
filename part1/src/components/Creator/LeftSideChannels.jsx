@@ -2,13 +2,14 @@ import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const LeftSideChannels = ({ eventdata }) => {
+const LeftSideChannels = ({ eventdata,token }) => {
   console.log(eventdata, "hi");
   const navigate = useNavigate();
   const handleClick = (id,eventName) => {
     console.log(`clicked ${id}`);
     navigate(`ind/${id}/${eventName}`);
   };
+  console.log(token);
   return (
     <Box sx={{ paddingRight: 1, bgcolor: "" }}>
       <Typography sx={{ paddingBottom: 3 }}>CHANNELS</Typography>

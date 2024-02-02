@@ -29,9 +29,7 @@ import Events from "./components/Events.jsx";
 import AllEvents from "./components/Explore/AllEvents.jsx";
 import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
 import Alltickets from "./components/Creator/Alltickets.jsx";
-import ChatWithOrganizer from "./components/Explore/Testing.jsx";
-import ChatBot from "./components/Explore/Testing.jsx";
-import ChatWindow from "./components/Explore/Testing.jsx";
+
 function App() {
   const [token, setToken] = useState(null);
   const isInitialMount = useRef(true);
@@ -97,7 +95,7 @@ function App() {
             },
             {
               path: "ind/:id/:eventName",
-              element: <RightSideChannels />,
+              element: <RightSideChannels token={token}/>,
             },
           ],
         },
@@ -161,10 +159,7 @@ function App() {
       path: "/signup",
       element: <Signup />,
     },
-    {
-      path: "/testing",
-      element: <ChatWindow />,
-    },
+  
    
   ]);
 

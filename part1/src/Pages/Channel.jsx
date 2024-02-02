@@ -11,20 +11,23 @@ const Channel = ({token}) => {
 
   const fetchUserData = async () => {
     try {
-      const response = await api.userAccountDatails(token);
-      if (response.status === 200) {
-        console.log(response.data.id, "userid");
-        setUserId(response.data.id);
-      } else {
-        alert("Unable to fetch user ID");
+      if(token!==null){
+        const response = await api.userAccountDatails(token);
+        if (response.status === 200) {
+          console.log(response.data.id, "userid");
+          setUserId(response.data.id);
+        } else {
+          alert("Unable to fetch user ID");
+        }
       }
+     
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     fetchUserData();
-  },[userId] );
+  },[token] );
 
   useEffect(() => {
     if (userId !== null && userId!== undefined) {
@@ -39,7 +42,7 @@ const Channel = ({token}) => {
           console.log(error);
         });
     }
-  }, [userId]);
+  }, [userId,token]);
 
   return (
     <Stack spacing={2} sx={{ marginTop: 3 }}>
@@ -59,7 +62,7 @@ const Channel = ({token}) => {
               "&::-webkit-scrollbar": { display: "none" },
             }}
           >
-            <LeftSideChannels eventdata={events} />
+            <LeftSideChannels eventdata={events} token={token} />
           </Grid>
 
           <Grid item xs={9}>

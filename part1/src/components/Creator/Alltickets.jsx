@@ -3,22 +3,24 @@ import { Box, Typography, Grid } from "@mui/material";
 import api from "../../Services/service";
 
 import Ticket from "./Ticket";
-const AllTickets = ({token}) => {
+const AllTickets = ({ token }) => {
   const [ticket, setTicket] = useState([]);
   const [data, setData] = useState(null);
   useEffect(() => {
-    api
-      .userAccountDatails(token)
-      .then((res) => {
-        console.log(res.data.id);
-        if (res.status === 200) {
-          callTicketDetails(res.data.id);
-        } else {
-          alert("error in fetching user  details");
-        }
-      })
-      .catch((error) => console.log(error));
-  }, []);
+    if (token !== null) {
+      api
+        .userAccountDatails(token)
+        .then((res) => {
+          console.log(res.data.id);
+          if (res.status === 200) {
+            callTicketDetails(res.data.id);
+          } else {
+            alert("error in fetching user  details");
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [token]);
   const callTicketDetails = (id) => {
     api
       .fetchTickets(id)
