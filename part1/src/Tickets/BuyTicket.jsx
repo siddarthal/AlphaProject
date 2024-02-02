@@ -83,12 +83,14 @@ const BuyTicket = ({token}) => {
             // alert(response1.razorpay_payment_id);
             // alert(response1.razorpay_order_id);
             // alert(response1.razorpay_signature);
-            console.log("re", response);
+            console.log("re", response1);
             const data = {
               PID: response1.razorpay_payment_id,
               ticket: response.data.TID,
               amount: totalFare,
               status: "success",
+              order_id: response1.razorpay_order_id,
+              signature: response1.razorpay_signature,
             };
             console.log(data, "data");
             axios
@@ -105,11 +107,6 @@ const BuyTicket = ({token}) => {
                 console.log(error);
               });
           },
-          prefill: {
-            name: "Piyush Garg",
-            email: "youremail@example.com",
-            contact: "9999999999",
-          },
           notes: {
             address: "Razorpay Corporate Office",
           },
@@ -121,13 +118,14 @@ const BuyTicket = ({token}) => {
         const rzp1 = new Razorpay(options);
 
         rzp1.on("payment.failed", function (response) {
-          alert(response.error.code);
-          alert(response.error.description);
-          alert(response.error.source);
-          alert(response.error.step);
-          alert(response.error.reason);
-          alert(response.error.metadata.order_id);
-          alert(response.error.metadata.payment_id);
+          alert("Payment Failed");
+          // alert(response.error.code);
+          // alert(response.error.description);
+          // alert(response.error.source);
+          // alert(response.error.step);
+          // alert(response.error.reason);
+          // alert(response.error.metadata.order_id);
+          // alert(response.error.metadata.payment_id);
         });
 
         rzp1.open();
