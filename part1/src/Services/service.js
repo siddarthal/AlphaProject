@@ -62,13 +62,13 @@ const editParticularEvent = (id, data, tokens) => {
   const promise = axios.put(urleditParticularEvent, data, { headers: headerS });
   return promise.then((res) => res.data).catch((error) => error);
 };
-const getEventMessages = (eventId,tokens) => {
+const getEventMessages = (eventId, tokens) => {
   const url = `http://127.0.0.1:8000/api/messages/${eventId}`;
-   const headerS = {
+  const headerS = {
     Authorization: "Bearer " + tokens,
   };
 
-  return axios.get(url,{ headers: headerS });
+  return axios.get(url, { headers: headerS });
 };
 
 const deleteParticularEvent = (id) => {
@@ -77,14 +77,16 @@ const deleteParticularEvent = (id) => {
   return promise.then((res) => res).catch((error) => error);
 };
 
-const createEventMessage = (eventId, message) => {
+const createEventMessage = (eventId, message, tokens) => {
   const url = `http://127.0.0.1:8000/api/announcements/`;
-
+  const headerS = {
+    Authorization: "Bearer " + tokens,
+  };
   const body = {
     content: message,
     broadcast: parseInt(eventId),
   };
-  return axios.post(url, body);
+  return axios.post(url, body, { headers: headerS });
 };
 const urserAccountUrl = "http://localhost:8000/api/user-data/";
 
@@ -101,20 +103,23 @@ const editAccountDetails = (name) => {
   };
   return axios.post(urserAccountUrl, body, { headers: header });
 };
-const handleDeleteMessage = (eventId) => {
-  const url = `http://localhost:3001/messages?eventId=${eventId}`;
-  return axios.delete(url);
+const handleDeleteMessage = (AID, token1) => {
+  const header1 = {
+    Authorization: "Bearer " + token1,
+  };
+  const url = `http://localhost:8000/api/announcements/${AID}`;
+  return axios.delete(url, { headers: header1 });
 };
 const buyTicketUrl = (body) => {
   const url = "http://localhost:8000/api/tickets/";
   return axios.post(url, body);
 };
-const userChannel = (uid,token1) => {
-   const header1 = {
+const userChannel = (uid, token1) => {
+  const header1 = {
     Authorization: "Bearer " + token1,
   };
   const url = `http://localhost:8000/api/self-channels/${uid}`;
-  return axios.get(url,{ headers: header1 });
+  return axios.get(url, { headers: header1 });
 };
 const fetchTickets = (id, token) => {
   const url = `http://localhost:8000/api/tickets/user/${id}`;
@@ -124,7 +129,7 @@ const fetchTickets = (id, token) => {
   return axios.get(url, { headers: header1 });
 };
 
-const handleChannelSubscribe = (user,id,token) => {
+const handleChannelSubscribe = (user, id, token) => {
   const url = `http://127.0.0.1:8000/api/volunteers/`;
   const header1 = {
     Authorization: "Bearer " + token,
@@ -133,7 +138,7 @@ const handleChannelSubscribe = (user,id,token) => {
     user: user,
     event: id,
   };
-  return axios.post(url, data,{ headers: header1 });
+  return axios.post(url, data, { headers: header1 });
 };
 export default {
   signin: signin,
@@ -154,5 +159,5 @@ export default {
   fetchTickets,
   userChannel,
   getEventsOne,
-  handleChannelSubscribe
+  handleChannelSubscribe,
 };

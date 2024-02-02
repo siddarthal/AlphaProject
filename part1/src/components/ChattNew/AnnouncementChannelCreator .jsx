@@ -11,7 +11,7 @@ import {
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import api from "../../Services/service";
 
-const AnnouncementChannelCreator = ({ idx }) => {
+const AnnouncementChannelCreator = ({ idx, token }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
@@ -19,33 +19,36 @@ const AnnouncementChannelCreator = ({ idx }) => {
 
   useEffect(() => {
     fetchMessages();
-  }, [idx]);
+  }, [idx, token]);
 
   const fetchMessages = () => {
-    api.getEventMessages(idx).then((res) => {
-      console.log("h",res.data);
-      setMessages(res.data);
-    });
+    if (token !== null) {
+      api.getEventMessages(idx, token).then((res) => {
+        console.log("h", res.data);
+        if (res.status === 200) {
+          setMessages(res.data);
+        }
+      });
+    }
   };
 
   const handleSendMessage = () => {
-    const timestamp = new Date().toLocaleTimeString();
     if (newMessage.trim() !== "") {
-
       sendMessage(newMessage);
     }
   };
-  
+
   const sendMessage = async (messageContent) => {
     try {
-      const timestamp = new Date().toLocaleTimeString();
-      const res = await api.createEventMessage(idx, messageContent,timestamp);
-      if (res.status === 201) {
-        setNewMessage("");
-        fetchMessages();
+      if (token !== null) {
+        const res = await api.createEventMessage(idx, messageContent, token);
+        if (res.status === 201) {
+          setNewMessage("");
+          fetchMessages();
+        }
       }
     } catch (error) {
-      // Handle error
+      console.error("Error sending message:", error);
     }
   };
 
@@ -62,13 +65,16 @@ const AnnouncementChannelCreator = ({ idx }) => {
   const handleDeleteMessage = async () => {
     if (selectedMessageId) {
       try {
-        const res = await api.handleDeleteMessage(idx, selectedMessageId);
-        if (res.status === 200) {
-          fetchMessages();
-          handleCloseMenu();
+        if (token !== null) {
+          const res = await api.handleDeleteMessage(selectedMessageId, token);
+          // console.log(res);
+          if (res.status === 204) {
+            fetchMessages();
+            handleCloseMenu();
+          }
         }
       } catch (error) {
-    
+        console.log(error, "Error deleting message");
       }
     }
   };
@@ -89,14 +95,17 @@ const AnnouncementChannelCreator = ({ idx }) => {
       </Typography>
       <div style={{ height: "300px", overflowY: "auto", marginBottom: "20px" }}>
         {messages.map((message) => (
-          <div key={message.id} style={{ display: "flex", alignItems: "center" }}>
+          <div
+            key={message.AID}
+            style={{ display: "flex", alignItems: "center" }}
+          >
             <div style={{ flex: 1, marginRight: "10px" }}>
               <Typography>{message.content}</Typography>
               <Typography variant="caption" color="textSecondary">
-              {message.timeStamp}
+                {new Date(message.timestamp).toLocaleTimeString()}
               </Typography>
             </div>
-            <IconButton onClick={(e) => handleOpenMenu(e, message.id)}>
+            <IconButton onClick={(e) => handleOpenMenu(e, message.AID)}>
               <MoreVertIcon />
             </IconButton>
           </div>

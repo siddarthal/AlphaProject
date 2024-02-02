@@ -141,7 +141,7 @@ export default function UserEventDetails({token}) {
         </Grid>
         <Grid  container spacing={2} alignItems="flex-start">
           <Grid item xs={12} md={8}>
-            <AnnouncementChannelCreator idx={id} />
+            <AnnouncementChannelCreator idx={id} token={token} />
           </Grid>
             <Grid item xs={12} md={4}>
             <Box
