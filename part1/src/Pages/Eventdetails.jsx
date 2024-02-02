@@ -50,8 +50,9 @@ export default function EventDetails({ token }) {
   
   const handleChannel = () => {
     const eventName=event.event_name+" Broadcast";
+    if(token!==null){ 
     api
-      .handleChannelSubscribe(userId, id)
+      .handleChannelSubscribe(userId, id,token)
       .then((res) => {
         console.log("res", res);
         if (res.status === 201) {
@@ -59,12 +60,17 @@ export default function EventDetails({ token }) {
         }
       })
       .catch((error) => {
-        console.log("error", error);
-        alert(
-          "already party of this channel press okay to continue to the channel"
-        );
-        navigate(`/events/channels/ind/${id}/${eventName}`);
+        // console.log("error", error);
+        console.log(error.code);
+        if(error.code==="ERR_BAD_REQUEST"){
+          alert("already party of this channel press okay to continue to the channel");
+          navigate(`/events/channels/ind/${id}/${eventName}`);
+        }
+        else{
+          alert("error in subscribing to the channel");
+        }
       });
+    }
   };
   const handleBuyTicket = () => {
     console.log("clicked buy");

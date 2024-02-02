@@ -9,9 +9,9 @@ const RightSideChannels = ({token}) => {
   const [messages, setMessages] = useState([]);
   console.log(id,"id");
   useEffect(() => {
-    if(id!==undefined){
+    if(id!==undefined && token!==null){
       api
-        .getEventMessages(id)
+        .getEventMessages(id,token)
         .then((res) => {
           setMessages(res.data);
           console.log(res.data);

@@ -30,9 +30,9 @@ const Channel = ({token}) => {
   },[token] );
 
   useEffect(() => {
-    if (userId !== null && userId!== undefined) {
+    if (userId !== null && userId!== undefined && token!==null) {
       api
-        .userChannel(userId)
+        .userChannel(userId,token)
         .then((res) => {
           console.log(res);
           setEvents(res.data);
