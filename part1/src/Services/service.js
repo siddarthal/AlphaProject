@@ -110,9 +110,12 @@ const userChannel = (uid) => {
   const url = `http://localhost:8000/api/self-channels/${uid}`;
   return axios.get(url);
 };
-const fetchTickets = (id) => {
+const fetchTickets = (id, token) => {
   const url = `http://localhost:8000/api/tickets/user/${id}`;
-  return axios.get(url);
+  const header1 = {
+    Authorization: "Bearer " + token,
+  };
+  return axios.get(url, { headers: header1 });
 };
 
 const handleChannelSubscribe = (user,id) => {

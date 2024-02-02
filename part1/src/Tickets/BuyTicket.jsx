@@ -65,9 +65,11 @@ const BuyTicket = ({token}) => {
     // api.buyTicketUrl(confirmationDetails).then((res)=>{
     //   console.log("res",res)
     // })
-
+    const header1 = {
+      Authorization: "Bearer " + token,
+    };
     axios
-      .post("http://127.0.0.1:8000/api/tickets/", confirmationDetails)
+      .post("http://127.0.0.1:8000/api/tickets/", confirmationDetails, {headers: header1})
       .then(function (response) {
         console.log(response);
         const order_id = response.data.order_id;

@@ -23,7 +23,7 @@ const AllTickets = ({ token }) => {
   }, [token]);
   const callTicketDetails = (id) => {
     api
-      .fetchTickets(id)
+      .fetchTickets(id, token)
       .then((res2) => {
         console.log(res2.data);
         if (res2.status === 200) {
