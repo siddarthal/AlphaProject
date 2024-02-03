@@ -75,7 +75,7 @@ const Signup = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xl" style={{ display: 'flex', height: '100vh' }}>
+    <Container component="main" maxWidth="xxl" style={{ display: 'flex', height: '100vh' }}>
       <Grid container component="div" style={{ height: '100%', width: '100%' }}>
         {/* Left side with form */}
         <Grid item xs={12} sm={6}
@@ -184,8 +184,8 @@ const Signup = () => {
                 {navigation.state === "submitting" ? "Signing you up..." : "Sign Up"}
               </Button>
               <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
-        Already a member? <Link to="/signin">Signin</Link>
-      </Typography>
+                Already a member? <Link to="/signin">Signin</Link>
+              </Typography>
             </form>
           </div>
         </Grid>

@@ -3,6 +3,7 @@ import { Container, Typography, TextField, Button, Grid, Paper, useMediaQuery, u
 import EventIcon from '@mui/icons-material/Event';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../Services/service';
+import image from '../Images/5500661.svg'
 
 const Signin = () => {
   const [formData, setFormData] = useState({
@@ -65,10 +66,10 @@ const Signin = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xl" style={{ display: 'flex', height: '100vh' }}>
+    <Container component="main" maxWidth="xxl" style={{ display: 'flex', height: '100vh' }}>
       <Grid container component="div" style={{ height: '100%', width: '100%' }}>
         {/* left side with image */}
-        <Grid item xs={0} sm={6} style={{ backgroundImage: `url('https://img.freepik.com/free-vector/key-concept-illustration_114360-6305.jpg?w=740&t=st=1706685388~exp=1706685988~hmac=2056ba4a72e536d890f45cc8cef398953d98fc12e657fd9d9cb7fb8546d26a4e')`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <Grid item xs={0} sm={6} style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
 
         {/* right side with form */}
         <Grid
@@ -129,6 +130,14 @@ const Signin = () => {
               <Button type="submit" fullWidth variant="contained" color="primary" style={{ marginTop: '20px', borderRadius: '50px', fontFamily: 'cursive' }} disabled={isSubmitting}>
                 Sign In
               </Button>
+              <Grid container component="div" style={{ height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              <Typography sx={{ marginTop: "10px", width: '50%' }} variant="body2" fontWeight="600">
+                <Link to="/signup">Oh no I don't remember my password</Link>
+              </Typography>
+              <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
+                New to our site? <Link to="/signup">Signup</Link>
+              </Typography>
+              </Grid>
             </form>
           </div>
         </Grid>
