@@ -165,8 +165,10 @@ const AddEvent = ({token}) => {
     }
   };
   const redirectSubmit = (formData) => {
+    console.log("redirect submit is called")
+    console.log(token, "token")
     api
-      .submitEvent(formData)
+      .submitEvent(formData, token)
       .then((res) => {
         if (res.status === 201) {
           console.log("succesfully data posted");

@@ -28,10 +28,13 @@ const fetchEvent = (id) => {
   const promise = axios.get(urlEachEvent);
   return promise.then((res) => res).catch((error) => error);
 };
-const submitEvent = (body) => {
+const submitEvent = (body, tokens) => {
+  const headerS = {
+    Authorization: "Bearer " + tokens,
+  };
   const urlSubmitEvent = urlEvents;
-
-  const promise = axios.post(urlSubmitEvent, body);
+  console.log(body, "body")
+  const promise = axios.post(urlSubmitEvent, body, { headers: headerS });
   return promise.then((res) => res).catch((error) => error);
 };
 const urlEvents2 = backendURL + "/api/events/self/";

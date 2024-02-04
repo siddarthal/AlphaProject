@@ -189,9 +189,6 @@ const Ticket = ({ eventdata, ticket }) => {
                   paddingY: 1,
                 }}
               >
-                <Typography component="span">
-                  attending :{ticket.attending}
-                </Typography>
                 <Box
                   sx={{
                     fontSize: 20,
@@ -201,7 +198,7 @@ const Ticket = ({ eventdata, ticket }) => {
                   <i className="far fa-smile"></i>
                 </Box>
                 <Typography component="span">
-                  num_people :{ticket.num_people}
+                  Number of People : <strong style={{fontSize: 25}}>{ticket.num_people}</strong>
                 </Typography>
                 <Typography component="span" sx={{ pl: 2 }}>
                   <a

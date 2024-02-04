@@ -17,8 +17,7 @@ const BuyTicket = ({token}) => {
   const { id } = useParams();
   const [Razorpay] = useRazorpay();
 
-  const [numPeople, setNumPeople] = useState(10);
-  const [attending, setAttending] = useState(3);
+  const [numPeople, setNumPeople] = useState(1);
   const [details, setDetails] = useState({
     category: "",
     ticket_cost: 0,
@@ -50,7 +49,6 @@ const BuyTicket = ({token}) => {
     const totalFare = calculateTotalFare();
     const confirmationDetails = {
       num_people: numPeople,
-      attending: attending,
       user: user,
       event: id,
       amount: totalFare,
@@ -94,7 +92,7 @@ const BuyTicket = ({token}) => {
             };
             console.log(data, "data");
             axios
-              .post("http://127.0.0.1:8000/api/payments/", data)
+              .post("http://127.0.0.1:8000/api/payments/", data, {headers: header1})
               .then(function (response2) {
                 if ((response2.status = 200)) {
                   navigate("/events/tickets");
@@ -117,7 +115,7 @@ const BuyTicket = ({token}) => {
 
         const rzp1 = new Razorpay(options);
 
-        rzp1.on("payment.failed", function (response) {
+        rzp1.on("payment.failed", function (responsez) {
           alert("Payment Failed");
           // alert(response.error.code);
           // alert(response.error.description);
@@ -126,6 +124,34 @@ const BuyTicket = ({token}) => {
           // alert(response.error.reason);
           // alert(response.error.metadata.order_id);
           // alert(response.error.metadata.payment_id);
+          axios
+              .get(`http://127.0.0.1:8000/api/tickets/${response.data.TID}/`)
+              .then(function (response1) {
+                if ((response1.status = 200)) {
+                  const data = response1.data
+                  console.log(data,'data')
+                  data.ticket_status = 'fail'
+                  axios
+                    .put(`http://127.0.0.1:8000/api/tickets/${response.data.TID}/`, data)
+                    .then(function (response2) {
+                      if ((response2.status = 200)) {
+                        navigate("/events/tickets");
+                      } else {
+                        console.log("res status", response2.status);
+                      }
+                      console.log(response2);
+                    })
+                    .catch(function (error) {
+                      console.log(error);
+                    });
+                } else {
+                  console.log("res status", response1.status);
+                }
+                console.log(response1);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
         });
 
         rzp1.open();
@@ -155,7 +181,7 @@ const BuyTicket = ({token}) => {
             label="Number of People"
             type="number"
             value={numPeople}
-            onChange={(e) =>{ setNumPeople(e.target.value);setAttending(e.target.value);}}
+            onChange={(e) =>{ setNumPeople(e.target.value);}}
             variant="outlined"
             sx={{ marginBottom: 2 }}
           />
