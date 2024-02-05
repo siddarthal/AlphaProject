@@ -31,6 +31,7 @@ import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
 import Alltickets from "./components/Creator/Alltickets.jsx";
 import CryptoJS from 'crypto-js';
 import ForgotPassword from "./Pages/ForgotPassword.jsx";
+import ResetPassword from "./Pages/ResetPassword.jsx";
 function App() {
   const [token, setToken] = useState(null);
   const isInitialMount = useRef(true);
@@ -173,6 +174,10 @@ function App() {
     {
       path: "/forgotpassword",
       element: <ForgotPassword/>
+    }
+    ,{
+      path:"/pwdUpdate/:id/:token",
+      element:<ResetPassword/>
     }
   ]);
 

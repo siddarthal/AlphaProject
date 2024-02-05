@@ -142,7 +142,7 @@ const Signin = ({setToken}) => {
               </Button>
               <Grid container component="div" style={{ height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
               <Typography sx={{ marginTop: "10px", width: '50%' }} variant="body2" fontWeight="600">
-                <Link to="/signup">Oh no I don't remember my password</Link>
+                <Link to="/forgotpassword">Oh no I don't remember my password</Link>
               </Typography>
               <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
                 New to our site? <Link to="/signup">Signup</Link>

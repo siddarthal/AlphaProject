@@ -33,7 +33,7 @@ const submitEvent = (body, tokens) => {
     Authorization: "Bearer " + tokens,
   };
   const urlSubmitEvent = urlEvents;
-  console.log(body, "body")
+  console.log(body, "body");
   const promise = axios.post(urlSubmitEvent, body, { headers: headerS });
   return promise.then((res) => res).catch((error) => error);
 };
@@ -146,38 +146,42 @@ const handleChannelSubscribe = (user, id, token) => {
   return axios.post(url, data, { headers: header1 });
 };
 
-const postTicketDetails =(body,token)=>{
-  const url =backendURL+"/api/tickets/"
+const postTicketDetails = (body, token) => {
+  const url = backendURL + "/api/tickets/";
   const header1 = {
     Authorization: "Bearer " + token,
   };
-  return axios
-  .post(url, body, {headers: header1})
-}
-const postPaymentDetails=(body,token)=>{
-  const url =backendURL+"/api/payments/"
+  return axios.post(url, body, { headers: header1 });
+};
+const postPaymentDetails = (body, token) => {
+  const url = backendURL + "/api/payments/";
   const header1 = {
     Authorization: "Bearer " + token,
   };
-  return axios
-  .post(url, body, {headers: header1})
-}
-const getTicketDetails=(id,token)=>{
-  const url =backendURL+`/api/tickets/${id}/`
+  return axios.post(url, body, { headers: header1 });
+};
+const getTicketDetails = (id, token) => {
+  const url = backendURL + `/api/tickets/${id}/`;
   const header1 = {
     Authorization: "Bearer " + token,
   };
-  return axios
-  .get(url, {headers: header1})
-}
-const putTicketDetails=(id,body,token)=>{
-  const url =backendURL+`/api/tickets/${id}/`
+  return axios.get(url, { headers: header1 });
+};
+const putTicketDetails = (id, body, token) => {
+  const url = backendURL + `/api/tickets/${id}/`;
   const header1 = {
     Authorization: "Bearer " + token,
   };
-  return axios
-  .put(url, body, {headers: header1})
-}
+  return axios.put(url, body, { headers: header1 });
+};
+const resetPassword = (body) => {
+  const url = backendURL + "/api/password-reset/";
+  return axios.post(url, body);
+};
+const postUpdatePassword = (body,id, token) => {
+  const url = backendURL + `/api/password-update/${id}/${token}/`;
+  return axios.post(url, body);
+};
 export default {
   signin: signin,
   getEvents: getEvents,
@@ -198,9 +202,10 @@ export default {
   userChannel,
   getEventsOne,
   handleChannelSubscribe,
-postTicketDetails,
-postPaymentDetails,
-getTicketDetails,
-putTicketDetails,
-
+  postTicketDetails,
+  postPaymentDetails,
+  getTicketDetails,
+  putTicketDetails,
+  resetPassword,
+  postUpdatePassword,
 };
