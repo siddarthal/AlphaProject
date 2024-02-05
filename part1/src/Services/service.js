@@ -178,9 +178,16 @@ const resetPassword = (body) => {
   const url = backendURL + "/api/password-reset/";
   return axios.post(url, body);
 };
-const postUpdatePassword = (body,id, token) => {
+const postUpdatePassword = (body, id, token) => {
   const url = backendURL + `/api/password-update/${id}/${token}/`;
   return axios.post(url, body);
+};
+const deleteTicket = (id, token) => {
+  const url = backendURL + `/api/refund/${id}/`;
+  const header1 = {
+    Authorization: "Bearer " + token,
+  };
+  return axios.get(url, { headers: header1 });
 };
 export default {
   signin: signin,
@@ -208,4 +215,5 @@ export default {
   putTicketDetails,
   resetPassword,
   postUpdatePassword,
+  deleteTicket,
 };

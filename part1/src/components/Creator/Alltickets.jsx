@@ -82,7 +82,7 @@ const AllTickets = ({ token }) => {
                     {console.log(data, "data")}
                     {data !== null && (
                       // <TicketEvents eventdata={data[item.event]} ticket={ticket} />
-                      <Ticket eventdata={data[item.event]} ticket={item} />
+                      <Ticket eventdata={data[item.event]} ticket={item} token={token}/>
                     )}
                   </Grid>
                 );

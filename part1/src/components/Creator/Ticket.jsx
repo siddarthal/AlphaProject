@@ -1,8 +1,9 @@
 import React from "react";
 import { Box, Paper, Card, CardContent, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-
-const Ticket = ({ eventdata, ticket }) => {
+import { Button } from "@mui/base";
+import api from "../../Services/service";
+const Ticket = ({ eventdata, ticket,token }) => {
   const imgUrl = eventdata.poster;
   // const imgUrl = "http://127.0.0.1:8000" + eventdata.poster;
   const dateString = eventdata.startDate;
@@ -78,6 +79,22 @@ const Ticket = ({ eventdata, ticket }) => {
   const latitude = eventdata.latitude;
   const longitude = eventdata.longitude;
   const locationLink = `https://maps.google.com/?q=${latitude},${longitude}`;
+  const handleCancel = (ticketData) => {
+    console.log("Cancel Ticket");
+    console.log("Ticket Data", ticketData);
+    api
+      .deleteTicket(ticketData.order_id,token)
+      .then((res) => {
+        console.log("Ticket Deleted", res);
+        if (res.status === 200) {
+          alert("Ticket Cancelled and proccessed for refund");
+        }
+      })
+      .catch((err) => {
+        console.error("Error", err);
+        alert("Unable to cancel ticket at the moment. Please try again later.");
+      });
+  };
   return (
     <Paper elevation={10}>
       <Card sx={{ maxWidth: 700 }}>
@@ -147,9 +164,7 @@ const Ticket = ({ eventdata, ticket }) => {
                     Transaction pending{" "}
                   </Typography>
                 ) : (
-                  <Typography variant="h6" >
-                    {ticket.ticket_status}
-                  </Typography>
+                  <Typography variant="h6">{ticket.ticket_status}</Typography>
                 )}
               </Box>
             </Box>
@@ -233,6 +248,9 @@ const Ticket = ({ eventdata, ticket }) => {
                     <LocationOnIcon />
                   </a>
                 </Typography>
+                <Button onClick={() => handleCancel(ticket)}>
+                  Cancel Ticket
+                </Button>
               </Box>
             </Box>
           </CardContent>
