@@ -6,7 +6,7 @@ import api from '../Services/service';
 import image from '../Images/5500661.svg'
 import CryptoJS from 'crypto-js';
 
-const Signin = () => {
+const Signin = ({setToken}) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
