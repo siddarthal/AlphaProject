@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { Link, useNavigate, json, useNavigation } from "react-router-dom";
 import api from "../Services/service";
-
-export default function Signin({setToken}) {
+import CryptoJS from 'crypto-js';
+export default function Signin({ setToken }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -37,12 +37,19 @@ export default function Signin({setToken}) {
           console.log("result", res);
           // onLogin();
           if (res.access_token !== undefined) {
-            localStorage.setItem("accessToken", res.access_token);
+            const secretKey = "your-secret-key";
+
+            const encryptedToken = CryptoJS.AES.encrypt(
+              res.access_token,
+              secretKey
+            ).toString();
+            localStorage.setItem("accessToken",encryptedToken);
             setToken(res.access_token);
+            const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours from now
+            localStorage.setItem("tokenExpiration", expirationTime);
             setFormData({ email: "", password: "" });
             navigate("/events");
-          }
-          else{
+          } else {
             alert("wrong credentials");
           }
         })

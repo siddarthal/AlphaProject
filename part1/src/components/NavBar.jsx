@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 import { Typography, Grid, Box } from "@mui/material";
 import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
 import IconButton from "@mui/material/IconButton";
@@ -26,6 +26,7 @@ const NavBar = () => {
   };
   const handleSignout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("tokenExpiration");
     navigate("/signin");
   };
   const token = getAuthToken();
@@ -127,7 +128,7 @@ const NavBar = () => {
           color="inherit"
           sx={{ paddingLeft: 4.9 }}
         >
-          <AccountCircle fontSize={isWideScreen?"small":"medium"} />
+          <AccountCircle fontSize={isWideScreen ? "small" : "medium"} />
         </IconButton>
         <Menu
           id="menu-appbar"
@@ -163,8 +164,12 @@ const NavBar = () => {
           <MenuItem onClick={() => handleClose("/dashboard/accounts")}>
             My account
           </MenuItem>
-          <MenuItem onClick={() => handleClose("/events/channels")}>Channels</MenuItem>
-          <MenuItem onClick={() => handleClose("/events/tickets")}>Tickets</MenuItem>
+          <MenuItem onClick={() => handleClose("/events/channels")}>
+            Channels
+          </MenuItem>
+          <MenuItem onClick={() => handleClose("/events/tickets")}>
+            Tickets
+          </MenuItem>
           <MenuItem onClick={handleSignout}>
             {tokenBool ? "signout" : "signin"}
           </MenuItem>

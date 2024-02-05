@@ -168,9 +168,7 @@ const EventForm = ({token}) => {
     if (!event.duration) {
       newErrors.duration = "Duration is required";
     }
-    // if (!event.language) {
-    //   newErrors.language = "Language is required";
-    // }
+   
     if (!event.category) {
       newErrors.categories = "Selecting one category is mandatory";
     }
@@ -182,6 +180,16 @@ const EventForm = ({token}) => {
     }
     if (!event.longitude) {
       newErrors.location = "Enter  longitude";
+    }
+    const startDate = new Date(event.startDate);
+    const endDate = new Date(event.endDate);
+    const currentTime = new Date();
+
+    if (startDate <= currentTime) {
+      newErrors.start_date = "Start date must be greater than current time";
+    }
+    if (startDate >= endDate) {
+      newErrors.start_date = "Start date must be less than end date";
     }
 
     setErrors(newErrors);
@@ -233,8 +241,7 @@ const EventForm = ({token}) => {
           privacy: true,
           medium: "",
           require_volunteers: true,
-          // startDate: sdate,
-          // endDate: edate,
+  
           startDate: "2024-1-3",
           endDate: "2024-1-3",
           duration: "",
