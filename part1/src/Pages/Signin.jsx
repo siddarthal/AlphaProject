@@ -146,7 +146,7 @@ export default function Signin({ setToken }) {
         New to Website <Link to="/signup">Signup</Link>
       </Typography>
       <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
-        Forgot Password? <Link to="/resetPassword">Reset Password</Link>
+        Forgot Password? <Link to="/forgotpassword">Reset Password</Link>
       </Typography>
     </Box>
   );

@@ -30,6 +30,7 @@ import AllEvents from "./components/Explore/AllEvents.jsx";
 import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
 import Alltickets from "./components/Creator/Alltickets.jsx";
 import CryptoJS from 'crypto-js';
+import ForgotPassword from "./Pages/ForgotPassword.jsx";
 function App() {
   const [token, setToken] = useState(null);
   const isInitialMount = useRef(true);
@@ -169,6 +170,10 @@ function App() {
       path: "/signup",
       element: <Signup />,
     },
+    {
+      path: "/forgotpassword",
+      element: <ForgotPassword/>
+    }
   ]);
 
   return (
