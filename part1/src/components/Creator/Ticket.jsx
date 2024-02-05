@@ -142,13 +142,13 @@ const Ticket = ({ eventdata, ticket }) => {
                 }}
               >
                 {ticket.ticket_status === "not_paid" ? (
-                  <Typography variant="h7" color="red">
+                  <Typography variant="h6" color="red">
                     {" "}
                     Transaction pending{" "}
                   </Typography>
                 ) : (
-                  <Typography variant="h6" color="green">
-                    Paid
+                  <Typography variant="h6" >
+                    {ticket.ticket_status}
                   </Typography>
                 )}
               </Box>

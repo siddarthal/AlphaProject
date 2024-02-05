@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import api from "../Services/service";
 import {
   Paper,
   Box,
@@ -8,7 +9,7 @@ import {
   Container,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import api from "../Services/service";
+
 import axios from "axios";
 import useRazorpay from "react-razorpay";
 
@@ -66,8 +67,7 @@ const BuyTicket = ({token}) => {
     const header1 = {
       Authorization: "Bearer " + token,
     };
-    axios
-      .post("http://127.0.0.1:8000/api/tickets/", confirmationDetails, {headers: header1})
+    api.postTicketDetails(confirmationDetails,token)
       .then(function (response) {
         console.log(response);
         const order_id = response.data.order_id;
@@ -91,8 +91,7 @@ const BuyTicket = ({token}) => {
               signature: response1.razorpay_signature,
             };
             console.log(data, "data");
-            axios
-              .post("http://127.0.0.1:8000/api/payments/", data, {headers: header1})
+            api.postPaymentDetails(data,token)
               .then(function (response2) {
                 if ((response2.status = 200)) {
                   navigate("/events/tickets");
@@ -124,15 +123,13 @@ const BuyTicket = ({token}) => {
           // alert(response.error.reason);
           // alert(response.error.metadata.order_id);
           // alert(response.error.metadata.payment_id);
-          axios
-              .get(`http://127.0.0.1:8000/api/tickets/${response.data.TID}/`)
+          api.getTicketDetails(response.data.TID,token)
               .then(function (response1) {
                 if ((response1.status = 200)) {
                   const data = response1.data
                   console.log(data,'data')
                   data.ticket_status = 'fail'
-                  axios
-                    .put(`http://127.0.0.1:8000/api/tickets/${response.data.TID}/`, data)
+                 api.putTicketDetails(response.data.TID,data,token)
                     .then(function (response2) {
                       if ((response2.status = 200)) {
                         navigate("/events/tickets");
