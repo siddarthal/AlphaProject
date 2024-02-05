@@ -11,23 +11,24 @@ import {
   Grid,
   Alert,
   AlertTitle,
+  FormControl, InputLabel, MenuItem, Select,
   Snackbar,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import StartDateTime from "../components/StartDateTime";
 import EndDateTime from "../components/EndDateTime";
 import ButtonGrouping from "../components/ButtonGrouping";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { useNavigate, Link } from "react-router-dom";
-const AddEvent = ({token}) => {
+const AddEvent = ({ token }) => {
   const [privacy, setPrivacy] = useState(true);
   const [medium, setMedium] = useState(true);
   const locationdata = ["location", "latitude", "longitude"];
-  const [sdate, setsDate] = useState(dayjs("2022-04-17T15:30"));
-  const [edate, seteDate] = useState(dayjs("2022-04-17T15:30"));
+  const [sdate, setsDate] = useState(dayjs(new Date().toLocaleString()));
+  const [edate, seteDate] = useState(dayjs(new Date().toLocaleString()));
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [errors, setErrors] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
@@ -50,19 +51,19 @@ const AddEvent = ({token}) => {
     privacy: false,
     user: 8,
   });
-  useEffect(()=>{
+  useEffect(() => {
     api
-    .userAccountDatails(token)
-    .then((res) => {
-      if (res.status == 200) {
-        console.log(res.data);
-        setEvent({...event,user:res.data.id})
-      } else {
-        alert("cant fetch user id");
-      }
-    })
-    .catch((error) => console.log(error));
-  },[])
+      .userAccountDatails(token)
+      .then((res) => {
+        if (res.status == 200) {
+          console.log(res.data);
+          setEvent({ ...event, user: res.data.id });
+        } else {
+          alert("cant fetch user id");
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
@@ -119,14 +120,16 @@ const AddEvent = ({token}) => {
       setEvent({ ...event, [e.target.name]: e.target.value });
     }
   };
+
   const formValidation = () => {
     setOpen(true);
     const newErrors = {};
+
     if (!event.event_name) {
-      newErrors.event_name = " Title is required";
+      newErrors.event_name = "Title is required";
     }
     if (!event.description) {
-      newErrors.description = " Description is required";
+      newErrors.description = "Description is required";
     }
     if (!event.duration) {
       newErrors.duration = "Duration is required";
@@ -135,13 +138,27 @@ const AddEvent = ({token}) => {
       newErrors.categories = "Selecting one category is mandatory";
     }
     if (!event.location) {
-      newErrors.location = "Enter  location";
+      newErrors.location = "Enter location";
     }
     if (!event.latitude) {
-      newErrors.location = "Enter  latitude";
+      newErrors.location = "Enter latitude";
     }
     if (!event.longitude) {
-      newErrors.location = "Enter  longitude";
+      newErrors.location = "Enter longitude";
+    }
+    if (!selectedFile) {
+      newErrors.poster = "Image is required";
+    }
+
+    const startDate = new Date(event.startDate);
+    const endDate = new Date(event.endDate);
+    const currentTime = new Date();
+
+    if (startDate <= currentTime) {
+      newErrors.start_date = "Start date must be greater than current time";
+    }
+    if (startDate >= endDate) {
+      newErrors.start_date = "Start date must be less than end date";
     }
 
     setErrors(newErrors);
@@ -165,8 +182,8 @@ const AddEvent = ({token}) => {
     }
   };
   const redirectSubmit = (formData) => {
-    console.log("redirect submit is called")
-    console.log(token, "token")
+    console.log("redirect submit is called");
+    console.log(token, "token");
     api
       .submitEvent(formData, token)
       .then((res) => {
@@ -356,16 +373,22 @@ const AddEvent = ({token}) => {
             variant="outlined"
           />
         </Box>
+
         <Box>
-          <TextField
-            onChange={handleChange}
-            name="medium"
-            value={event.medium}
-            sx={{ width: "100%", borderRadius: "8px" }}
-            id="outlined-basic"
-            label="Medium"
-            variant="outlined"
-          />
+          <FormControl sx={{ width: "100%", borderRadius: "8px" }}>
+            <InputLabel id="medium-label">Medium</InputLabel>
+            <Select
+              labelId="medium-label"
+              id="medium-select"
+              name="medium"
+              value={event.medium}
+              onChange={handleChange}
+              label="Medium"
+            >
+              <MenuItem value="offline">offline</MenuItem>
+              <MenuItem value="online">online</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
         <Box>
           <TextField

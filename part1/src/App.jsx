@@ -10,7 +10,7 @@ import RightSide from "./components/RightSide.jsx";
 import HomeContent from "./components/HomeContent.jsx";
 import AccountDetails from "./components/AccountDetails.jsx";
 import UserEventDetails from "./components/UserEventDetails.jsx";
-import { useEffect, useState,useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import ParticularEvent from "./components/Creator/ParticularEvent.jsx";
 import EditExistingEvent from "./components/Creator/EditExistingEvent.jsx";
 import "./app.css";
@@ -29,20 +29,30 @@ import Events from "./components/Events.jsx";
 import AllEvents from "./components/Explore/AllEvents.jsx";
 import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
 import Alltickets from "./components/Creator/Alltickets.jsx";
-
+import CryptoJS from 'crypto-js';
 function App() {
   const [token, setToken] = useState(null);
   const isInitialMount = useRef(true);
   useEffect(() => {
-    const storedToken = localStorage.getItem('accessToken');
+    const encryptedToken = localStorage.getItem("accessToken");
+    const tokenExpiration = localStorage.getItem("tokenExpiration");
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
     }
-    console.log("storedToken", storedToken);
-    if (storedToken) {
-      setToken(storedToken);
-  
+    console.log("storedToken", encryptedToken);
+    if (encryptedToken && tokenExpiration) {
+      if (new Date().getTime() > tokenExpiration) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("tokenExpiration");
+        setToken(null);
+      } else {
+        const secretKey = 'your-secret-key'; 
+      const bytes = CryptoJS.AES.decrypt(encryptedToken, secretKey);
+      const originalToken = bytes.toString(CryptoJS.enc.Utf8);
+
+      setToken(originalToken);
+      }
     }
   }, []);
   const router = createBrowserRouter([
@@ -74,16 +84,16 @@ function App() {
         },
         {
           path: "/events/:id",
-          element: <EventDetails token={token}/>,
+          element: <EventDetails token={token} />,
         },
 
         {
           path: "/events/tickets/:id",
-          element: <BuyTicket token={token}/>,
+          element: <BuyTicket token={token} />,
         },
         {
           path: "/events/tickets",
-          element: <Alltickets token={token}/>,
+          element: <Alltickets token={token} />,
         },
         {
           path: "/events/channels",
@@ -95,7 +105,7 @@ function App() {
             },
             {
               path: "ind/:id/:eventName",
-              element: <RightSideChannels token={token}/>,
+              element: <RightSideChannels token={token} />,
             },
           ],
         },
@@ -108,7 +118,7 @@ function App() {
       children: [
         {
           path: "/dashboard",
-          element: <RightSide token={token}/>,
+          element: <RightSide token={token} />,
         },
 
         {
@@ -118,7 +128,7 @@ function App() {
         ,
         {
           path: "events",
-          element: <UserEventDetails token={token}/>,
+          element: <UserEventDetails token={token} />,
         },
         {
           path: "accounts",
@@ -126,7 +136,7 @@ function App() {
         },
         {
           path: "events/:id",
-          element: <ParticularEvent token={token}/>,
+          element: <ParticularEvent token={token} />,
         },
         {
           path: "edit/:id",
@@ -146,7 +156,7 @@ function App() {
         },
         {
           path: "eventGroupings/:eventType",
-          element: <FilterEvents1  token={token}/>,
+          element: <FilterEvents1 token={token} />,
         },
       ],
     },
@@ -159,8 +169,6 @@ function App() {
       path: "/signup",
       element: <Signup />,
     },
-  
-   
   ]);
 
   return (

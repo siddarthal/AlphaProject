@@ -47,29 +47,30 @@ export default function EventDetails({ token }) {
       }
     });
   }, [token]);
-  
+
   const handleChannel = () => {
-    const eventName=event.event_name+" Broadcast";
-    if(token!==null){ 
-    api
-      .handleChannelSubscribe(userId, id,token)
-      .then((res) => {
-        console.log("res", res);
-        if (res.status === 201) {
-          navigate("/events/channels");
-        }
-      })
-      .catch((error) => {
-        // console.log("error", error);
-        console.log(error.code);
-        if(error.code==="ERR_BAD_REQUEST"){
-          alert("already party of this channel press okay to continue to the channel");
-          navigate(`/events/channels/ind/${id}/${eventName}`);
-        }
-        else{
-          alert("error in subscribing to the channel");
-        }
-      });
+    const eventName = event.event_name + " Broadcast";
+    if (token !== null) {
+      api
+        .handleChannelSubscribe(userId, id, token)
+        .then((res) => {
+          console.log("res", res);
+          if (res.status === 201) {
+            navigate("/events/channels");
+          }
+        })
+        .catch((error) => {
+          // console.log("error", error);
+          console.log(error.code);
+          if (error.code === "ERR_BAD_REQUEST") {
+            alert(
+              "already party of this channel press okay to continue to the channel"
+            );
+            navigate(`/events/channels/ind/${id}/${eventName}`);
+          } else {
+            alert("error in subscribing to the channel");
+          }
+        });
     }
   };
   const handleBuyTicket = () => {
@@ -103,7 +104,7 @@ export default function EventDetails({ token }) {
           <Paper
             elevation={3}
             sx={{
-              height: "50vh" ,
+              height: "50vh",
               // [theme.breakpoints.up("cm1")]: { height: "50vh" },
               // [theme.breakpoints.down("cm1")]: { height: "60vh" },
             }}
@@ -125,11 +126,13 @@ export default function EventDetails({ token }) {
         <Grid item xs={12} md={4}>
           <Paper
             elevation={6}
-            sx={{
-              // height: "50vh" ,
-              // [theme.breakpoints.up("cm1")]: { height: "50vh" },
-              // [theme.breakpoints.down("cm1")]: { height: "40vh" },
-            }}
+            sx={
+              {
+                // height: "50vh" ,
+                // [theme.breakpoints.up("cm1")]: { height: "50vh" },
+                // [theme.breakpoints.down("cm1")]: { height: "40vh" },
+              }
+            }
           >
             <Container>
               <Stack spacing={2}>
@@ -261,9 +264,11 @@ export default function EventDetails({ token }) {
           </Paper>
         </Grid>
         <Grid item xs={4}>
-          <Button variant="contained" onClick={handleChannel}>
-            Join channel
-          </Button>
+          <Box display="flex" justifyContent="center" sx={{pt:3}}>
+            <Button variant="contained" onClick={handleChannel} >
+              Join channel
+            </Button>
+          </Box>
         </Grid>
       </Grid>
     </Container>

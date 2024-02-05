@@ -3,7 +3,7 @@ import { Box, Paper, Card, CardContent, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const Ticket = ({ eventdata, ticket }) => {
-  const imgUrl =  eventdata.poster;
+  const imgUrl = eventdata.poster;
   // const imgUrl = "http://127.0.0.1:8000" + eventdata.poster;
   const dateString = eventdata.startDate;
   const dateObj = new Date(dateString);
@@ -82,52 +82,76 @@ const Ticket = ({ eventdata, ticket }) => {
     <Paper elevation={10}>
       <Card sx={{ maxWidth: 700 }}>
         <Box sx={{ display: "flex" }}>
-          <Box
-            sx={{
-              width: 350,
-              height: 250,
-              backgroundImage: `url(${imgUrl})`,
-              backgroundSize: "cover",
-              opacity: 0.85,
-              position: "relative",
-            }}
-          >
-
-            <Box
-              sx={{
-                position: "absolute",
-                color: "darkgray",
-                height: 250,
-                padding: "0 10px",
-                letterSpacing: "0.15em",
-                display: "flex",
-                textAlign: "center",
-                justifyContent: "space-around",
-                writingMode: "vertical-rl",
-                transform: "rotate(-180deg)",
-                fontFamily: "'Staatliches', sans-serif", 
-              }}
-            >
-              <Typography component="p">RELEVENT</Typography>
-              <Typography component="p" fontWeight={700}>
-                RELEVENT
-              </Typography>
-              <Typography component="p">RELEVENT</Typography>
-            </Box>
-
-            <Box
-              sx={{
-                position: "absolute",
-                height: 250,
-                width: 250,
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-                padding: 5,
-                fontFamily: "'Staatliches', sans-serif", 
-              }}
-            >
-              <Typography component="p">{ticket.order_id}</Typography>
+          <Box>
+            <Box>
+              <Box
+                sx={{
+                  width: 350,
+                  height: 250,
+                  backgroundImage: `url(${imgUrl})`,
+                  backgroundSize: "cover",
+                  opacity: 0.85,
+                  position: "relative",
+                }}
+              >
+                <Box
+                  sx={{
+                    position: "absolute",
+                    color: "darkgray",
+                    height: 250,
+                    padding: "0 10px",
+                    letterSpacing: "0.15em",
+                    display: "flex",
+                    textAlign: "center",
+                    justifyContent: "space-around",
+                    writingMode: "vertical-rl",
+                    transform: "rotate(-180deg)",
+                    fontFamily: "'Staatliches', sans-serif",
+                  }}
+                >
+                  <Typography component="p">RELEVENT</Typography>
+                  <Typography component="p" fontWeight={700}>
+                    RELEVENT
+                  </Typography>
+                  <Typography component="p">RELEVENT</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    height: 250,
+                    width: 250,
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "flex-end",
+                    padding: 5,
+                    fontFamily: "'Staatliches', sans-serif",
+                  }}
+                >
+                  <Typography component="p">{ticket.order_id}</Typography>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  borderTop: "1px solid gray",
+                  borderBottom: "1px solid gray",
+                  paddingY: 1,
+                  marginTop: 1,
+                }}
+              >
+                {ticket.ticket_status === "not_paid" ? (
+                  <Typography variant="h7" color="red">
+                    {" "}
+                    Transaction pending{" "}
+                  </Typography>
+                ) : (
+                  <Typography variant="h6" color="green">
+                    Paid
+                  </Typography>
+                )}
+              </Box>
             </Box>
           </Box>
           {/* Card Content */}
@@ -142,7 +166,6 @@ const Ticket = ({ eventdata, ticket }) => {
                 paddingY: 1,
               }}
             >
-
               <Typography component="span">{day}</Typography>
               <Typography component="span" className="june-29" color="#d83565">
                 {month} {dayOfMonth}
@@ -151,13 +174,12 @@ const Ticket = ({ eventdata, ticket }) => {
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Typography
                   variant="h4"
                   style={{ fontFamily: "'Nanum Pen Script', cursive" }}
                 >
-                  {eventdata.event_name} 
+                  {eventdata.event_name}
                 </Typography>
               </Box>
 
@@ -198,7 +220,8 @@ const Ticket = ({ eventdata, ticket }) => {
                   <i className="far fa-smile"></i>
                 </Box>
                 <Typography component="span">
-                  Number of People : <strong style={{fontSize: 25}}>{ticket.num_people}</strong>
+                  Number of People :{" "}
+                  <strong style={{ fontSize: 25 }}>{ticket.num_people}</strong>
                 </Typography>
                 <Typography component="span" sx={{ pl: 2 }}>
                   <a

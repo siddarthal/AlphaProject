@@ -4,6 +4,7 @@ import EventIcon from '@mui/icons-material/Event';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../Services/service';
 import image from '../Images/5500661.svg'
+import CryptoJS from 'crypto-js';
 
 const Signin = () => {
   const [formData, setFormData] = useState({
@@ -49,11 +50,20 @@ const Signin = () => {
           console.log('Result', res);
 
           if (res.access_token !== undefined) {
-            localStorage.setItem('accessToken', res.access_token);
-            setFormData({ email: '', password: '' });
-            navigate('/events');
+            const secretKey = "your-secret-key";
+
+            const encryptedToken = CryptoJS.AES.encrypt(
+              res.access_token,
+              secretKey
+            ).toString();
+            localStorage.setItem("accessToken",encryptedToken);
+            setToken(res.access_token);
+            const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours from now
+            localStorage.setItem("tokenExpiration", expirationTime);
+            setFormData({ email: "", password: "" });
+            navigate("/events");
           } else {
-            alert('Wrong credentials');
+            alert("wrong credentials");
           }
         })
         .catch((err) => {
