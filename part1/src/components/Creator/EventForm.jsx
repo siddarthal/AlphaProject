@@ -113,7 +113,7 @@ const EventForm = ({token}) => {
   });
   const handlePrivacy = (value) => {
     setPrivacy(value);
-    setEvent({ ...event, privacy: privacy });
+    setEvent({ ...event, privacy: value });
   };
   const handleMedium = (value) => {
     setMedium(value);

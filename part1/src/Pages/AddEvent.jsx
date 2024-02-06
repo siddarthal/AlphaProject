@@ -35,8 +35,8 @@ const AddEvent = ({ token }) => {
   const navigate = useNavigate();
   const [event, setEvent] = useState({
     event_name: "",
-    startDate: "2024-01-16",
-    endDate: "2024-01-17",
+    startDate: sdate,
+    endDate: edate,
     location: "",
     latitude: "",
     longitude: "",
@@ -77,7 +77,7 @@ const AddEvent = ({ token }) => {
   });
   const handlePrivacy = (value) => {
     setPrivacy(value);
-    setEvent({ ...event, privacy: privacy });
+    setEvent({ ...event, privacy: value });
   };
   const handleMedium = (value) => {
     setMedium(value);
@@ -153,11 +153,11 @@ const AddEvent = ({ token }) => {
     const startDate = new Date(event.startDate);
     const endDate = new Date(event.endDate);
     const currentTime = new Date();
-
+    console.log(startDate, endDate, currentTime, "dates");
     if (startDate <= currentTime) {
       newErrors.start_date = "Start date must be greater than current time";
     }
-    if (startDate >= endDate) {
+    if (startDate > endDate) {
       newErrors.start_date = "Start date must be less than end date";
     }
 

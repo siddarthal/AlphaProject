@@ -15,7 +15,7 @@ export default function EventCard({ event }) {
   const dateObj = new Date(event.startDate);
   const month = dateObj.toLocaleString("default", { month: "short" });
   const date = dateObj.getDate();
-
+  
   const overlayTopRightStyle = {
     position: "absolute",
     top: "8px",

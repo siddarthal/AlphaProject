@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../Services/service";
 import img from "../../Images/R.jpg";
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import React from "react";
 import { Button, Stack, Box, Typography, Grid, Paper } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -21,7 +22,7 @@ export default function UserEventDetails({token}) {
       console.log(res);
       setDetails(res);
     });
-  }, []);
+  }, [token]);
   const navigate = useNavigate();
 
   const handleEdit = () => {
@@ -172,21 +173,21 @@ export default function UserEventDetails({token}) {
                 sx={{ display: "flex", alignItems: "center", gap: 1, mt: 2 }}
               >
                 <PlaceIcon />
-                <Typography>1234 Example Street</Typography>
+                <Typography>{details.location}</Typography>
               </Box>
 
               <Box
                 sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
               >
-                <AttachMoneyIcon />
-                <Typography>Free</Typography>
+                <CurrencyRupeeIcon/>
+                <Typography>{details.ticket_cost}</Typography>
               </Box>
 
               <Box
                 sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
               >
                 <GroupIcon />
-                <Typography>No members</Typography>
+                <Typography>{(details.require_volunteers)?("Volunteers"):("Not Required")}</Typography>
               </Box>
 
               <Box
