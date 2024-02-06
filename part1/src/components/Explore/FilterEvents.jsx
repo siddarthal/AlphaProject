@@ -36,8 +36,7 @@ const FilterEvents = () => {
           console.log("in the blood", item.EID);
           return (
             <Grid item xs={12} md={4} key={item.EID}>
-              {console.log(item.privacy, "privacy")}
-              {item.privacy === false && <EventCard event={item} />}
+              <EventCard event={item} />
             </Grid>
           );
         })}
