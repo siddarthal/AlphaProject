@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import CancelIcon from "@mui/icons-material/Cancel";
+import Loader from "../Explore/Loader";
 import {
   Box,
   Stack,
@@ -24,7 +25,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
-const EventForm = ({token}) => {
+const EventForm = ({ token }) => {
   const [privacy, setPrivacy] = useState(true);
   const [medium, setMedium] = useState(true);
   const locationdata = ["location", "latitude", "longitude"];
@@ -35,6 +36,7 @@ const EventForm = ({token}) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
+  const [loader, setLoader] = useState(false);
   const [event, setEvent] = useState({
     event_name: "",
     description: "",
@@ -53,19 +55,19 @@ const EventForm = ({token}) => {
     longitude: "",
     user: "1",
   });
-  useEffect(()=>{
+  useEffect(() => {
     api
-    .userAccountDatails(token)
-    .then((res) => {
-      if (res.status == 200) {
-        console.log(res.data);
-        setEvent({...event,user:res.data.id})
-      } else {
-        alert("cant fetch user id");
-      }
-    })
-    .catch((error) => console.log(error));
-  },[])
+      .userAccountDatails(token)
+      .then((res) => {
+        if (res.status == 200) {
+          console.log(res.data);
+          setEvent({ ...event, user: res.data.id });
+        } else {
+          alert("cant fetch user id");
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
   const categories = [
     "music",
     "games",
@@ -79,7 +81,7 @@ const EventForm = ({token}) => {
     "other",
   ];
   useEffect(() => {
-    api.fetchParticularEvent(id,token).then((res) => {
+    api.fetchParticularEvent(id, token).then((res) => {
       console.log(res);
       setEvent(res);
       setPrivacy(res.privacy);
@@ -168,7 +170,7 @@ const EventForm = ({token}) => {
     if (!event.duration) {
       newErrors.duration = "Duration is required";
     }
-   
+
     if (!event.category) {
       newErrors.categories = "Selecting one category is mandatory";
     }
@@ -227,36 +229,46 @@ const EventForm = ({token}) => {
   };
   const sendFormData = (formData) => {
     console.log(formData);
+    setLoader(true);
     setErrors({});
     api
-      .editParticularEvent(id, formData,token)
+      .editParticularEvent(id, formData, token)
       .then((res) => {
-        console.log("succesfully data posted");
-        console.log(formData);
-        console.log(res);
-        // setEventPresent(eventPresent + 1);
-        setEvent({
-          event_name: "",
-          description: "",
-          privacy: true,
-          medium: "",
-          require_volunteers: true,
-  
-          startDate: "2024-1-3",
-          endDate: "2024-1-3",
-          duration: "",
-          poster: null,
-          ticket_cost: "",
-          language: "",
-          category: "",
-          time: "",
-          location: "",
-          latitude: "",
-          longitude: "",
-        });
-        navigate(`/dashboard/events/${id}`);
+        if (res.status === 200) {
+          console.log("succesfully data posted");
+          console.log(formData);
+          console.log(res.data);
+          // setEventPresent(eventPresent + 1);
+          setLoader(false);
+          setEvent({
+            event_name: "",
+            description: "",
+            privacy: true,
+            medium: "",
+            require_volunteers: true,
+
+            startDate: "2024-1-3",
+            endDate: "2024-1-3",
+            duration: "",
+            poster: null,
+            ticket_cost: "",
+            language: "",
+            category: "",
+            time: "",
+            location: "",
+            latitude: "",
+            longitude: "",
+          });
+          navigate(`/dashboard/events/${id}`);
+        } else {
+          setLoader(false);
+          alert("error in posting data");
+        }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setLoader(false);
+        console.log(error);
+      });
   };
   const handlePress = () => {
     navigate("/dashboard");
@@ -343,8 +355,8 @@ const EventForm = ({token}) => {
 
         <Box>
           <Box>
-            <Grid container spacing={0.2}>
-              <Grid item xs={1}>
+            <Grid container spacing={1}>
+              <Grid item xs={6} sm={2} md={2} lg={1.3}>
                 <Button
                   variant={privacy ? "contained" : "outlined"}
                   onClick={() => handlePrivacy(true)}
@@ -352,7 +364,7 @@ const EventForm = ({token}) => {
                   Private
                 </Button>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={6} sm={2} md={2} lg={1.3}>
                 <Button
                   variant={privacy ? "outlined" : "contained"}
                   onClick={() => handlePrivacy(false)}
@@ -369,8 +381,8 @@ const EventForm = ({token}) => {
 
         <Box>
           <Box>
-            <Grid container spacing={0.2}>
-              <Grid item xs={1}>
+            <Grid container spacing={1}>
+              <Grid item xs={6} sm={2} md={2} lg={1.3}>
                 <Button
                   variant={medium ? "contained" : "outlined"}
                   onClick={() => handleMedium(true)}
@@ -378,7 +390,7 @@ const EventForm = ({token}) => {
                   TRUE
                 </Button>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={6} sm={2} md={2} lg={1.3}>
                 <Button
                   variant={medium ? "outlined" : "contained"}
                   onClick={() => handleMedium(false)}
@@ -533,9 +545,11 @@ const EventForm = ({token}) => {
           sx={{ width: "20%" }}
           variant="contained"
           onClick={handleCreate}
+          disabled={loader}
         >
           Save Changes
         </Button>
+        {loader && <Loader />}
       </Stack>
     </Box>
   );

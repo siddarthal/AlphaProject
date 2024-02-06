@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   Container,
   Typography,
@@ -17,7 +18,7 @@ const Signup = () => {
   const navigation = useNavigation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -63,6 +64,7 @@ const Signup = () => {
   const signupHandler = (e) => {
     e.preventDefault();
     if (formValidation()) {
+      setLoading(true);
       setErrors({});
       const { confirmPassword, ...dataToSend } = formData;
       api
@@ -72,6 +74,7 @@ const Signup = () => {
             console.log("Successful");
             console.log("formData", dataToSend);
             console.log("result", result);
+            setLoading(false);
             navigate("/signin");
             setFormData({
               name: "",
@@ -82,11 +85,13 @@ const Signup = () => {
           } else {
             alert(`Email address is already registered `);
             console.log("result", result);
+            setLoading(false);
           }
         })
         .catch((err) => {
           console.error(err);
           alert(`something wrong try again later`, err);
+          setLoading(false);
         });
     } else {
       console.error(`Can't validate`);
@@ -262,13 +267,26 @@ const Signup = () => {
                   borderRadius: "50px",
                   fontFamily: "cursive",
                 }}
-                disabled={navigation.state === "submitting"}
+                // disabled={navigation.state === "submitting"}
+                disabled={loading}
                 onClick={signupHandler}
               >
                 {navigation.state === "submitting"
                   ? "Signing you up..."
                   : "Sign Up"}
               </Button>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    marginTop: "-12px",
+                    marginLeft: "-12px",
+                  }}
+                />
+              )}
               <Typography
                 sx={{ marginTop: "10px" }}
                 variant="body2"

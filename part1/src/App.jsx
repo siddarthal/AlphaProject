@@ -92,14 +92,17 @@ function App() {
         {
           path: "/events/tickets/:id",
           element: <BuyTicket token={token} />,
+          loader: checkAuthLoader,
         },
         {
           path: "/events/tickets",
           element: <Alltickets token={token} />,
+          loader: checkAuthLoader,
         },
         {
           path: "/events/channels",
           element: <Channel token={token} />,
+          loader: checkAuthLoader,
           children: [
             {
               path: "",

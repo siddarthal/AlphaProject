@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import api from "../../Services/service";
+import Loader from "../Explore/Loader";
 
 import Ticket from "./Ticket";
 const AllTickets = ({ token }) => {
   const [ticket, setTicket] = useState([]);
   const [data, setData] = useState(null);
+  const [loader, setLoading] = React.useState(false);
   useEffect(() => {
+    setLoading(true);
     if (token !== null) {
       api
         .userAccountDatails(token)
@@ -28,20 +31,27 @@ const AllTickets = ({ token }) => {
         console.log(res2.data);
         if (res2.status === 200) {
           console.log("hi");
+
           setTicket(res2.data);
           api
             .getEventsOne()
             .then((res) => {
               console.log(res.status, "status");
               if (res.status === 200) {
+                setLoading(false);
                 filterFunc(res2.data, res.data);
               } else {
                 console.log("unable to fetch data of event from server", res2);
+                setLoading(false);
               }
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+              console.log(error);
+              setLoading(false);
+            });
         } else {
           alert("error in fetching ticket details");
+          setLoading(false);
         }
       })
       .catch((error) => console.log(error));
@@ -65,6 +75,7 @@ const AllTickets = ({ token }) => {
   };
   return (
     <Box>
+      {loader && <Loader />}
       {noInvites ? (
         <Typography variant="h4" sx={{ fontWeight: "bold", pt: 4 }}>
           No Tickets Booked
@@ -82,7 +93,11 @@ const AllTickets = ({ token }) => {
                     {console.log(data, "data")}
                     {data !== null && (
                       // <TicketEvents eventdata={data[item.event]} ticket={ticket} />
-                      <Ticket eventdata={data[item.event]} ticket={item} token={token}/>
+                      <Ticket
+                        eventdata={data[item.event]}
+                        ticket={item}
+                        token={token}
+                      />
                     )}
                   </Grid>
                 );

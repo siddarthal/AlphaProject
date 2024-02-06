@@ -62,7 +62,7 @@ const editParticularEvent = (id, data, tokens) => {
   const urleditParticularEvent = urlEvents + id + "/";
 
   const promise = axios.put(urleditParticularEvent, data, { headers: headerS });
-  return promise.then((res) => res.data).catch((error) => error);
+  return promise.then((res) => res).catch((error) => error);
 };
 const getEventMessages = (eventId, tokens) => {
   const url = backendURL + `/api/messages/${eventId}`;

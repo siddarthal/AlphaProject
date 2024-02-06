@@ -25,6 +25,7 @@ const FilterEvents = () => {
       category[item.category].push(item);
     }
   });
+  const data = category[eventName].filter((item) => item.privacy === false);
   console.log(category);
   return (
     <Box>
@@ -32,7 +33,7 @@ const FilterEvents = () => {
         {eventName}
       </Typography>
       <Grid container spacing={1} alignItems="center">
-        {category[eventName].map((item) => {
+        {data.map((item) => {
           console.log("in the blood", item.EID);
           return (
             <Grid item xs={12} md={4} key={item.EID}>

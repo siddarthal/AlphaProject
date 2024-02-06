@@ -12,12 +12,13 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
 import useRazorpay from "react-razorpay";
+import Loader from "../components/Explore/Loader";
 
 const BuyTicket = ({ token }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [Razorpay] = useRazorpay();
-
+  const [loader, setLoader] = useState(false);
   const [numPeople, setNumPeople] = useState(1);
   const [details, setDetails] = useState({
     category: "",
@@ -64,9 +65,8 @@ const BuyTicket = ({ token }) => {
     // api.buyTicketUrl(confirmationDetails).then((res)=>{
     //   console.log("res",res)
     // })
-    const header1 = {
-      Authorization: "Bearer " + token,
-    };
+    setLoader(true);
+
     api
       .postTicketDetails(confirmationDetails, token)
       .then(function (response) {
@@ -96,14 +96,17 @@ const BuyTicket = ({ token }) => {
               .postPaymentDetails(data, token)
               .then(function (response2) {
                 if ((response2.status = 200)) {
+                  setLoader(false);
                   navigate("/events/tickets");
                 } else {
                   console.log("res status", response2.status);
+                  setLoader;
                 }
                 console.log(response2);
               })
               .catch(function (error) {
                 console.log(error);
+                setLoader(false);
               });
           },
           notes: {
@@ -171,6 +174,7 @@ const BuyTicket = ({ token }) => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
+          opacity: loader && 0.5,
         }}
       >
         <Paper elevation={3} sx={{ padding: 4, textAlign: "center" }}>
@@ -212,12 +216,14 @@ const BuyTicket = ({ token }) => {
             variant="contained"
             color="primary"
             onClick={handleConfirmation}
+            disabled={loader}
             sx={{ marginTop: 2 }}
           >
             Confirm and Proceed to Payment
           </Button>
         </Paper>
       </Box>
+      {loader && <Loader />}
     </Container>
   );
 };

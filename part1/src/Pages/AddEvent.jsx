@@ -2,6 +2,8 @@ import * as React from "react";
 import dayjs from "dayjs";
 import api from "../Services/service";
 import { styled } from "@mui/material/styles";
+import CircularProgress from "@mui/material/CircularProgress";
+import Loader from "../components/Explore/Loader";
 import {
   Box,
   Stack,
@@ -27,15 +29,17 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { useNavigate, Link } from "react-router-dom";
 const AddEvent = ({ token }) => {
-  const [privacy, setPrivacy] = useState(true);
+  const [privacy, setPrivacy] = useState(false);
   const [medium, setMedium] = useState(true);
   const locationdata = ["location", "latitude", "longitude"];
-  const [sdate, setsDate] = useState(dayjs(new Date().toLocaleString()));
-  const [edate, seteDate] = useState(dayjs(new Date().toLocaleString()));
+  const [sdate, setsDate] = useState("");
+  const [edate, seteDate] = useState("");
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [errors, setErrors] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [event, setEvent] = useState({
     event_name: "",
     startDate: sdate,
@@ -45,13 +49,12 @@ const AddEvent = ({ token }) => {
     longitude: "",
     time: "09:58:00",
     require_volunteers: true,
-    poster: null,
     ticket_cost: "",
     description: "",
     medium: "",
     category: "",
     duration: "",
-    privacy: false,
+    privacy: true,
     user: 8,
   });
   useEffect(() => {
@@ -98,13 +101,14 @@ const AddEvent = ({ token }) => {
     console.log(name, "name");
     const dateValue = dayjs(value);
     const formattedDate = dateValue.format("YYYY-MM-DD");
-    const formattedTime = dateValue.format("HH:mm:ss");
+    console.log(formattedDate, "formattedDate");
     if (name === "endDate") {
       setEvent({
         ...event,
         [name]: formattedDate,
       });
     } else {
+      const formattedTime = dateValue.format("HH:mm:ss");
       setEvent({
         ...event,
         [name]: formattedDate,
@@ -170,6 +174,7 @@ const AddEvent = ({ token }) => {
   const handleCreate = () => {
     console.log("clicked");
     if (formValidation()) {
+      
       setErrors({});
       const formData = new FormData();
       for (const key in event) {
@@ -177,6 +182,7 @@ const AddEvent = ({ token }) => {
       }
       if (selectedFile) {
         formData.append("poster", selectedFile);
+        console.log("hi name");
       }
       console.log(formData);
       redirectSubmit(formData);
@@ -185,8 +191,10 @@ const AddEvent = ({ token }) => {
     }
   };
   const redirectSubmit = (formData) => {
+    setLoader(true);
     console.log("redirect submit is called");
     console.log(token, "token");
+    console.log(formData, "formdata");
     api
       .submitEvent(formData, token)
       .then((res) => {
@@ -194,10 +202,11 @@ const AddEvent = ({ token }) => {
           console.log("succesfully data posted");
           console.log(res);
           console.log(event);
+          setLoader(false);
           setEvent({
             event_name: "",
             description: "",
-            privacy: true,
+            privacy: false,
             medium: "",
             require_volunteers: true,
             startDate: sdate,
@@ -212,12 +221,19 @@ const AddEvent = ({ token }) => {
             latitude: "",
             longitude: "",
           });
+          
           navigate("/dashboard");
         } else {
+          
+          setLoader(false);
           alert("issue in submitting the event");
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        
+        setLoader(false);
+        console.log("error", error);
+      });
   };
   const handlePress = () => {
     // Handle click action here
@@ -306,8 +322,8 @@ const AddEvent = ({ token }) => {
 
         <Box>
           <Box>
-            <Grid container spacing={0.2}>
-              <Grid item xs={1}>
+            <Grid container spacing={1}>
+              <Grid item xs={6} sm={2} md={2} lg={1.3}>
                 <Button
                   variant={privacy ? "contained" : "outlined"}
                   onClick={() => handlePrivacy(true)}
@@ -315,7 +331,7 @@ const AddEvent = ({ token }) => {
                   Private
                 </Button>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={6} sm={3} md={2} lg={1.3}>
                 <Button
                   variant={privacy ? "outlined" : "contained"}
                   onClick={() => handlePrivacy(false)}
@@ -333,7 +349,7 @@ const AddEvent = ({ token }) => {
         <Box>
           <Box>
             <Grid container spacing={0.2}>
-              <Grid item xs={1}>
+              <Grid  item xs={6} sm={2} md={2} lg={1.3}>
                 <Button
                   variant={medium ? "contained" : "outlined"}
                   onClick={() => handleMedium(true)}
@@ -341,7 +357,7 @@ const AddEvent = ({ token }) => {
                   TRUE
                 </Button>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={6} sm={2} md={2} lg={1.3}>
                 <Button
                   variant={medium ? "outlined" : "contained"}
                   onClick={() => handleMedium(false)}
@@ -500,9 +516,11 @@ const AddEvent = ({ token }) => {
           sx={{ width: "20%" }}
           variant="contained"
           onClick={handleCreate}
+          disabled={loader}
         >
           Create
         </Button>
+        {loader && <Loader />}
       </Stack>
     </Box>
   );

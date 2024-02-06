@@ -20,16 +20,16 @@ const Ticket = ({ eventdata, ticket, token }) => {
   const months = [
     "Jan",
     "Feb",
-    "March",
-    "April",
+    "Mar",
+    "Apr",
     "May",
     "June",
     "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   const day = weekdays[dateObj.getDay()];
@@ -75,7 +75,7 @@ const Ticket = ({ eventdata, ticket, token }) => {
     .toString()
     .padStart(2, "0");
   const allowedEndTime = allowedEndHours + ":" + minutes + " " + ampm;
-
+  
   console.log("Allowed End Time:", allowedEndTime);
   const latitude = eventdata.latitude;
   const longitude = eventdata.longitude;

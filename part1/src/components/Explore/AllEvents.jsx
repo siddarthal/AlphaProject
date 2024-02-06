@@ -8,18 +8,28 @@ import { useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import EventCard from "../EventCard";
 import { Box, Typography } from "@mui/material";
+import Loader from "./Loader";
 const AllEvents = () => {
   const [event, setEvent] = useState([]);
+  const [loading, setLoading] = useState();
   useEffect(() => {
+    setLoading(true);
     api
       .getEventsOne()
       .then((res) => {
         if (res.status === 200) {
           console.log(res, "in response 2000000");
           setEvent(res.data);
+          setLoading(false);
+        } else {
+          alert("error in fetching events");
+          setLoading(false);
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {
+        console.log("error", error);
+        setLoading(false);
+      });
   }, []);
   function LeftNextArrow(props) {
     const { className, style, onClick } = props;
@@ -107,31 +117,37 @@ const AllEvents = () => {
       }
     });
   }
-  
-  
+
+  const data = event.filter((item) => item.privacy === false);
   fetchAllCategoriesData();
   console.log("hi");
   return (
     <>
-      <Box>
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          All Events
-        </Typography>
-
-        <Slider {...settings}>
-          {event.map(
-            (item, index) =>
-              item.privacy === false && (
-                <EventCard key={index} event={item} idx={index} />
-              )
-          )}
-        </Slider>
-      </Box>
-      {Object.keys(category).map((categoryName, idx) => {
-        return (
-          <Carousel category={category} categoryName={categoryName} key={idx} />
-        );
-      })}
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <Box>
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              All Events
+            </Typography>
+            <Slider {...settings}>
+              {data.map((item, index) => (
+                <EventCard key={item.EID} event={item} idx={index} />
+              ))}
+            </Slider>
+          </Box>
+          {Object.keys(category).map((categoryName, idx) => {
+            return (
+              <Carousel
+                category={category}
+                categoryName={categoryName}
+                key={idx}
+              />
+            );
+          })}
+        </>
+      )}
     </>
   );
 };
