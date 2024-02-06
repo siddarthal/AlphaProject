@@ -30,12 +30,14 @@ const Carousel = ({ category, categoryName }) => {
       </div>
     );
   }
-
+  const filtered = category[categoryName].filter(
+    (item) => item.privacy === false
+  );
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: Math.min(3, category[categoryName].length),
+    slidesToShow: Math.min(3, filtered.length),
     slidesToScroll: 1,
     initialSlide: 0,
     nextArrow: <LeftNextArrow />,
@@ -67,9 +69,6 @@ const Carousel = ({ category, categoryName }) => {
       },
     ],
   };
-  const filtered = category[categoryName].filter(
-    (item) => item.privacy === false
-  );
 
   return (
     <Box>
