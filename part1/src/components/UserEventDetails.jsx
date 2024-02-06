@@ -4,7 +4,7 @@ import { Box, Grid, Typography, Button, Stack } from "@mui/material";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { useNavigate } from "react-router-dom";
 import Events from "./Creator/Events";
-const UserEventDetails = ({token}) => {
+const UserEventDetails = ({ token }) => {
   const [eventData, setEventData] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -19,7 +19,7 @@ const UserEventDetails = ({token}) => {
   return (
     <>
       <Box>
-      {/* Hi */}
+        {/* Hi */}
         <Stack spacing={6}>
           <Grid container>
             <Grid item xs={6}>
@@ -28,7 +28,11 @@ const UserEventDetails = ({token}) => {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <Box sx={{ paddingLeft: 65 }}>
+              <Box
+                display="flex"
+                justifyContent="flex-end"
+                sx={{ paddingRight: 3 }}
+              >
                 <Button
                   variant="contained"
                   startIcon={<CreateOutlinedIcon />}
@@ -44,13 +48,13 @@ const UserEventDetails = ({token}) => {
               {eventData.map((item, idx) => (
                 <Grid item xs={6} key={idx}>
                   {" "}
-                  <Events  eventdata={item} />{" "}
+                  <Events eventdata={item} />{" "}
                 </Grid>
               ))}
             </Grid>
           ) : (
             // <p></p>
-            <Typography variant="body" >
+            <Typography variant="body">
               There are no events please add events
             </Typography>
           )}

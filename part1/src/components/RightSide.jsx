@@ -33,18 +33,21 @@ const RightSide = ({ token }) => {
     navigate("/dashboard/add");
   };
 
-
   return (
     <Box>
       <Stack spacing={2}>
-        <Grid container spacing={2} sx={{paddingRight:3}}>
+        <Grid container spacing={2}>
           <Grid item xs={6}>
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
               Dashboard
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Box display="flex" justifyContent="flex-end">
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              sx={{ paddingRight: 3 }}
+            >
               <Button
                 variant="contained"
                 startIcon={<CreateOutlinedIcon />}
@@ -57,7 +60,7 @@ const RightSide = ({ token }) => {
           <DateOnDashboard />
         </Grid>
 
-        {data.length ===0 ? (
+        {data.length === 0 ? (
           <>
             <Box style={{ textAlign: "center", paddingTop: 74 }}>
               <Typography
