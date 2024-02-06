@@ -30,12 +30,15 @@ export default function UserEventDetails({ token }) {
   };
   const handleCopyId = () => {
     const url = window.location.origin + `/events/${id}`;
+    console.log("inside copy id", url);
     navigator.clipboard
       .writeText(url)
       .then(() => {
         alert("url copied to clipboard");
+        console.log("url copied to clipboard",url);
       })
       .catch((error) => {
+        console.log(error, "error in copying");gt
         alert("Error copying ID to clipboard:", error);
       });
   };
