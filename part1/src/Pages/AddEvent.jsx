@@ -11,7 +11,10 @@ import {
   Grid,
   Alert,
   AlertTitle,
-  FormControl, InputLabel, MenuItem, Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Snackbar,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -63,7 +66,7 @@ const AddEvent = ({ token }) => {
         }
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [token]);
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
@@ -153,11 +156,11 @@ const AddEvent = ({ token }) => {
     const startDate = new Date(event.startDate);
     const endDate = new Date(event.endDate);
     const currentTime = new Date();
-    console.log(startDate, endDate, currentTime, "dates");
+
     if (startDate <= currentTime) {
       newErrors.start_date = "Start date must be greater than current time";
     }
-    if (startDate > endDate) {
+    if (startDate >= endDate) {
       newErrors.start_date = "Start date must be less than end date";
     }
 

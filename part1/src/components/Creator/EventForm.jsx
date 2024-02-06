@@ -29,7 +29,7 @@ const EventForm = ({token}) => {
   const [medium, setMedium] = useState(true);
   const locationdata = ["location", "latitude", "longitude"];
   const [sdate, setsDate] = useState(dayjs("2027-04-17T19:50"));
-  const [edate, seteDate] = useState(dayjs("2022-04-17T15:30"));
+  const [edate, seteDate] = useState(dayjs("2022-04-17"));
   const [tracker, setTracker] = useState(new Array(12).fill(false));
   const [errors, setErrors] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
@@ -38,7 +38,7 @@ const EventForm = ({token}) => {
   const [event, setEvent] = useState({
     event_name: "",
     description: "",
-    privacy: true,
+    privacy: false,
     medium: "",
     require_volunteers: true,
     startDate: "2024-9-11",
