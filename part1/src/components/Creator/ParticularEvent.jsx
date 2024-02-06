@@ -31,16 +31,37 @@ export default function UserEventDetails({ token }) {
   const handleCopyId = () => {
     const url = window.location.origin + `/events/${id}`;
     console.log("inside copy id", url);
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
+
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          alert("url copied to clipboard");
+          console.log("url copied to clipboard", url);
+        })
+        .catch((error) => {
+          console.log(error, "error in copying");
+          alert("Error copying ID to clipboard:", error);
+        });
+    } else if (document.execCommand) {
+      const textarea = document.createElement("textarea");
+      textarea.textContent = url;
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        document.execCommand("copy");
         alert("url copied to clipboard");
-        console.log("url copied to clipboard",url);
-      })
-      .catch((error) => {
-        console.log(error, "error in copying");gt
+        console.log("url copied to clipboard", url);
+      } catch (error) {
+        console.log(error, "error in copying");
         alert("Error copying ID to clipboard:", error);
-      });
+      }
+
+      document.body.removeChild(textarea);
+    } else {
+      alert("Your browser does not support clipboard operations");
+    }
   };
   const handleDeleteEvent = async () => {
     const confirmDeletion = window.confirm(
