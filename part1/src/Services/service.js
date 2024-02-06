@@ -102,11 +102,14 @@ const userAccountDatails = (token1) => {
 
   return axios.get(urserAccountUrl, { headers: header1 });
 };
-const editAccountDetails = (name) => {
+const editAccountDetails = (name,token1) => {
+  const header1 = {
+    Authorization: "Bearer " + token1,
+  };
   const body = {
     name: name,
   };
-  return axios.post(urserAccountUrl, body, { headers: header });
+  return axios.put(urserAccountUrl, body, { headers: header1 });
 };
 const handleDeleteMessage = (AID, token1) => {
   const header1 = {

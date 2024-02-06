@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../Services/service";
 import img from "../../Images/R.jpg";
-import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import React from "react";
 import { Button, Stack, Box, Typography, Grid, Paper } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -12,13 +12,13 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Iframe from "react-iframe";
 import ChatBox from "../ChatBox";
 import AnnouncementChannelCreator from "../ChattNew/AnnouncementChannelCreator ";
-export default function UserEventDetails({token}) {
+export default function UserEventDetails({ token }) {
   const { id } = useParams();
   const [details, setDetails] = useState({});
 
   console.log(id);
   useEffect(() => {
-    api.fetchParticularEvent(id,token).then((res) => {
+    api.fetchParticularEvent(id, token).then((res) => {
       console.log(res);
       setDetails(res);
     });
@@ -29,13 +29,14 @@ export default function UserEventDetails({token}) {
     navigate(`/dashboard/edit/${id}`);
   };
   const handleCopyId = () => {
+    const url = window.location.origin + `/events/${id}`;
     navigator.clipboard
-      .writeText(id)
+      .writeText(url)
       .then(() => {
-        console.log("ID copied to clipboard:", eventId);
+        alert("url copied to clipboard");
       })
       .catch((error) => {
-        console.error("Error copying ID to clipboard:", error);
+        alert("Error copying ID to clipboard:", error);
       });
   };
   const handleDeleteEvent = async () => {
@@ -44,7 +45,7 @@ export default function UserEventDetails({token}) {
     );
     if (confirmDeletion) {
       try {
-        const response = await api.deleteParticularEvent(id,token);
+        const response = await api.deleteParticularEvent(id, token);
         if (response.status === 204) {
           // Event deletion successful
           console.log(`Event with ID  deleted successfully.`);
@@ -84,7 +85,7 @@ export default function UserEventDetails({token}) {
               Delete Event
             </Button>
             <Button variant="contained" color="primary" onClick={handleCopyId}>
-              Copy Invite ID
+              Copy Invite url
             </Button>
             <Button variant="outlined" color="inherit" onClick={handelGoBack}>
               Go Back
@@ -140,18 +141,18 @@ export default function UserEventDetails({token}) {
             </Paper>
           </Grid>
         </Grid>
-        <Grid  container spacing={2} alignItems="flex-start">
+        <Grid container spacing={2} alignItems="flex-start">
           <Grid item xs={12} md={8}>
             <AnnouncementChannelCreator idx={id} token={token} />
           </Grid>
-            <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4}>
             <Box
-               sx={{
+              sx={{
                 p: 2,
                 bgcolor: "error.main",
                 color: "white",
                 borderRadius: 2,
-                height: "100%", 
+                height: "100%",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -179,7 +180,7 @@ export default function UserEventDetails({token}) {
               <Box
                 sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
               >
-                <CurrencyRupeeIcon/>
+                <CurrencyRupeeIcon />
                 <Typography>{details.ticket_cost}</Typography>
               </Box>
 
@@ -187,7 +188,9 @@ export default function UserEventDetails({token}) {
                 sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
               >
                 <GroupIcon />
-                <Typography>{(details.require_volunteers)?("Volunteers"):("Not Required")}</Typography>
+                <Typography>
+                  {details.require_volunteers ? "Volunteers" : "Not Required"}
+                </Typography>
               </Box>
 
               <Box

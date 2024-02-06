@@ -13,7 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import useRazorpay from "react-razorpay";
 
-const BuyTicket = ({token}) => {
+const BuyTicket = ({ token }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [Razorpay] = useRazorpay();
@@ -33,7 +33,7 @@ const BuyTicket = ({token}) => {
       setUser(parseInt(res.data.id));
     });
     api
-      .fetchParticularEvent(id,token)
+      .fetchParticularEvent(id, token)
       .then((res) => {
         console.log(res);
         setDetails(res);
@@ -41,9 +41,9 @@ const BuyTicket = ({token}) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [token]);
   const calculateTotalFare = () => {
-    return numPeople * details.ticket_cost ;
+    return numPeople * details.ticket_cost;
   };
 
   const handleConfirmation = () => {
@@ -67,7 +67,8 @@ const BuyTicket = ({token}) => {
     const header1 = {
       Authorization: "Bearer " + token,
     };
-    api.postTicketDetails(confirmationDetails,token)
+    api
+      .postTicketDetails(confirmationDetails, token)
       .then(function (response) {
         console.log(response);
         const order_id = response.data.order_id;
@@ -91,7 +92,8 @@ const BuyTicket = ({token}) => {
               signature: response1.razorpay_signature,
             };
             console.log(data, "data");
-            api.postPaymentDetails(data,token)
+            api
+              .postPaymentDetails(data, token)
               .then(function (response2) {
                 if ((response2.status = 200)) {
                   navigate("/events/tickets");
@@ -123,32 +125,34 @@ const BuyTicket = ({token}) => {
           // alert(response.error.reason);
           // alert(response.error.metadata.order_id);
           // alert(response.error.metadata.payment_id);
-          api.getTicketDetails(response.data.TID,token)
-              .then(function (response1) {
-                if ((response1.status = 200)) {
-                  const data = response1.data
-                  console.log(data,'data')
-                  data.ticket_status = 'fail'
-                 api.putTicketDetails(response.data.TID,data,token)
-                    .then(function (response2) {
-                      if ((response2.status = 200)) {
-                        navigate("/events/tickets");
-                      } else {
-                        console.log("res status", response2.status);
-                      }
-                      console.log(response2);
-                    })
-                    .catch(function (error) {
-                      console.log(error);
-                    });
-                } else {
-                  console.log("res status", response1.status);
-                }
-                console.log(response1);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+          api
+            .getTicketDetails(response.data.TID, token)
+            .then(function (response1) {
+              if ((response1.status = 200)) {
+                const data = response1.data;
+                console.log(data, "data");
+                data.ticket_status = "fail";
+                api
+                  .putTicketDetails(response.data.TID, data, token)
+                  .then(function (response2) {
+                    if ((response2.status = 200)) {
+                      navigate("/events/tickets");
+                    } else {
+                      console.log("res status", response2.status);
+                    }
+                    console.log(response2);
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+              } else {
+                console.log("res status", response1.status);
+              }
+              console.log(response1);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
         });
 
         rzp1.open();
@@ -178,19 +182,26 @@ const BuyTicket = ({token}) => {
             label="Number of People"
             type="number"
             value={numPeople}
-            onChange={(e) =>{ setNumPeople(e.target.value);}}
+            onChange={(event) => {
+              setNumPeople(event.target.value);
+              const value = event.target.value;
+              if (value > 100) {
+                event.target.value = 100;
+                setNumPeople(event.target.value);
+              } else if (value < 1) {
+                event.target.value = 1;
+                setNumPeople(event.target.value);
+              }
+            }}
             variant="outlined"
             sx={{ marginBottom: 2 }}
+            inputProps={{
+              min: 1,
+              max: 100,
+              step: 1,
+            }}
           />
-          {/* <TextField
-            fullWidth
-            label="Number Attending"
-            type="number"
-            value={attending}
-            onChange={(e) => }
-            variant="outlined"
-            sx={{ marginBottom: 2 }}
-          /> */}
+
           <Typography variant="h6" sx={{ marginBottom: 1 }}>
             Total Fare:
           </Typography>

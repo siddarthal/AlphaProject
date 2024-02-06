@@ -77,7 +77,8 @@ export default function EventDetails({ token }) {
     console.log("clicked buy");
     navigate(`/events/tickets/${id}`);
   };
-
+  const stime = new Date(event.startDate);
+  const currentTime = new Date();
   // const formattedDate = startDate.toLocaleDateString("en-US", options);
 
   // console.log(formattedDate);
@@ -196,13 +197,19 @@ export default function EventDetails({ token }) {
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        onClick={handleBuyTicket}
-                      >
-                        Buy Ticket
-                      </Button>
+                      {stime > currentTime ? (
+                        <Button
+                          variant="contained"
+                          size="small"
+                          onClick={handleBuyTicket}
+                        >
+                          Buy Ticket
+                        </Button>
+                      ) : (
+                        <Typography style={{ color: "red" }}>
+                          Event has ended
+                        </Typography>
+                      )}
                     </Grid>
                   </Grid>
                 </Box>
@@ -263,13 +270,15 @@ export default function EventDetails({ token }) {
             </Container>
           </Paper>
         </Grid>
-        <Grid item xs={4}>
-          <Box display="flex" justifyContent="center" sx={{pt:3}}>
-            <Button variant="contained" onClick={handleChannel} >
-              Join channel
-            </Button>
-          </Box>
-        </Grid>
+        {event.require_volunteers === true && (
+          <Grid item xs={4}>
+            <Box display="flex" justifyContent="center" sx={{ pt: 3 }}>
+              <Button variant="contained" onClick={handleChannel}>
+                Join channel
+              </Button>
+            </Box>
+          </Grid>
+        )}
       </Grid>
     </Container>
   );

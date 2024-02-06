@@ -67,16 +67,19 @@ const Carousel = ({ category, categoryName }) => {
       },
     ],
   };
+  const filtered = category[categoryName].filter(
+    (item) => item.privacy === false
+  );
 
   return (
     <Box>
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-        {categoryName}
+        {filtered.length > 0 && categoryName}
       </Typography>
       {/* {console.log("hi")} */}
 
       <Slider {...settings}>
-        {category[categoryName].map((item) => {
+        {filtered.map((item) => {
           console.log("in the blood", item.EID);
           return <EventCard key={item.EID} event={item} />;
         })}

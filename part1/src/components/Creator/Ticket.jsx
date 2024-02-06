@@ -3,7 +3,7 @@ import { Box, Paper, Card, CardContent, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Button } from "@mui/base";
 import api from "../../Services/service";
-const Ticket = ({ eventdata, ticket,token }) => {
+const Ticket = ({ eventdata, ticket, token }) => {
   const imgUrl = eventdata.poster;
   // const imgUrl = "http://127.0.0.1:8000" + eventdata.poster;
   const dateString = eventdata.startDate;
@@ -18,8 +18,8 @@ const Ticket = ({ eventdata, ticket,token }) => {
     "Saturday",
   ];
   const months = [
-    "January",
-    "February",
+    "Jan",
+    "Feb",
     "March",
     "April",
     "May",
@@ -39,7 +39,8 @@ const Ticket = ({ eventdata, ticket,token }) => {
 
   const startEventTime = eventdata.time;
   const eventDuration = eventdata.duration;
-
+  const stime = new Date(eventdata.startDate);
+  const currentTime = new Date();
   const timeString = startEventTime;
   const timeParts = timeString.split(":");
   let hours = parseInt(timeParts[0]);
@@ -83,7 +84,7 @@ const Ticket = ({ eventdata, ticket,token }) => {
     console.log("Cancel Ticket");
     console.log("Ticket Data", ticketData);
     api
-      .deleteTicket(ticketData.order_id,token)
+      .deleteTicket(ticketData.order_id, token)
       .then((res) => {
         console.log("Ticket Deleted", res);
         if (res.status === 200) {
@@ -248,9 +249,11 @@ const Ticket = ({ eventdata, ticket,token }) => {
                     <LocationOnIcon />
                   </a>
                 </Typography>
-                <Button onClick={() => handleCancel(ticket)}>
-                  Cancel Ticket
-                </Button>
+                {ticket.ticket_status === "success" && stime > currentTime && (
+                  <Button onClick={() => handleCancel(ticket)}>
+                    Cancel Ticket
+                  </Button>
+                )}
               </Box>
             </Box>
           </CardContent>

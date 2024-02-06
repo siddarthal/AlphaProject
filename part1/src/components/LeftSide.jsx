@@ -52,13 +52,13 @@ const LeftSide = () => {
             </Button>
           </Container>
         </Box> */}
-        <Box>
+        {/* <Box>
           <Container>
             <Button variant="text" startIcon={<LocalActivityOutlinedIcon />} onClick={() => navigate("rsvps")}>
               RSVPS
             </Button>
           </Container>
-        </Box>
+        </Box> */}
         {/* <Box>
           <Container>
             <Button
@@ -80,10 +80,8 @@ const LeftSide = () => {
             </Button>
           </Container>
         </Box>
-        
       </Stack>
     </div>
   );
 };
 export default LeftSide;
-

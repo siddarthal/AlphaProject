@@ -44,7 +44,7 @@ const AccountDetails = ({token}) => {
     }));
   };
   const handleSubmit=()=>{
-    api.editAccountDetails(user.name).then((res)=>{
+    api.editAccountDetails(user.name,token).then((res)=>{
       console.log(res.data.message);
       alert(res.data.message)
     }).catch(error =>
