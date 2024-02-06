@@ -1,19 +1,28 @@
-import React, { useState } from 'react';
-import { Container, Typography, TextField, Button, Grid, Paper, useMediaQuery, useTheme } from '@mui/material';
-import EventIcon from '@mui/icons-material/Event';
+import React, { useState } from "react";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  Paper,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import EventIcon from "@mui/icons-material/Event";
 import { Link, useNavigate, useNavigation } from "react-router-dom";
 import api from "../Services/service";
 
 const Signup = () => {
   const navigation = useNavigation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -28,23 +37,23 @@ const Signup = () => {
     const newErrors = {};
 
     if (!formData.name) {
-      newErrors.name = 'Name is required';
+      newErrors.name = "Name is required";
     }
 
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Enter a valid email address';
+      newErrors.email = "Enter a valid email address";
     }
 
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     }
 
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Confirm Password is required';
+      newErrors.confirmPassword = "Confirm Password is required";
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
     setErrors(newErrors);
@@ -59,15 +68,25 @@ const Signup = () => {
       api
         .signUp(dataToSend)
         .then((result) => {
-          console.log("Successful");
-          console.log("formData", dataToSend);
-          console.log("result", result);
-          navigate("/signin");
-          setFormData({ name: "", email: "", password: "", confirmPassword: "" });
+          if (result.status === 201) {
+            console.log("Successful");
+            console.log("formData", dataToSend);
+            console.log("result", result);
+            navigate("/signin");
+            setFormData({
+              name: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+            });
+          } else {
+            alert(`Email address is already registered `);
+            console.log("result", result);
+          }
         })
         .catch((err) => {
           console.error(err);
-          alert(`Email address is already registered`);
+          alert(`something wrong try again later`, err);
         });
     } else {
       console.error(`Can't validate`);
@@ -75,28 +94,59 @@ const Signup = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xxl" style={{ display: 'flex', height: '100vh' }}>
-      <Grid container component="div" style={{ height: '100%', width: '100%' }}>
+    <Container
+      component="main"
+      maxWidth="xxl"
+      style={{ display: "flex", height: "100vh" }}
+    >
+      <Grid container component="div" style={{ height: "100%", width: "100%" }}>
         {/* Left side with form */}
-        <Grid item xs={12} sm={6}
+        <Grid
+          item
+          xs={12}
+          sm={6}
           component={Paper}
-          elevation={6} square
+          elevation={6}
+          square
           style={{
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundImage: isMobile ? `url('https://img.freepik.com/free-vector/key-concept-illustration_114360-6305.jpg?w=740&t=st=1706685388~exp=1706685988~hmac=2056ba4a72e536d890f45cc8cef398953d98fc12e657fd9d9cb7fb8546d26a4e')` : '',
-            backgroundPosition: 'center',
-            display: isMobile ? 'flex' : 'flex'
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundImage: isMobile
+              ? `url('https://img.freepik.com/free-vector/key-concept-illustration_114360-6305.jpg?w=740&t=st=1706685388~exp=1706685988~hmac=2056ba4a72e536d890f45cc8cef398953d98fc12e657fd9d9cb7fb8546d26a4e')`
+              : "",
+            backgroundPosition: "center",
+            display: isMobile ? "flex" : "flex",
           }}
         >
-          <div style={{ padding: '20px', width: '80%', background: 'rgba(255, 255, 255, 0.9)', alignItems: 'center' }}>
-            <Typography variant="h5" style={{ fontFamily: 'cursive', fontWeight: 'bold', display: 'flex', alignItems: 'center', marginBottom: 50 }}>
-              <EventIcon style={{ marginRight: '10px' }} />
+          <div
+            style={{
+              padding: "20px",
+              width: "80%",
+              background: "rgba(255, 255, 255, 0.9)",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="h5"
+              style={{
+                fontFamily: "cursive",
+                fontWeight: "bold",
+                display: "flex",
+                alignItems: "center",
+                marginBottom: 50,
+              }}
+            >
+              <EventIcon style={{ marginRight: "10px" }} />
               RelEvent
             </Typography>
-            <Typography variant="h5" style={{ fontFamily: 'cursive', fontWeight: 'bold' }}>Sign Up</Typography>
-            <form style={{ width: '100%', marginTop: '20px' }}>
+            <Typography
+              variant="h5"
+              style={{ fontFamily: "cursive", fontWeight: "bold" }}
+            >
+              Sign Up
+            </Typography>
+            <form style={{ width: "100%", marginTop: "20px" }}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -108,8 +158,14 @@ const Signup = () => {
                 autoComplete="name"
                 autoFocus
                 onChange={handleChange}
-                InputLabelProps={{ style: { fontFamily: 'cursive' } }}
-                InputProps={{ style: { borderRadius: '50px', fontFamily: 'cursive', borderColor: '#555' } }}
+                InputLabelProps={{ style: { fontFamily: "cursive" } }}
+                InputProps={{
+                  style: {
+                    borderRadius: "50px",
+                    fontFamily: "cursive",
+                    borderColor: "#555",
+                  },
+                }}
               />
               {errors.name && (
                 <Typography variant="body2" fontWeight="600">
@@ -126,8 +182,14 @@ const Signup = () => {
                 name="email"
                 autoComplete="email"
                 onChange={handleChange}
-                InputProps={{ style: { borderRadius: '50px', fontFamily: 'cursive', borderColor: '#555' } }}
-                InputLabelProps={{ style: { fontFamily: 'cursive' } }}
+                InputProps={{
+                  style: {
+                    borderRadius: "50px",
+                    fontFamily: "cursive",
+                    borderColor: "#555",
+                  },
+                }}
+                InputLabelProps={{ style: { fontFamily: "cursive" } }}
               />
               {errors.email && (
                 <Typography variant="body2" fontWeight="600">
@@ -145,8 +207,14 @@ const Signup = () => {
                 id="password"
                 autoComplete="new-password"
                 onChange={handleChange}
-                InputProps={{ style: { borderRadius: '50px', fontFamily: 'cursive', borderColor: '#555' } }}
-                InputLabelProps={{ style: { fontFamily: 'cursive' } }}
+                InputProps={{
+                  style: {
+                    borderRadius: "50px",
+                    fontFamily: "cursive",
+                    borderColor: "#555",
+                  },
+                }}
+                InputLabelProps={{ style: { fontFamily: "cursive" } }}
               />
               {errors.password && (
                 <Typography variant="body2" fontWeight="600">
@@ -164,8 +232,14 @@ const Signup = () => {
                 id="confirmPassword"
                 autoComplete="new-password"
                 onChange={handleChange}
-                InputProps={{ style: { borderRadius: '50px', fontFamily: 'cursive', borderColor: '#555' } }}
-                InputLabelProps={{ style: { fontFamily: 'cursive' } }}
+                InputProps={{
+                  style: {
+                    borderRadius: "50px",
+                    fontFamily: "cursive",
+                    borderColor: "#555",
+                  },
+                }}
+                InputLabelProps={{ style: { fontFamily: "cursive" } }}
               />
               {errors.confirmPassword && (
                 <Typography
@@ -178,22 +252,46 @@ const Signup = () => {
                 </Typography>
               )}
 
-              <Button type="submit" fullWidth variant="contained" color="primary" style={{ marginTop: '20px', borderRadius: '50px', fontFamily: 'cursive' }}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                style={{
+                  marginTop: "20px",
+                  borderRadius: "50px",
+                  fontFamily: "cursive",
+                }}
                 disabled={navigation.state === "submitting"}
-                onClick={signupHandler}>
-                {navigation.state === "submitting" ? "Signing you up..." : "Sign Up"}
+                onClick={signupHandler}
+              >
+                {navigation.state === "submitting"
+                  ? "Signing you up..."
+                  : "Sign Up"}
               </Button>
-              <Typography sx={{ marginTop: "10px" }} variant="body2" fontWeight="600">
+              <Typography
+                sx={{ marginTop: "10px" }}
+                variant="body2"
+                fontWeight="600"
+              >
                 Already a member? <Link to="/signin">Signin</Link>
               </Typography>
             </form>
           </div>
         </Grid>
-       
+
         {/* Right side with image */}
-        <Grid item xs={0} sm={6} style={{ backgroundImage: `url('https://img.freepik.com/free-vector/privacy-policy-concept-illustration_114360-7853.jpg?w=740&t=st=1706680118~exp=1706680718~hmac=4d77e51b0d572be79cce84cbee47c7cd208c8da8b7f1f05ab7ad9d13c964539a')`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <Grid
+          item
+          xs={0}
+          sm={6}
+          style={{
+            backgroundImage: `url('https://img.freepik.com/free-vector/privacy-policy-concept-illustration_114360-7853.jpg?w=740&t=st=1706680118~exp=1706680718~hmac=4d77e51b0d572be79cce84cbee47c7cd208c8da8b7f1f05ab7ad9d13c964539a')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
       </Grid>
-      
     </Container>
   );
 };

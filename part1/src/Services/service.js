@@ -12,7 +12,7 @@ const signin = (body) => {
 const urlSignup = backendURL + "/api/signup/";
 const signUp = (body) => {
   const promise = axios.post(urlSignup, body);
-  return promise.then((res) => res.data).catch((error) => error);
+  return promise.then((res) => res).catch((error) => error);
 };
 const urlEvents = backendURL + "/api/events/";
 const getEvents = () => {

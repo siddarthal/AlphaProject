@@ -37,14 +37,14 @@ const RightSide = ({ token }) => {
   return (
     <Box>
       <Stack spacing={2}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{paddingRight:3}}>
           <Grid item xs={6}>
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
               Dashboard
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Box sx={{ paddingLeft: 65 }}>
+            <Box display="flex" justifyContent="flex-end">
               <Button
                 variant="contained"
                 startIcon={<CreateOutlinedIcon />}
