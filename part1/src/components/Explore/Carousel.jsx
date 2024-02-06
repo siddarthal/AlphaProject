@@ -67,9 +67,9 @@ const Carousel = ({ category, categoryName }) => {
       },
     ],
   };
-  
+
   return (
-    <Box >
+    <Box>
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
         {categoryName}
       </Typography>

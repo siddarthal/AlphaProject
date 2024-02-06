@@ -15,7 +15,7 @@ export default function EventCard({ event }) {
   const dateObj = new Date(event.startDate);
   const month = dateObj.toLocaleString("default", { month: "short" });
   const date = dateObj.getDate();
-  
+
   const overlayTopRightStyle = {
     position: "absolute",
     top: "8px",
@@ -51,7 +51,7 @@ export default function EventCard({ event }) {
   };
 
   return (
-    <div style={{paddingLeft:16}}>
+    <div style={{ paddingLeft: 16 }}>
       <Card sx={{ maxWidth: 345, marginTop: 6 }}>
         <CardActionArea onClick={handleClickOpen}>
           <div style={{ position: "relative" }}>

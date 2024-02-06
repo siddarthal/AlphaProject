@@ -38,10 +38,10 @@ function App() {
   useEffect(() => {
     const encryptedToken = localStorage.getItem("accessToken");
     const tokenExpiration = localStorage.getItem("tokenExpiration");
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
+    // if (isInitialMount.current) {
+    //   isInitialMount.current = false;
+    //   return;
+    // }
     console.log("storedToken", encryptedToken);
     if (encryptedToken && tokenExpiration) {
       if (new Date().getTime() > tokenExpiration) {

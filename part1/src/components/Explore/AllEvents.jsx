@@ -107,6 +107,8 @@ const AllEvents = () => {
       }
     });
   }
+  
+  
   fetchAllCategoriesData();
   console.log("hi");
   return (
@@ -117,9 +119,12 @@ const AllEvents = () => {
         </Typography>
 
         <Slider {...settings}>
-          {event.map((item, index) => (
-            <EventCard key={index} event={item} idx={index} />
-          ))}
+          {event.map(
+            (item, index) =>
+              item.privacy === false && (
+                <EventCard key={index} event={item} idx={index} />
+              )
+          )}
         </Slider>
       </Box>
       {Object.keys(category).map((categoryName, idx) => {
