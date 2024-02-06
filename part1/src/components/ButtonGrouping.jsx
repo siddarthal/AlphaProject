@@ -17,7 +17,7 @@ const ButtonGrouping = ({ tracker, setTracker, handleClick }) => {
   return (
     <Grid container spacing={0.2}>
       {categories.map((item, idx) => (
-        <Grid item xs={1} key={idx}>
+        <Grid item xs={12} md={1} key={idx}>
           <Button
             name={item}
             sx={{ width: "100%" }}

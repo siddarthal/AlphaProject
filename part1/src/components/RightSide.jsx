@@ -7,6 +7,8 @@ import image from "../Images/home.jpg";
 import api from "../Services/service";
 import RightSideEvents from "./RighsideEvents";
 import DateOnDashboard from "./Creator/DateOnDashboard";
+import { useTheme } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
 const RightSide = ({ token }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -26,7 +28,8 @@ const RightSide = ({ token }) => {
     };
     fetchData();
   }, [token]);
-
+  const theme1 = useTheme();
+  const isWideScreen = useMediaQuery(theme1.breakpoints.up("md"));
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -52,12 +55,13 @@ const RightSide = ({ token }) => {
                 variant="contained"
                 startIcon={<CreateOutlinedIcon />}
                 onClick={handleClick}
+                size={isWideScreen ? "medium" : "small"}
               >
                 Create
               </Button>
             </Box>
           </Grid>
-          <DateOnDashboard />
+          {isWideScreen && <DateOnDashboard />}
         </Grid>
 
         {data.length === 0 ? (

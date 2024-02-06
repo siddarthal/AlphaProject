@@ -9,11 +9,16 @@ import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
 const LeftSide = () => {
   const navigate = useNavigate();
   const handleeHome = () => {
     navigate("/dashboard");
   };
+  const theme1 = useTheme();
+  const isWideScreen = useMediaQuery(theme1.breakpoints.up("md"));
+
   return (
     <div>
       <Stack spacing={4}>
@@ -29,7 +34,7 @@ const LeftSide = () => {
               startIcon={<HomeIcon />}
               onClick={handleeHome}
             >
-              Home
+              {isWideScreen && "Home"}
             </Button>
           </Container>
         </Box>
@@ -40,35 +45,10 @@ const LeftSide = () => {
               variant="text"
               startIcon={<EventAvailableOutlinedIcon />}
             >
-              Events
+              {isWideScreen && "Events"}
             </Button>
           </Container>
         </Box>
-
-        {/* <Box>
-          <Container>
-            <Button variant="text" startIcon={<PeopleAltOutlinedIcon />} onClick={() => navigate("rsvps")}>
-              RSVPS
-            </Button>
-          </Container>
-        </Box> */}
-        {/* <Box>
-          <Container>
-            <Button variant="text" startIcon={<LocalActivityOutlinedIcon />} onClick={() => navigate("rsvps")}>
-              RSVPS
-            </Button>
-          </Container>
-        </Box> */}
-        {/* <Box>
-          <Container>
-            <Button
-              variant="text"
-              startIcon={<CircleNotificationsOutlinedIcon />} onClick={() => navigate("notifications")}
-            >
-              Notifications
-            </Button>
-          </Container>
-        </Box> */}
         <Box style={{ bottom: 0 }}>
           <Container>
             <Button
@@ -76,7 +56,7 @@ const LeftSide = () => {
               variant="text"
               startIcon={<PersonOutlineOutlinedIcon />}
             >
-              Account
+              {isWideScreen && "Account"}
             </Button>
           </Container>
         </Box>
