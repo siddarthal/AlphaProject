@@ -89,7 +89,7 @@ const AllTickets = ({ token }) => {
             <Grid container alignItems="center" spacing={2}>
               {ticket.map((item) => {
                 return (
-                  <Grid item xs={12} md={6} key={item.TID}>
+                  <Grid item xs={12} lg={6} key={item.TID}>
                     {console.log(data, "data")}
                     {data !== null && (
                       // <TicketEvents eventdata={data[item.event]} ticket={ticket} />
