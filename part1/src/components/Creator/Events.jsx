@@ -14,7 +14,8 @@ const Events = ({ eventdata }) => {
   const navigate = useNavigate();
 
   const maxDescriptionHeight = 400;
-  const imgUrl = "http://127.0.0.1:8000" + eventdata.poster;
+  const imgUrl =
+    import.meta.env.VITE_REACT_APP_BACKEND_URL + `/` + eventdata.poster;
   const boxStyle = {
     position: "absolute",
     bottom: 8,
@@ -39,12 +40,12 @@ const Events = ({ eventdata }) => {
     fontSize: 16,
     fontWeight: "bold",
     marginRight: 4,
-    color: "#333", 
+    color: "#333",
   };
 
   const dateStyle = {
     fontSize: 16,
-    color: "#555", 
+    color: "#555",
   };
 
   return (
