@@ -9,7 +9,7 @@ export default function StartDateTime({ value, handelDateChange }) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={["DateTimePicker", "DateTimePicker"]}>
         <DateTimePicker
-          label="Start Date Time"
+          label="Event Date-Time"
           value={value}
           onChange={(newValue) => handelDateChange(newValue,"startDate")}
         />

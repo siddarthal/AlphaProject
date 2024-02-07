@@ -174,7 +174,6 @@ const AddEvent = ({ token }) => {
   const handleCreate = () => {
     console.log("clicked");
     if (formValidation()) {
-      
       setErrors({});
       const formData = new FormData();
       for (const key in event) {
@@ -221,16 +220,14 @@ const AddEvent = ({ token }) => {
             latitude: "",
             longitude: "",
           });
-          
+
           navigate("/dashboard");
         } else {
-          
           setLoader(false);
           alert("issue in submitting the event");
         }
       })
       .catch((error) => {
-        
         setLoader(false);
         console.log("error", error);
       });
@@ -271,7 +268,7 @@ const AddEvent = ({ token }) => {
     }
   };
   return (
-    <Box>
+    <Box sx={{ opacity: loader && 0.5 }}>
       {generateAlert()}
       <Stack spacing={2.5}>
         <Box>
@@ -349,7 +346,7 @@ const AddEvent = ({ token }) => {
         <Box>
           <Box>
             <Grid container spacing={0.2}>
-              <Grid  item xs={6} sm={2} md={2} lg={1.3}>
+              <Grid item xs={6} sm={2} md={2} lg={1.3}>
                 <Button
                   variant={medium ? "contained" : "outlined"}
                   onClick={() => handleMedium(true)}
@@ -369,7 +366,7 @@ const AddEvent = ({ token }) => {
           </Box>
         </Box>
         <Box>
-          <Typography variant="h6">Sart Date-Time *</Typography>
+          <Typography variant="h6">Event Date-Time</Typography>
         </Box>
         <Box>
           <StartDateTime value={sdate} handelDateChange={handelDateChange} />
@@ -388,7 +385,7 @@ const AddEvent = ({ token }) => {
             required
             value={event.duration}
             id="outlined-basic"
-            label="Duration"
+            label="Duration (in hours)"
             variant="outlined"
           />
         </Box>
@@ -478,7 +475,7 @@ const AddEvent = ({ token }) => {
           variant="contained"
           startIcon={<CloudUploadIcon />}
         >
-          Upload file
+          Upload Poster
           <VisuallyHiddenInput
             type="file"
             name="poster"

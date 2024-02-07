@@ -305,7 +305,7 @@ const EventForm = ({ token }) => {
     }
   };
   return (
-    <Box>
+    <Box sx={{opacity: loader && 0.5}}>
       {generateAlert()}
       <Stack spacing={2.5}>
         <Box>
@@ -402,7 +402,7 @@ const EventForm = ({ token }) => {
           </Box>
         </Box>
         <Box>
-          <Typography variant="h6">Sart Date-Time *</Typography>
+          <Typography variant="h6">Event Date-Time *</Typography>
         </Box>
         <Box>
           <StartDateTime value={sdate} handelDateChange={handelDateChange} />
@@ -421,7 +421,7 @@ const EventForm = ({ token }) => {
             required
             value={event.duration}
             id="outlined-basic"
-            label="Duration"
+            label="Duration (in hours)"
             variant="outlined"
           />
         </Box>
@@ -494,7 +494,7 @@ const EventForm = ({ token }) => {
           variant="contained"
           startIcon={<CloudUploadIcon />}
         >
-          Upload new file
+          Update Poster
           <VisuallyHiddenInput
             type="file"
             name="poster"
@@ -516,7 +516,7 @@ const EventForm = ({ token }) => {
           </div>
         ) : (
           <div style={{ marginTop: "20px", position: "relative" }}>
-            <Typography variant="body1">File uploaded:</Typography>
+            <Typography variant="body1">Poster uploaded:</Typography>
             <img
               src={URL.createObjectURL(selectedFile)}
               alt="Uploaded File"
