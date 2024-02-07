@@ -63,7 +63,7 @@ const Signin = ({ setToken }) => {
           console.log("Result", res);
 
           if (res.access_token !== undefined) {
-            const secretKey = "your-secret-key";
+            const secretKey = "relEventSecretKey";
 
             const encryptedToken = CryptoJS.AES.encrypt(
               res.access_token,

@@ -48,7 +48,7 @@ const ResetPassword = () => {
         .postUpdatePassword(dataToSend, id, token)
         .then((result) => {
           if (result.status === 200) {
-            alert(`successfully reset password`);
+            alert(`password reset successfull`);
             setFormData({ password: "", rePassword: "" });
             navigate("/signin");
             setLoader(false);
