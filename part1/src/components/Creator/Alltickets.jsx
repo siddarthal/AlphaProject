@@ -6,6 +6,8 @@ import Loader from "../Explore/Loader";
 import Ticket from "./Ticket";
 const AllTickets = ({ token }) => {
   const [ticket, setTicket] = useState([]);
+  const [dummy,setDummy] = useState(true);
+
   const [data, setData] = useState(null);
   const [loader, setLoading] = React.useState(false);
   useEffect(() => {
@@ -23,7 +25,7 @@ const AllTickets = ({ token }) => {
         })
         .catch((error) => console.log(error));
     }
-  }, [token]);
+  }, [token,dummy]);
   const callTicketDetails = (id) => {
     api
       .fetchTickets(id, token)
@@ -97,6 +99,8 @@ const AllTickets = ({ token }) => {
                         eventdata={data[item.event]}
                         ticket={item}
                         token={token}
+                        dummy={dummy}
+                        setDummy={setDummy}
                       />
                     )}
                   </Grid>

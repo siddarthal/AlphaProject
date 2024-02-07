@@ -2,8 +2,9 @@ import React from "react";
 import { Box, Paper, Card, CardContent, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Button } from "@mui/base";
+import { useState } from "react";
 import api from "../../Services/service";
-const Ticket = ({ eventdata, ticket, token }) => {
+const Ticket = ({ eventdata, ticket, token,dummy,setDummy }) => {
   const imgUrl = eventdata.poster;
   // const imgUrl = "http://127.0.0.1:8000" + eventdata.poster;
   const dateString = eventdata.startDate;
@@ -81,20 +82,28 @@ const Ticket = ({ eventdata, ticket, token }) => {
   const longitude = eventdata.longitude;
   const locationLink = `https://maps.google.com/?q=${latitude},${longitude}`;
   const handleCancel = (ticketData) => {
-    console.log("Cancel Ticket");
-    console.log("Ticket Data", ticketData);
-    api
-      .deleteTicket(ticketData.order_id, token)
-      .then((res) => {
-        console.log("Ticket Deleted", res);
-        if (res.status === 200) {
-          alert("Ticket Cancelled and proccessed for refund");
-        }
-      })
-      .catch((err) => {
-        console.error("Error", err);
-        alert("Unable to cancel ticket at the moment. Please try again later.");
-      });
+    const confirmCancel = window.confirm(
+      "Are you sure you want to cancel the ticket?"
+    );
+    if (confirmCancel) {
+      console.log("Cancel Ticket");
+      console.log("Ticket Data", ticketData);
+      api
+        .deleteTicket(ticketData.order_id, token)
+        .then((res) => {
+          console.log("Ticket Deleted", res);
+          if (res.status === 200) {
+            alert("Ticket Cancelled and proccessed for refund");
+            setDummy(!dummy);
+          }
+        })
+        .catch((err) => {
+          console.error("Error", err);
+          alert(
+            "Unable to cancel ticket at the moment. Please try again later."
+          );
+        });
+    }
   };
   return (
     <Paper elevation={10}>
@@ -198,7 +207,7 @@ const Ticket = ({ eventdata, ticket, token }) => {
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
-                    width: 200
+                    width: 200,
                   }}
                 >
                   {eventdata.event_name}
