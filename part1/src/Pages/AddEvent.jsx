@@ -162,11 +162,11 @@ const AddEvent = ({ token }) => {
     const currentTime = new Date();
 
     if (startDate <= currentTime) {
-      newErrors.start_date = "Start date must be greater than current time";
+      newErrors.start_date = "Start date must be atleast one day ahead";
     }
-    if (startDate >= endDate) {
-      newErrors.start_date = "Start date must be less than end date";
-    }
+    // if (startDate >= endDate) {
+    //   newErrors.start_date = "Start date must be less than end date";
+    // }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -377,9 +377,9 @@ const AddEvent = ({ token }) => {
         <Box>
           <Typography variant="h6">End Date-Time *</Typography>
         </Box>
-        <Box>
+        {/* <Box>
           <EndDateTime value={edate} handelDateChange={handelDateChange} />
-        </Box>
+        </Box> */}
         <Box>
           <TextField
             onChange={handleChange}

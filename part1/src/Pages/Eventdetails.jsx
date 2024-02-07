@@ -105,7 +105,7 @@ export default function EventDetails({ token }) {
           <Paper
             elevation={3}
             sx={{
-              height: "50vh",
+              height: "55vh",
               // [theme.breakpoints.up("cm1")]: { height: "50vh" },
               // [theme.breakpoints.down("cm1")]: { height: "60vh" },
             }}
@@ -130,7 +130,7 @@ export default function EventDetails({ token }) {
             sx={
               {
                 // height:"50vh"
-                height: isWideScreen?("54vh"):("50vh") ,
+                height: isWideScreen?("54vh"):("55vh") ,
                 // [theme.breakpoints.up("cm1")]: { height: "50vh" },
                 // [theme.breakpoints.down("cm1")]: { height: "40vh" },
               }
