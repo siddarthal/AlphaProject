@@ -22,7 +22,7 @@ const Homepage = () => {
         </Stack>
       </Container>
 
-      <Footer />
+      {/* <Footer /> */}
     </Box>
   );
 };

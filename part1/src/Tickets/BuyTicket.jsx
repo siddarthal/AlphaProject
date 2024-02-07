@@ -27,7 +27,7 @@ const BuyTicket = ({ token }) => {
     event: id,
   });
   const [user, setUser] = useState();
-  const eventName = details.category;
+  const eventName = details.event_name;
   useEffect(() => {
     api.userAccountDatails(token).then((res) => {
       console.log("uid", res.data.id);
@@ -178,7 +178,16 @@ const BuyTicket = ({ token }) => {
         }}
       >
         <Paper elevation={3} sx={{ padding: 4, textAlign: "center" }}>
-          <Typography variant="h4" gutterBottom>
+          <Typography
+            variant="h4"
+            gutterBottom
+            sx={{
+              width:300,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
             {eventName}
           </Typography>
           <TextField
