@@ -115,6 +115,13 @@ const BuyTicket = ({ token }) => {
           theme: {
             color: "#3399cc",
           },
+          modal: {
+            ondismiss: function () {
+              alert("Payment Pending going tickets page");
+              setLoader(false);
+              navigate("/events/tickets");
+            },
+          },
         };
 
         const rzp1 = new Razorpay(options);
@@ -150,8 +157,6 @@ const BuyTicket = ({ token }) => {
                   });
               } else {
                 console.log("res status", response1.status);
-                setLoader(false);
-                navigate("/events/tickets");
               }
               console.log(response1);
             })
@@ -163,16 +168,10 @@ const BuyTicket = ({ token }) => {
         });
 
         rzp1.open();
-        // rzp1.on("payment.cancelled", function (responsez) {
-        //   alert("Payment Cancelled");
-        //   setLoader(false);
-        //   navigate("/events/tickets");
-        // });
-        
       })
       .catch(function (error) {
         setLoader(false);
-        navigate("/events/tickets");
+        alert("something went wrong")
         console.log(error);
       });
     // navigate("/payment", { state: confirmationDetails });
