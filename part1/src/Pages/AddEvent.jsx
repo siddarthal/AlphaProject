@@ -54,7 +54,7 @@ const AddEvent = ({ token }) => {
     medium: "",
     category: "",
     duration: "",
-    privacy: true,
+    privacy: privacy,
     user: 8,
   });
   useEffect(() => {

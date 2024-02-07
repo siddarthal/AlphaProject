@@ -83,7 +83,7 @@ export default function EventDetails({ token }) {
 
   // console.log(formattedDate);
   const theme1 = useTheme();
-  const isWideScreen = useMediaQuery(theme1.breakpoints.up("sm"));
+  const isWideScreen = useMediaQuery(theme1.breakpoints.between("xs","md"));
   const theme = createTheme({
     breakpoints: {
       values: {
@@ -129,7 +129,8 @@ export default function EventDetails({ token }) {
             elevation={6}
             sx={
               {
-                // height: "50vh" ,
+                // height:"50vh"
+                height: isWideScreen?("54vh"):("50vh") ,
                 // [theme.breakpoints.up("cm1")]: { height: "50vh" },
                 // [theme.breakpoints.down("cm1")]: { height: "40vh" },
               }
@@ -271,9 +272,13 @@ export default function EventDetails({ token }) {
           </Paper>
         </Grid>
         {event.require_volunteers === true && (
-          <Grid item xs={4}>
-            <Box display="flex" justifyContent="center" sx={{ pt: 3 }}>
-              <Button variant="contained" onClick={handleChannel}>
+          <Grid item xs={12} md={4}>
+            <Box display="flex" justifyContent="center" >
+              <Button
+                variant="contained"
+                onClick={handleChannel}
+                sx={{ width: isWideScreen ? ("100%"):("50%") }}
+              >
                 Join channel
               </Button>
             </Box>
