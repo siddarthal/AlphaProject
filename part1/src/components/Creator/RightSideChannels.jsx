@@ -9,6 +9,7 @@ const RightSideChannels = ({ token }) => {
   const [messages, setMessages] = useState([]);
   console.log(id, "id");
   useEffect(() => {
+    function getMessages() {
     if (id !== undefined && token !== null) {
       api
         .getEventMessages(id, token)
@@ -20,6 +21,14 @@ const RightSideChannels = ({ token }) => {
           console.log(error);
         });
     }
+  }
+  getMessages();
+  const interval = setInterval(getMessages, 4000); 
+
+    return () => {
+      clearInterval(interval); 
+    };
+  
   }, [token, id]);
 
   return (
