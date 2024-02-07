@@ -49,7 +49,7 @@ function App() {
         localStorage.removeItem("tokenExpiration");
         setToken(null);
       } else {
-        const secretKey = "relEventSecretKey";
+        const secretKey = "your-secret-key";
         const bytes = CryptoJS.AES.decrypt(encryptedToken, secretKey);
         const originalToken = bytes.toString(CryptoJS.enc.Utf8);
 
