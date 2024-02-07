@@ -43,7 +43,7 @@ const AddEvent = ({ token }) => {
   const [event, setEvent] = useState({
     event_name: "",
     startDate: sdate,
-    endDate: edate,
+    endDate: "2024-02-08",
     location: "",
     latitude: "",
     longitude: "",
