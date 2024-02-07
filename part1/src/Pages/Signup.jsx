@@ -13,6 +13,7 @@ import {
 import EventIcon from "@mui/icons-material/Event";
 import { Link, useNavigate, useNavigation } from "react-router-dom";
 import api from "../Services/service";
+import Loader from "../components/Explore/Loader";
 
 const Signup = () => {
   const navigation = useNavigation();
@@ -104,7 +105,11 @@ const Signup = () => {
       maxWidth="xxl"
       style={{ display: "flex", height: "100vh" }}
     >
-      <Grid container component="div" style={{ height: "100%", width: "100%" }}>
+      <Grid
+        container
+        component="div"
+        style={{ height: "100%", width: "100%", opacity: loading && 0.4 }}
+      >
         {/* Left side with form */}
         <Grid
           item
@@ -275,18 +280,7 @@ const Signup = () => {
                   ? "Signing you up..."
                   : "Sign Up"}
               </Button>
-              {loading && (
-                <CircularProgress
-                  size={24}
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    marginTop: "-12px",
-                    marginLeft: "-12px",
-                  }}
-                />
-              )}
+
               <Typography
                 sx={{ marginTop: "10px" }}
                 variant="body2"
@@ -310,6 +304,7 @@ const Signup = () => {
           }}
         />
       </Grid>
+      {loading && <Loader />}
     </Container>
   );
 };

@@ -9,6 +9,7 @@ const Loader = () => {
         left: "50%",
         marginTop: "-12px",
         marginLeft: "-12px",
+        
       }}
     />
   );

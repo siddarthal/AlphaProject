@@ -268,156 +268,157 @@ const AddEvent = ({ token }) => {
     }
   };
   return (
-    <Box sx={{ opacity: loader && 0.5 }}>
-      {generateAlert()}
-      <Stack spacing={2.5}>
-        <Box>
-          <ArrowBackRoundedIcon fontSize="small" />
-          <Link
-            to="/dashboard"
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            <Typography variant="h6">Go back</Typography>
-          </Link>
-        </Box>
-
-        <Box></Box>
-        <Box>
-          <Typography variant="h5" fontWeight="bold">
-            Create Event
-          </Typography>
-        </Box>
-        <Box>
-          <TextField
-            onChange={handleChange}
-            name="event_name"
-            sx={{ width: "100%" }}
-            required
-            value={event.event_name}
-            id="outlined-basic"
-            label="EventTitle"
-            variant="outlined"
-          />
-        </Box>
-        <Box>
-          <TextField
-            onChange={handleChange}
-            name="description"
-            sx={{ width: "100%", borderRadius: "8px" }}
-            required
-            multiline
-            rows={2}
-            value={event.description}
-            id="outlined-basic"
-            label="Description"
-            variant="outlined"
-          />
-        </Box>
-        <Box>
-          <Typography variant="h6">Privacy *</Typography>
-        </Box>
-
-        <Box>
+    <Box>
+      <Box sx={{ opacity: loader && 0.2 }}>
+        {generateAlert()}
+        <Stack spacing={2.5}>
           <Box>
-            <Grid container spacing={1}>
-              <Grid item xs={6} sm={2} md={2} lg={1.3}>
-                <Button
-                  variant={privacy ? "contained" : "outlined"}
-                  onClick={() => handlePrivacy(true)}
-                >
-                  Private
-                </Button>
-              </Grid>
-              <Grid item xs={6} sm={3} md={2} lg={1.3}>
-                <Button
-                  variant={privacy ? "outlined" : "contained"}
-                  onClick={() => handlePrivacy(false)}
-                >
-                  Public
-                </Button>
-              </Grid>
-            </Grid>
+            <ArrowBackRoundedIcon fontSize="small" />
+            <Link
+              to="/dashboard"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              <Typography variant="h6">Go back</Typography>
+            </Link>
           </Box>
-        </Box>
-        <Box>
-          <Typography variant="h6">Require_volunteers *</Typography>
-        </Box>
 
-        <Box>
+          <Box></Box>
           <Box>
-            <Grid container spacing={0.2}>
-              <Grid item xs={6} sm={2} md={2} lg={1.3}>
-                <Button
-                  variant={medium ? "contained" : "outlined"}
-                  onClick={() => handleMedium(true)}
-                >
-                  TRUE
-                </Button>
-              </Grid>
-              <Grid item xs={6} sm={2} md={2} lg={1.3}>
-                <Button
-                  variant={medium ? "outlined" : "contained"}
-                  onClick={() => handleMedium(false)}
-                >
-                  FALSE
-                </Button>
-              </Grid>
-            </Grid>
+            <Typography variant="h5" fontWeight="bold">
+              Create Event
+            </Typography>
           </Box>
-        </Box>
-        <Box>
-          <Typography variant="h6">Event Date-Time</Typography>
-        </Box>
-        <Box>
-          <StartDateTime value={sdate} handelDateChange={handelDateChange} />
-        </Box>
-        {/* <Box>
+          <Box>
+            <TextField
+              onChange={handleChange}
+              name="event_name"
+              sx={{ width: "100%" }}
+              required
+              value={event.event_name}
+              id="outlined-basic"
+              label="EventTitle"
+              variant="outlined"
+            />
+          </Box>
+          <Box>
+            <TextField
+              onChange={handleChange}
+              name="description"
+              sx={{ width: "100%", borderRadius: "8px" }}
+              required
+              multiline
+              rows={2}
+              value={event.description}
+              id="outlined-basic"
+              label="Description"
+              variant="outlined"
+            />
+          </Box>
+          <Box>
+            <Typography variant="h6">Privacy *</Typography>
+          </Box>
+
+          <Box>
+            <Box>
+              <Grid container spacing={1}>
+                <Grid item xs={6} sm={2} md={2} lg={1.3}>
+                  <Button
+                    variant={privacy ? "contained" : "outlined"}
+                    onClick={() => handlePrivacy(true)}
+                  >
+                    Private
+                  </Button>
+                </Grid>
+                <Grid item xs={6} sm={3} md={2} lg={1.3}>
+                  <Button
+                    variant={privacy ? "outlined" : "contained"}
+                    onClick={() => handlePrivacy(false)}
+                  >
+                    Public
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+          <Box>
+            <Typography variant="h6">Require_volunteers *</Typography>
+          </Box>
+
+          <Box>
+            <Box>
+              <Grid container spacing={0.2}>
+                <Grid item xs={6} sm={2} md={2} lg={1.3}>
+                  <Button
+                    variant={medium ? "contained" : "outlined"}
+                    onClick={() => handleMedium(true)}
+                  >
+                    TRUE
+                  </Button>
+                </Grid>
+                <Grid item xs={6} sm={2} md={2} lg={1.3}>
+                  <Button
+                    variant={medium ? "outlined" : "contained"}
+                    onClick={() => handleMedium(false)}
+                  >
+                    FALSE
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+          <Box>
+            <Typography variant="h6">Event Date-Time</Typography>
+          </Box>
+          <Box>
+            <StartDateTime value={sdate} handelDateChange={handelDateChange} />
+          </Box>
+          {/* <Box>
           <Typography variant="h6">End Date-Time *</Typography>
         </Box> */}
-        {/* <Box>
+          {/* <Box>
           <EndDateTime value={edate} handelDateChange={handelDateChange} />
         </Box> */}
-        <Box>
-          <TextField
-            onChange={handleChange}
-            name="duration"
-            sx={{ width: "100%", borderRadius: "8px" }}
-            required
-            value={event.duration}
-            id="outlined-basic"
-            label="Duration (in hours)"
-            variant="outlined"
-          />
-        </Box>
-
-        <Box>
-          <FormControl sx={{ width: "100%", borderRadius: "8px" }}>
-            <InputLabel id="medium-label">Medium</InputLabel>
-            <Select
-              labelId="medium-label"
-              id="medium-select"
-              name="medium"
-              value={event.medium}
+          <Box>
+            <TextField
               onChange={handleChange}
-              label="Medium"
-            >
-              <MenuItem value="offline">offline</MenuItem>
-              <MenuItem value="online">online</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Box>
-          <TextField
-            onChange={handleChange}
-            name="ticket_cost"
-            value={event.ticket_cost}
-            sx={{ width: "100%", borderRadius: "8px" }}
-            id="outlined-basic"
-            label="ticket_cost"
-            variant="outlined"
-          />
-        </Box>
-        {/* <Box>
+              name="duration"
+              sx={{ width: "100%", borderRadius: "8px" }}
+              required
+              value={event.duration}
+              id="outlined-basic"
+              label="Duration (in hours)"
+              variant="outlined"
+            />
+          </Box>
+
+          <Box>
+            <FormControl sx={{ width: "100%", borderRadius: "8px" }}>
+              <InputLabel id="medium-label">Medium</InputLabel>
+              <Select
+                labelId="medium-label"
+                id="medium-select"
+                name="medium"
+                value={event.medium}
+                onChange={handleChange}
+                label="Medium"
+              >
+                <MenuItem value="offline">offline</MenuItem>
+                <MenuItem value="online">online</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Box>
+            <TextField
+              onChange={handleChange}
+              name="ticket_cost"
+              value={event.ticket_cost}
+              sx={{ width: "100%", borderRadius: "8px" }}
+              id="outlined-basic"
+              label="ticket_cost"
+              variant="outlined"
+            />
+          </Box>
+          {/* <Box>
           <TextField
             onChange={handleChange}
             name="language"
@@ -428,18 +429,18 @@ const AddEvent = ({ token }) => {
             variant="outlined"
           />
         </Box> */}
-        <Box>
-          <Typography variant="h6">Category *</Typography>
-        </Box>
-        <Box>
-          <ButtonGrouping
-            tracker={tracker}
-            // value={event.}
-            setTracker={setTracker}
-            handleClick={handleClick}
-          />
-        </Box>
-        {/* <Box>
+          <Box>
+            <Typography variant="h6">Category *</Typography>
+          </Box>
+          <Box>
+            <ButtonGrouping
+              tracker={tracker}
+              // value={event.}
+              setTracker={setTracker}
+              handleClick={handleClick}
+            />
+          </Box>
+          {/* <Box>
           <TextField
             sx={{ width: "100%", borderRadius: "8px" }}
             required
@@ -451,74 +452,76 @@ const AddEvent = ({ token }) => {
             variant="outlined"
           />
         </Box> */}
-        {locationdata.map((item, idx) => {
-          console.log(item);
-          console.log(event);
-          const obj = item;
-          console.log(event[item], "event item name");
-          return (
-            <TextField
+          {locationdata.map((item, idx) => {
+            console.log(item);
+            console.log(event);
+            const obj = item;
+            console.log(event[item], "event item name");
+            return (
+              <TextField
+                onChange={handleChange}
+                name={item}
+                key={idx}
+                sx={{ width: "100%", borderRadius: "8px" }}
+                required
+                value={event[item]}
+                id="outlined-basic"
+                label={item}
+                variant="outlined"
+              />
+            );
+          })}
+          <Button
+            component="label"
+            variant="contained"
+            startIcon={<CloudUploadIcon />}
+          >
+            Upload Poster
+            <VisuallyHiddenInput
+              type="file"
+              name="poster"
               onChange={handleChange}
-              name={item}
-              key={idx}
-              sx={{ width: "100%", borderRadius: "8px" }}
-              required
-              value={event[item]}
-              id="outlined-basic"
-              label={item}
-              variant="outlined"
             />
-          );
-        })}
-        <Button
-          component="label"
-          variant="contained"
-          startIcon={<CloudUploadIcon />}
-        >
-          Upload Poster
-          <VisuallyHiddenInput
-            type="file"
-            name="poster"
-            onChange={handleChange}
-          />
-        </Button>
-        {selectedFile && (
-          <div style={{ marginTop: "20px", position: "relative" }}>
-            <Typography variant="body1">File uploaded:</Typography>
-            <img
-              src={URL.createObjectURL(selectedFile)}
-              alt="Uploaded File"
-              style={{
-                maxWidth: "100%",
-                maxHeight: "200px",
-                marginTop: "10px",
-              }}
-            />
-            <IconButton
-              onClick={() => {
-                setSelectedFile(null);
-              }}
-              style={{
-                position: "absolute",
-                top: "10px",
-                right: "10px",
-                zIndex: 1,
-              }}
-            >
-              <CancelIcon />
-            </IconButton>
-          </div>
-        )}
-        <Button
-          sx={{ width: "20%" }}
-          variant="contained"
-          onClick={handleCreate}
-          disabled={loader}
-        >
-          Create
-        </Button>
-        {loader && <Loader />}
-      </Stack>
+          </Button>
+          {selectedFile && (
+            <div style={{ marginTop: "20px", position: "relative" }}>
+              <Typography variant="body1">File uploaded:</Typography>
+              <img
+                src={URL.createObjectURL(selectedFile)}
+                alt="Uploaded File"
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "200px",
+                  marginTop: "10px",
+                }}
+              />
+              <IconButton
+                onClick={() => {
+                  setSelectedFile(null);
+                }}
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  zIndex: 1,
+                }}
+              >
+                <CancelIcon />
+              </IconButton>
+            </div>
+          )}
+          <Button
+            sx={{ width: "20%" }}
+            variant="contained"
+            onClick={handleCreate}
+            disabled={loader}
+          >
+            Create
+          </Button>
+        </Stack>
+      </Box>
+
+      {loader && <Loader />}
     </Box>
   );
 };

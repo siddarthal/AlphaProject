@@ -15,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../Services/service";
 import image from "../Images/5500661.svg";
 import CryptoJS from "crypto-js";
+import Loader from "../components/Explore/Loader";
 
 const Signin = ({ setToken }) => {
   const [formData, setFormData] = useState({
@@ -97,7 +98,7 @@ const Signin = ({ setToken }) => {
       maxWidth="xxl"
       style={{ display: "flex", height: "100vh" }}
     >
-      <Grid container component="div" style={{ height: "100%", width: "100%" }}>
+      <Grid container component="div" style={{ height: "100%", width: "100%", opacity: loading&&0.4 }}>
         {/* left side with image */}
         <Grid
           item
@@ -224,18 +225,7 @@ const Signin = ({ setToken }) => {
               >
                 Sign In
               </Button>
-              {loading && (
-                <CircularProgress
-                  size={24}
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    marginTop: "-12px",
-                    marginLeft: "-12px",
-                  }}
-                />
-              )}
+              
               <Grid
                 container
                 component="div"
@@ -267,6 +257,7 @@ const Signin = ({ setToken }) => {
           </div>
         </Grid>
       </Grid>
+      {loading &&<Loader/> }
     </Container>
   );
 };
