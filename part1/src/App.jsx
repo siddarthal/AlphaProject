@@ -29,7 +29,7 @@ import Events from "./components/Events.jsx";
 import AllEvents from "./components/Explore/AllEvents.jsx";
 import FilterEvents1 from "./components/Creator/FilterEvents.jsx";
 import Alltickets from "./components/Creator/Alltickets.jsx";
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 import ForgotPassword from "./Pages/ForgotPassword.jsx";
 import ResetPassword from "./Pages/ResetPassword.jsx";
 function App() {
@@ -49,11 +49,11 @@ function App() {
         localStorage.removeItem("tokenExpiration");
         setToken(null);
       } else {
-        const secretKey = 'your-secret-key'; 
-      const bytes = CryptoJS.AES.decrypt(encryptedToken, secretKey);
-      const originalToken = bytes.toString(CryptoJS.enc.Utf8);
+        const secretKey = "your-secret-key";
+        const bytes = CryptoJS.AES.decrypt(encryptedToken, secretKey);
+        const originalToken = bytes.toString(CryptoJS.enc.Utf8);
 
-      setToken(originalToken);
+        setToken(originalToken);
       }
     }
   }, []);
@@ -107,10 +107,12 @@ function App() {
             {
               path: "",
               element: <RightSideChannels />,
+              loader: checkAuthLoader,
             },
             {
               path: "ind/:id/:eventName",
               element: <RightSideChannels token={token} />,
+              loader: checkAuthLoader,
             },
           ],
         },
@@ -176,12 +178,12 @@ function App() {
     },
     {
       path: "/forgotpassword",
-      element: <ForgotPassword/>
-    }
-    ,{
-      path:"/pwdUpdate/:id/:token",
-      element:<ResetPassword/>
-    }
+      element: <ForgotPassword />,
+    },
+    {
+      path: "/pwdUpdate/:id/:token",
+      element: <ResetPassword />,
+    },
   ]);
 
   return (

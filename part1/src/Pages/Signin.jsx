@@ -76,11 +76,14 @@ const Signin = ({ setToken }) => {
             setLoading(false);
             navigate("/events");
           } else {
+            setLoading(false);
+
             alert("wrong credentials");
           }
         })
         .catch((err) => {
           console.error(err);
+          setLoading(false);
           alert("Wrong credentials");
         });
     } else {

@@ -75,7 +75,7 @@ const Ticket = ({ eventdata, ticket, token }) => {
     .toString()
     .padStart(2, "0");
   const allowedEndTime = allowedEndHours + ":" + minutes + " " + ampm;
-  
+
   console.log("Allowed End Time:", allowedEndTime);
   const latitude = eventdata.latitude;
   const longitude = eventdata.longitude;
@@ -194,6 +194,12 @@ const Ticket = ({ eventdata, ticket, token }) => {
                 <Typography
                   variant="h4"
                   style={{ fontFamily: "'Nanum Pen Script', cursive" }}
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    width: 200
+                  }}
                 >
                   {eventdata.event_name}
                 </Typography>
