@@ -150,17 +150,29 @@ const BuyTicket = ({ token }) => {
                   });
               } else {
                 console.log("res status", response1.status);
+                setLoader(false);
+                navigate("/events/tickets");
               }
               console.log(response1);
             })
             .catch(function (error) {
+              setLoader(false);
+              navigate("/events/tickets");
               console.log(error);
             });
         });
 
         rzp1.open();
+        // rzp1.on("payment.cancelled", function (responsez) {
+        //   alert("Payment Cancelled");
+        //   setLoader(false);
+        //   navigate("/events/tickets");
+        // });
+        
       })
       .catch(function (error) {
+        setLoader(false);
+        navigate("/events/tickets");
         console.log(error);
       });
     // navigate("/payment", { state: confirmationDetails });
@@ -182,7 +194,7 @@ const BuyTicket = ({ token }) => {
             variant="h4"
             gutterBottom
             sx={{
-              width:300,
+              width: 300,
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
