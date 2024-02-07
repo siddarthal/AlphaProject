@@ -190,9 +190,9 @@ const EventForm = ({ token }) => {
     if (startDate <= currentTime) {
       newErrors.start_date = "Start date must be greater than current time";
     }
-    if (startDate >= endDate) {
-      newErrors.start_date = "Start date must be less than end date";
-    }
+    // if (startDate >= endDate) {
+    //   newErrors.start_date = "Start date must be less than end date";
+    // }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -407,12 +407,12 @@ const EventForm = ({ token }) => {
         <Box>
           <StartDateTime value={sdate} handelDateChange={handelDateChange} />
         </Box>
-        <Box>
+        {/* <Box>
           <Typography variant="h6">End Date-Time *</Typography>
         </Box>
         <Box>
           <EndDateTime value={edate} handelDateChange={handelDateChange} />
-        </Box>
+        </Box> */}
         <Box>
           <TextField
             onChange={handleChange}

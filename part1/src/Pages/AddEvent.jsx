@@ -374,9 +374,9 @@ const AddEvent = ({ token }) => {
         <Box>
           <StartDateTime value={sdate} handelDateChange={handelDateChange} />
         </Box>
-        <Box>
+        {/* <Box>
           <Typography variant="h6">End Date-Time *</Typography>
-        </Box>
+        </Box> */}
         {/* <Box>
           <EndDateTime value={edate} handelDateChange={handelDateChange} />
         </Box> */}
