@@ -77,59 +77,70 @@ const RightSideChannels = ({ token }) => {
           </Typography>
         </Box>
         {messageArray.map((message, index) => (
-
-          {message.map((message, index) => (
-             <React.Fragment key={index}>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: 1,
-                borderColor: "black",
-                padding: 1,
-              }}
-            ></Box>
-            <Box>
-              <Box style={{ maxWidth: "100%" }}>
-                <Paper
-                  elevation={3}
-                  style={{
-                    padding: "12px",
-                    backgroundColor: "#d0d9e6",
-                    color: "black",
-                    borderLeft: "2px solid #3f51b5",
+          <Box key={index}>
+            <Typography
+              variant="caption"
+              color="textSecondary"
+              sx={{ textAlign: "center" }}
+            >
+              {new Date(message.timestamp).toLocaleDateString()}
+            </Typography>
+            {message["message"].map((message, index) => (
+              <React.Fragment key={index}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    border: 1,
+                    borderColor: "black",
                   }}
-                >
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="flex-start"
-                  >
-                    <Avatar>
-                      <PersonIcon />
-                    </Avatar>
-                    <Typography variant="h6" sx={{ marginLeft: "10px" }}>
-                      SenderName
-                    </Typography>
-                    <Typography
-                      variant="caption"
-                      color="textSecondary"
-                      sx={{ pl: 3 }}
+                ></Box>
+                <Box>
+                  <Box style={{ maxWidth: "100%" }}>
+                    <Paper
+                      elevation={3}
+                      style={{
+                        padding: "12px",
+                        backgroundColor: "#d0d9e6",
+                        color: "black",
+                        borderLeft: "2px solid #3f51b5",
+                      }}
                     >
-                      {new Date(message.timestamp).toLocaleTimeString()}
-                    </Typography>
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="flex-start"
+                      >
+                        <Avatar>
+                          <PersonIcon />
+                        </Avatar>
+                        <Typography variant="h6" sx={{ marginLeft: "10px" }}>
+                          SenderName
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color="textSecondary"
+                          sx={{ pl: 3 }}
+                        >
+                          {new Date(message.timestamp).toLocaleDateString()}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ pt: 1, pl: 6 }}>
+                        <Typography
+                          variant="body1"
+                          sx={{ wordWrap: "break-word" }}
+                        >
+                          {message.content}
+                        </Typography>
+                      </Box>
+                    </Paper>
                   </Box>
-                  <Box sx={{ pt: 1, pl: 6 }}>
-                    <Typography variant="body1" sx={{ wordWrap: "break-word" }}>
-                      {message.content}
-                    </Typography>
-                  </Box>
-                </Paper>
-              </Box>
-            </Box>
-          </React.Fragment>
-        ))}}
+                </Box>
+              </React.Fragment>
+            ))}
+          </Box>
+        ))}
       </Stack>
     </Paper>
   );
