@@ -44,7 +44,13 @@ const BuyTicket = ({ token }) => {
       });
   }, [token]);
   const calculateTotalFare = () => {
-    return numPeople * details.ticket_cost;
+    var amt = 0;
+    if (details.ticket_cost == 0) {
+      amt = 1;
+    }else{
+      amt = details.ticket_cost;
+    }
+    return numPeople * amt;
   };
 
   const handleConfirmation = () => {
@@ -241,6 +247,7 @@ const BuyTicket = ({ token }) => {
           >
             Confirm and Proceed to Payment
           </Button>
+          {details.ticket_cost == 0 && <Typography sx={{ marginTop: 1, fontSize: 12, color: '#e53735'}}>*Pay Rs.1 per ticket for security reasons</Typography>}
         </Paper>
       </Box>
       {loader && <Loader />}
