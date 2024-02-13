@@ -4,16 +4,16 @@ import { useNavigate } from "react-router-dom";
 const Menubar = () => {
   const categories = [
     "All",
-    "music",
-    "games",
-    "sports",
-    "arts",
-    "film",
-    "technology",
-    "literature",
-    "fashion",
-    "lifestyle",
-    "other",
+    "Music",
+    "Games",
+    "Sports",
+    "Arts",
+    "Film",
+    "Technology",
+    "Literature",
+    "Fashion",
+    "Lifestyle",
+    "Other",
   ];
   const navigate = useNavigate();
   const [pressedItem, setPressedItem] = useState(null);

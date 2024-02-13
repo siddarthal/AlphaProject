@@ -20,12 +20,14 @@ const FilterEvents = () => {
   console.log(eventName);
   console.log(event);
   const category = { [eventName]: [] };
+  const lowerCaseEventName = eventName.toLowerCase();
+  console.log(lowerCaseEventName, "LCE")
   event.forEach((item) => {
-    if (item.category === eventName) {
-      category[item.category].push(item);
+    if (item.category === lowerCaseEventName) {
+      category[eventName].push(item);
     }
   });
-  const data = category[eventName].filter((item) => item.privacy === false);
+  const data = (category[eventName].filter((item) => item.privacy === false)).reverse();
   console.log(category);
   return (
     <Box>

@@ -19,7 +19,7 @@ const AllEvents = () => {
       .then((res) => {
         if (res.status === 200) {
           console.log(res, "in response 2000000");
-          setEvent(res.data);
+          setEvent(res.data.reverse());
           setLoading(false);
         } else {
           alert("error in fetching events");
