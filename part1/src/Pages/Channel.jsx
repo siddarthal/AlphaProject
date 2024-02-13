@@ -4,11 +4,12 @@ import api from "../Services/service";
 import ChannelEvents from "../components/Creator/ChannelEvents";
 import { Outlet } from "react-router-dom";
 import LeftSideChannels from "../components/Creator/LeftSideChannels";
+import RightSideChannels from "../components/Creator/RightSideChannels";
 
 const Channel = ({ token }) => {
   const [events, setEvents] = useState([]);
   const [userId, setUserId] = useState(null);
-
+  const [tracker, setTracker] = useState([]);
   const fetchUserData = async () => {
     try {
       if (token !== null) {
@@ -35,6 +36,7 @@ const Channel = ({ token }) => {
         .then((res) => {
           console.log(res);
           setEvents(res.data);
+          setTracker(new Array(res.data.length).fill(false));
         })
         .catch((error) => {
           console.log(error);
@@ -56,7 +58,6 @@ const Channel = ({ token }) => {
               elevation={6}
               sx={{
                 overflowY: "auto",
-                "&::-webkit-scrollbar": { display: "none" },
                 position: "sticky",
                 top: 0,
                 paddingTop: 4,
@@ -65,12 +66,18 @@ const Channel = ({ token }) => {
                 color: "black",
               }}
             >
-              <LeftSideChannels eventdata={events} token={token} />
+              <LeftSideChannels
+                eventdata={events}
+                token={token}
+                tracker={tracker}
+                setTracker={setTracker}
+              />
             </Paper>
           </Grid>
 
           <Grid item xs={9}>
-            <Outlet />
+            {/* <Outlet eventdata={events}/> */}
+            <RightSideChannels token={token} eventdata={events}/>
           </Grid>
         </Grid>
       </Box>

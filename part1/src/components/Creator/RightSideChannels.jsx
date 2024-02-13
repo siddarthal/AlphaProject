@@ -4,11 +4,15 @@ import api from "../../Services/service";
 import { Box, Typography, Paper, List, Avatar, Stack } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person"; // Import the person icon
 
-const RightSideChannels = ({ token }) => {
+const RightSideChannels = ({ token, eventdata }) => {
   const { id, eventName } = useParams();
   const [messages, setMessages] = useState([]);
+  const [userDetail, setUserDetail] = useState();
   console.log(id, "id");
+  console.log(eventdata, "eventdata");
   useEffect(() => {
+    setUserDetail(fetchNameDetails());
+
     function getMessages() {
       if (id !== undefined && token !== null) {
         api
@@ -23,12 +27,26 @@ const RightSideChannels = ({ token }) => {
       }
     }
     getMessages();
+
     const interval = setInterval(getMessages, 4000);
 
     return () => {
       clearInterval(interval);
     };
-  }, [token, id]);
+  }, [token, id, eventdata]);
+  const fetchNameDetails = () => {
+    eventdata.forEach((item) => {
+      console.log(item.event.EID + " " + id, "item outsdieeeeeee");
+      if (parseInt(item.event.EID, 10) === parseInt(id, 10)) {
+        console.log(item.event.EID + " " + id, "item inside");
+        return 2;
+      }
+    });
+    return 1;
+  };
+
+  console.log(userDetail, "userDetail");
+
   let messageArray = [];
   const splitMessages = (message) => {
     messageArray.push({
@@ -48,7 +66,7 @@ const RightSideChannels = ({ token }) => {
       } else {
         messageArray.push({
           timestamp: message[i].timestamp,
-          message: message[i],
+          message: [message[i]],
         });
       }
     }
@@ -60,16 +78,26 @@ const RightSideChannels = ({ token }) => {
   return (
     <Paper
       elevation={6}
-      style={{
+      sx={{
         height: "100vh",
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
         backgroundColor: "#bac8d1",
+        overflowY: "auto",
+        "&::-webkit-scrollbar": { display: "none" },
       }}
     >
       <Stack spacing={1}>
-        <Box p={2} sx={{ backgroundColor: "#d0d9e6" }}>
+        <Box
+          p={2}
+          sx={{
+            backgroundColor: "#bac8d1",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Typography variant="h5">
             {id === undefined
               ? "Browse through channels to get latest info"
@@ -78,35 +106,49 @@ const RightSideChannels = ({ token }) => {
         </Box>
         {messageArray.map((message, index) => (
           <Box key={index}>
-            <Typography
-              variant="caption"
-              color="textSecondary"
-              sx={{ textAlign: "center" }}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                "&::before, &::after": {
+                  content: '""',
+                  flex: 1,
+                  borderBottom: "1px solid black",
+                },
+                "&::before": {
+                  marginRight: "0.5rem",
+                },
+                "&::after": {
+                  marginLeft: "0.5rem",
+                },
+              }}
             >
-              {new Date(message.timestamp).toLocaleDateString()}
-            </Typography>
-            {message["message"].map((message, index) => (
-              <React.Fragment key={index}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    border: 1,
-                    borderColor: "black",
-                  }}
-                ></Box>
-                <Box>
-                  <Box style={{ maxWidth: "100%" }}>
-                    <Paper
-                      elevation={3}
-                      style={{
-                        padding: "12px",
-                        backgroundColor: "#d0d9e6",
-                        color: "black",
-                        borderLeft: "2px solid #3f51b5",
-                      }}
-                    >
+              <Typography variant="caption" color="textSecondary">
+                {new Date(message.timestamp).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </Typography>
+            </Box>
+            <Paper
+              elevation={3}
+              style={{
+                padding: "12px",
+                backgroundColor: "#d0d9e6",
+                color: "black",
+                borderLeft: "2px solid #3f51b5",
+              }}
+            >
+              {message["message"].map((message, index) => (
+                <React.Fragment key={index}>
+                  <Box
+                    sx={{
+                      paddingBottom: 2,
+                    }}
+                  >
+                    <Box style={{ maxWidth: "100%" }}>
                       <Box
                         display="flex"
                         alignItems="center"
@@ -116,7 +158,7 @@ const RightSideChannels = ({ token }) => {
                           <PersonIcon />
                         </Avatar>
                         <Typography variant="h6" sx={{ marginLeft: "10px" }}>
-                          SenderName
+                          Hiiiiiii
                         </Typography>
                         <Typography
                           variant="caption"
@@ -124,6 +166,16 @@ const RightSideChannels = ({ token }) => {
                           sx={{ pl: 3 }}
                         >
                           {new Date(message.timestamp).toLocaleDateString()}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color="textSecondary"
+                          sx={{ pl: 0.7 }}
+                        >
+                          {new Date(message.timestamp).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
                         </Typography>
                       </Box>
                       <Box sx={{ pt: 1, pl: 6 }}>
@@ -134,11 +186,11 @@ const RightSideChannels = ({ token }) => {
                           {message.content}
                         </Typography>
                       </Box>
-                    </Paper>
+                    </Box>
                   </Box>
-                </Box>
-              </React.Fragment>
-            ))}
+                </React.Fragment>
+              ))}
+            </Paper>
           </Box>
         ))}
       </Stack>
