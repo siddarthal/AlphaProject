@@ -72,15 +72,15 @@ function App() {
           children: [
             {
               path: "/events",
-              element: <AllEvents />,
+              element: <AllEvents token={token}/>,
             },
             {
               path: "/events/all",
-              element: <AllEvents />,
+              element: <AllEvents token={token}/>,
             },
             {
               path: "/events/eventName/:eventName",
-              element: <FilterEvents />,
+              element: <FilterEvents token={token}/>,
             },
           ],
         },

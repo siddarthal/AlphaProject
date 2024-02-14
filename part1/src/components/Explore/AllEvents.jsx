@@ -9,11 +9,17 @@ import Carousel from "./Carousel";
 import EventCard from "../EventCard";
 import { Box, Typography } from "@mui/material";
 import Loader from "./Loader";
-const AllEvents = () => {
+const AllEvents = ({token}) => {
   const [event, setEvent] = useState([]);
   const [loading, setLoading] = useState();
+  const [user, setUser] = useState(0);
   useEffect(() => {
     setLoading(true);
+    console.log(token)
+    api.userAccountDatails(token).then((res) => {
+      console.log(res.data);
+      setUser(res.data.id);
+    });
     api
       .getEventsOne()
       .then((res) => {
@@ -30,7 +36,7 @@ const AllEvents = () => {
         console.log("error", error);
         setLoading(false);
       });
-  }, []);
+  }, [token]);
   function LeftNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -93,6 +99,8 @@ const AllEvents = () => {
     ],
   };
 
+  const data = event.filter((item) => item.privacy === false).filter((item) => item.user !== user);
+
   const category = {
     Music: [],
     Games: [],
@@ -111,7 +119,7 @@ const AllEvents = () => {
   };
 
   function fetchAllCategoriesData() {
-    event.forEach((item) => {
+    data.forEach((item) => {
       var cat = item.category
       category[capitalizeFirstLetter(cat)].push(item);
     });
@@ -123,7 +131,6 @@ const AllEvents = () => {
     });
   }
 
-  const data = event.filter((item) => item.privacy === false);
   fetchAllCategoriesData();
   console.log("hi");
   return (

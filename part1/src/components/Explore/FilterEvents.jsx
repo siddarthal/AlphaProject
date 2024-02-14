@@ -4,11 +4,16 @@ import api from "../../Services/service";
 import { useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import EventCard from "../EventCard";
-const FilterEvents = () => {
+const FilterEvents = ({token}) => {
   const [event, setEvent] = useState([]);
+  const [user, setUser] = useState(0);
 
   const { eventName } = useParams();
   useEffect(() => {
+    api.userAccountDatails(token).then((res) => {
+      console.log(res.data);
+      setUser(res.data.id);
+    });
     api
       .getEvents()
       .then((res) => {
@@ -16,7 +21,7 @@ const FilterEvents = () => {
         setEvent(res);
       })
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [token]);
   console.log(eventName);
   console.log(event);
   const category = { [eventName]: [] };
@@ -27,7 +32,7 @@ const FilterEvents = () => {
       category[eventName].push(item);
     }
   });
-  const data = (category[eventName].filter((item) => item.privacy === false)).reverse();
+  const data = (category[eventName].filter((item) => item.privacy === false)).filter((item) => item.user !== user).reverse();
   console.log(category);
   return (
     <Box>
