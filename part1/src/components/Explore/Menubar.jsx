@@ -1,6 +1,7 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Container, useMediaQuery, MenuItem, Select, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const Menubar = () => {
   const categories = [
     "All",
@@ -17,18 +18,38 @@ const Menubar = () => {
   ];
   const navigate = useNavigate();
   const [pressedItem, setPressedItem] = useState(null);
-  const handleClick = (idx) => {
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const theme = useTheme();
+  const isWideScreen = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const handleClick = (idx, categoryName) => {
     setPressedItem(idx);
+    setSelectedCategory(categoryName);
     if (idx === 0) {
       navigate("/events/all");
     } else {
-      navigate(`/events/eventName/${categories[idx]}`);
+      navigate(`/events/eventName/${categoryName}`);
     }
   };
+
+  if (!isWideScreen) {
+    return (
+      <Container>
+        <Box sx={{ textAlign: 'center', paddingBottom: 2 }}>
+          <Select value={selectedCategory} onChange={(e) => handleClick(categories.indexOf(e.target.value), e.target.value)}>
+            {categories.map((category, idx) => (
+              <MenuItem key={idx} value={category}>{category}</MenuItem>
+            ))}
+          </Select>
+        </Box>
+      </Container>
+    );
+  }
+
   return (
-    <Box sx={{ paddingLeft: 0 }}>
+    <Box sx={{ overflowX: 'auto', paddingLeft: 0 }}>
       <Grid container spacing={3} alignItems="center">
-        {categories.map((items, idx) => (
+        {categories.map((category, idx) => (
           <Grid
             item
             key={idx}
@@ -43,15 +64,15 @@ const Menubar = () => {
                 fontWeight: "light",
                 cursor: "pointer",
                 fontFamily: "Arial, sans-serif",
-                textDecoration: "none", // Remove text decoration
-                color: pressedItem === idx ? "blue" : "inherit", // Change color to blue if pressed
+                textDecoration: "none",
+                color: pressedItem === idx ? "blue" : "inherit",
                 "&:hover": {
                   textDecoration: "underline",
                 },
               }}
-              onClick={() => handleClick(idx)}
+              onClick={() => handleClick(idx, category)}
             >
-              {items}
+              {category}
             </Typography>
           </Grid>
         ))}
@@ -59,4 +80,5 @@ const Menubar = () => {
     </Box>
   );
 };
+
 export default Menubar;

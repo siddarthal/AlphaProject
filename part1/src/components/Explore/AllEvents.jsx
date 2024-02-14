@@ -94,21 +94,26 @@ const AllEvents = () => {
   };
 
   const category = {
-    music: [],
-    games: [],
-    sports: [],
-    arts: [],
-    film: [],
-    technology: [],
-    literature: [],
-    fashion: [],
-    lifestyle: [],
-    other: [],
+    Music: [],
+    Games: [],
+    Sports: [],
+    Arts: [],
+    Film: [],
+    Technology: [],
+    Literature: [],
+    Fashion: [],
+    Lifestyle: [],
+    Other: [],
+  };
+
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   };
 
   function fetchAllCategoriesData() {
     event.forEach((item) => {
-      category[item.category].push(item);
+      var cat = item.category
+      category[capitalizeFirstLetter(cat)].push(item);
     });
 
     Object.keys(category).forEach((categoryName) => {
