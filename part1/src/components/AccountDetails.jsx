@@ -1,6 +1,15 @@
 // AccountDetails.js
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, Avatar, TextField, Button } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Avatar,
+  IconButton,
+  TextField,
+  Button,
+  Box,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   deepOrange,
   deepPurple,
@@ -8,6 +17,7 @@ import {
   amber,
   pink,
 } from "@mui/material/colors";
+import { styled } from "@mui/system";
 import api from "../Services/service";
 const getRandomColor = () => {
   const colors = [
@@ -21,7 +31,9 @@ const getRandomColor = () => {
   return colors[randomIndex];
 };
 
-const AccountDetails = ({token}) => {
+const AccountDetails = ({ token }) => {
+  const [avatar, setAvatar] = useState(null);
+
   const userData = {
     name: "",
     email: "",
@@ -34,7 +46,18 @@ const AccountDetails = ({token}) => {
       setUser(res.data);
     });
   }, [token]);
+  const handleUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
 
+    reader.onloadend = () => {
+      setAvatar(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
   const handleUsernameChange = (event) => {
     console.log(event.target.value);
     // setUser({ ...event, [event.target.name]: event.target.value });
@@ -43,30 +66,47 @@ const AccountDetails = ({token}) => {
       [event.target.name]: event.target.value,
     }));
   };
-  const handleSubmit=()=>{
-    api.editAccountDetails(user.name,token).then((res)=>{
-      console.log(res.data.message);
-      alert(res.data.message)
-    }).catch(error =>
-      console.log(error))
-  }
+  const handleSubmit = () => {
+    api
+      .editAccountDetails(user.name, token)
+      .then((res) => {
+        console.log(res.data.message);
+        alert(res.data.message);
+      })
+      .catch((error) => console.log(error));
+  };
   const avatarColor = getRandomColor();
-
+  
   return (
     <Grid container justifyContent="center" alignItems="center" height="85vh">
       <Grid item xs={12} sm={8} md={6} lg={4}>
         <Grid container direction="column" alignItems="center">
-          <Avatar
-            sx={{
-              bgcolor: avatarColor,
-              width: 80,
-              height: 80,
-              fontSize: 36,
-              margin: "16px 0",
-            }}
+          <Box
+            sx={{ padding: 3, position: "relative", display: "inline-flex" }}
           >
-            {/* {user.name.charAt(0)} */}
-          </Avatar>
+            <Avatar src={avatar} sx={{ width: 90, height: 90 }} />
+            <input
+              accept="image/*"
+              style={{ display: "none" }}
+              id="upload-button"
+              type="file"
+              onChange={handleUpload}
+            />
+            <label htmlFor="upload-button">
+              <IconButton
+                color="primary"
+                component="span"
+                sx={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                }}
+              >
+                <EditIcon />
+              </IconButton>
+            </label>
+          </Box>
+
           <Typography variant="h5" gutterBottom>
             Hello, {user.name}
           </Typography>
@@ -94,7 +134,9 @@ const AccountDetails = ({token}) => {
             disabled
             sx={{ width: "80%" }}
           />
-          <Button sx={{ paddingTop: 3 }} onClick={handleSubmit} >Save Changes</Button>
+          <Button sx={{ paddingTop: 3 }} onClick={handleSubmit}>
+            Save Changes
+          </Button>
         </Grid>
       </Grid>
     </Grid>
