@@ -145,7 +145,18 @@ const AccountDetails = ({ token }) => {
       setUser(res.data);
     });
   }, [token]);
+  const handleUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
 
+    reader.onloadend = () => {
+      setAvatar(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
   const handleUsernameChange = (event) => {
     setUser((prevUser) => ({
       ...prevUser,
@@ -192,7 +203,7 @@ const AccountDetails = ({ token }) => {
   };
 
   const avatarColor = getRandomColor();
-
+  
   return (
     <Grid container justifyContent="center" alignItems="center" height="85vh">
       <Grid item xs={12} sm={8} md={6} lg={4}>
