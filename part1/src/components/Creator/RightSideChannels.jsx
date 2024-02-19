@@ -7,12 +7,9 @@ import PersonIcon from "@mui/icons-material/Person"; // Import the person icon
 const RightSideChannels = ({ token, eventdata }) => {
   const { id, eventName } = useParams();
   const [messages, setMessages] = useState([]);
-  const [userDetail, setUserDetail] = useState();
   console.log(id, "id");
   console.log(eventdata, "eventdata");
   useEffect(() => {
-    setUserDetail(fetchNameDetails());
-
     function getMessages() {
       if (id !== undefined && token !== null) {
         api
@@ -34,18 +31,16 @@ const RightSideChannels = ({ token, eventdata }) => {
       clearInterval(interval);
     };
   }, [token, id, eventdata]);
-  const fetchNameDetails = () => {
-    eventdata.forEach((item) => {
-      console.log(item.event.EID + " " + id, "item outsdieeeeeee");
-      if (parseInt(item.event.EID, 10) === parseInt(id, 10)) {
-        console.log(item.event.EID + " " + id, "item inside");
-        return 2;
-      }
-    });
-    return 1;
-  };
-
-  console.log(userDetail, "userDetail");
+  // const fetchNameDetails = () => {
+  //   eventdata.forEach((item) => {
+  //     console.log(item.event.EID + " " + id, "item outsdieeeeeee");
+  //     if (parseInt(item.event.EID, 10) === parseInt(id, 10)) {
+  //       console.log(item.event.EID + " " + id, "item inside");
+  //       return 2;
+  //     }
+  //   });
+  //   return 1;
+  // };
 
   let messageArray = [];
   const splitMessages = (message) => {
@@ -154,11 +149,16 @@ const RightSideChannels = ({ token, eventdata }) => {
                         alignItems="center"
                         justifyContent="flex-start"
                       >
-                        <Avatar>
-                          <PersonIcon />
+                        <Avatar
+                          src={message.broadcast.event.user.profile_pic} // Set src attribute based on user's profile pic
+                          sx={{
+                            margin: "16px 0",
+                          }}
+                        >
+                          {message.broadcast.event.user.name.charAt(0)}
                         </Avatar>
                         <Typography variant="h6" sx={{ marginLeft: "10px" }}>
-                          Hiiiiiii
+                          {message.broadcast.event.user.name} 
                         </Typography>
                         <Typography
                           variant="caption"
