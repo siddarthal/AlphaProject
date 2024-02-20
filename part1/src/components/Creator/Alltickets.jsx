@@ -41,7 +41,7 @@ const AllTickets = ({ token }) => {
               console.log(res.status, "status");
               if (res.status === 200) {
                 setLoading(false);
-                filterFunc(res2.data, res.data);
+                filterFunc(res2.data.reverse(), res.data);
               } else {
                 console.log("unable to fetch data of event from server", res2);
                 setLoading(false);

@@ -6,7 +6,6 @@ import { useState } from "react";
 import api from "../../Services/service";
 const Ticket = ({ eventdata, ticket, token,dummy,setDummy }) => {
   const imgUrl = eventdata.poster;
-  // const imgUrl = "http://127.0.0.1:8000" + eventdata.poster;
   const dateString = eventdata.startDate;
   const dateObj = new Date(dateString);
   const weekdays = [
@@ -108,7 +107,7 @@ const Ticket = ({ eventdata, ticket, token,dummy,setDummy }) => {
   return (
     <Paper elevation={10}>
       <Card sx={{ maxWidth: 700 }}>
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex", flexDirection: { xs: 'column', sm: 'row', md: 'row' } }}>
           <Box>
             <Box>
               <Box
@@ -169,12 +168,15 @@ const Ticket = ({ eventdata, ticket, token,dummy,setDummy }) => {
                 }}
               >
                 {ticket.ticket_status === "not_paid" ? (
-                  <Typography variant="h6" color="red">
-                    {" "}
-                    Transaction pending{" "}
+                  <Typography variant="h6">
+                    Transaction pending
                   </Typography>
+                ) : ticket.ticket_status === "success" ? (
+                  <Typography variant="h6" color="green">Booking Success</Typography>
+                ) : ticket.ticket_status === "fail" ? (
+                  <Typography variant="h6" color='red'>Booking Failed</Typography>
                 ) : (
-                  <Typography variant="h6">{ticket.ticket_status}</Typography>
+                  <Typography variant="h6" color='yellow'>Ticket Cancelled</Typography>
                 )}
               </Box>
             </Box>
@@ -208,13 +210,14 @@ const Ticket = ({ eventdata, ticket, token,dummy,setDummy }) => {
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                     width: 200,
+                    textAlign: 'center',
                   }}
                 >
                   {eventdata.event_name}
                 </Typography>
               </Box>
 
-              <Typography variant="h5" align="center" color="#d83565">
+              <Typography variant="h7" align="center" color="#d83565">
                 {eventdata.category}
               </Typography>
 
