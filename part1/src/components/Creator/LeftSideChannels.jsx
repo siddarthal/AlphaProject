@@ -1,11 +1,27 @@
-import React from "react";
-import { Box, Typography, Button, Stack } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  Stack,
+  useMediaQuery,
+  MenuItem,
+  Select,
+  useTheme,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const LeftSideChannels = ({ eventdata, token, tracker, setTracker }) => {
-  console.log(eventdata, "hi");
+  const theme = useTheme();
+  const isWideScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const navigate = useNavigate();
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    eventdata.length > 0 ? eventdata[0].BID : ""
+  );
+
   const handleClick = (id, eventName, idx) => {
+    setSelectedCategory(id);
     console.log(`clicked ${id}`);
     navigate(`ind/${id}/${eventName}`);
     const arr = new Array(13).fill(false);
@@ -29,13 +45,43 @@ const LeftSideChannels = ({ eventdata, token, tracker, setTracker }) => {
         </Typography>
       </Box>
 
-      <Stack direction="column" spacing={2}>
-        {eventdata.map((item, idx) => {
-          return (
+      {!isWideScreen ? (
+        <Select
+          fullWidth
+          value={selectedCategory}
+          onChange={(event) => {
+            const idx = eventdata.findIndex(
+              (item) => item.BID === event.target.value
+            );
+            if (idx !== -1) {
+              handleClick(
+                eventdata[idx].BID,
+                eventdata[idx].broadcast_name,
+                idx
+              );
+            }
+          }}
+        >
+          {eventdata.map((item, idx) => (
+            <MenuItem
+              key={item.BID}
+              value={item.BID}
+              sx={{
+                color: tracker[idx] ? "black" : "black",
+                backgroundColor: tracker[idx] ? "#a8c2d1" : "white",
+              }}
+            >
+              {item.broadcast_name.replace("Broadcast", "")}
+            </MenuItem>
+          ))}
+        </Select>
+      ) : (
+        <Stack direction="column" spacing={2}>
+          {eventdata.map((item, idx) => (
             <Button
               sx={{
                 color: tracker[idx] ? "black" : "black",
-                onHover: {color: "black"},  
+                onHover: { color: "black" },
                 backgroundColor: tracker[idx] ? "#a8c2d1" : "white",
               }}
               variant={tracker[idx] ? "contained" : "text"}
@@ -44,9 +90,9 @@ const LeftSideChannels = ({ eventdata, token, tracker, setTracker }) => {
             >
               {item.broadcast_name.replace("Broadcast", "")}
             </Button>
-          );
-        })}
-      </Stack>
+          ))}
+        </Stack>
+      )}
     </Box>
   );
 };

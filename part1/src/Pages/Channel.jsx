@@ -1,4 +1,4 @@
-import { Box, Grid, Stack, Paper } from "@mui/material";
+import { Box, Grid, Stack, Paper,useTheme,useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../Services/service";
 import ChannelEvents from "../components/Creator/ChannelEvents";
@@ -43,7 +43,8 @@ const Channel = ({ token }) => {
         });
     }
   }, [userId, token]);
-
+  const theme = useTheme();
+  const isWideScreen = useMediaQuery(theme.breakpoints.up("sm"));
   return (
     <Stack spacing={2} sx={{ marginTop: 3 }}>
       <Box
@@ -53,7 +54,7 @@ const Channel = ({ token }) => {
         }}
       >
         <Grid container spacing={2} alignContent="center">
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <Paper
               elevation={6}
               sx={{
@@ -61,7 +62,7 @@ const Channel = ({ token }) => {
                 position: "sticky",
                 top: 0,
                 paddingTop: 4,
-                height: "100vh",
+                height:(isWideScreen)?"100vh":"auto",
                 backgroundColor: "#bac8d1",
                 color: "black",
               }}
@@ -75,7 +76,7 @@ const Channel = ({ token }) => {
             </Paper>
           </Grid>
 
-          <Grid item xs={9}>
+          <Grid item xs={12} md={9}>
             {/* <Outlet eventdata={events}/> */}
             <RightSideChannels token={token} eventdata={events}/>
           </Grid>

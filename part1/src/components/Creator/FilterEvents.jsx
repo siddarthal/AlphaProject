@@ -81,7 +81,7 @@ const FilterEvents1 = ({token}) => {
       {arrayDisplay[0] ? (
             <Grid container spacing={4}>
               {arrayDisplay.map((item, idx) => (
-                <Grid item xs={6} key={idx}>
+                <Grid item xs={12} md={6} key={idx}>
                   {" "}
                   <Events  eventdata={item} />{" "}
                 </Grid>
