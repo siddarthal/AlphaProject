@@ -192,6 +192,20 @@ const deleteTicket = (id, token) => {
   };
   return axios.get(url, { headers: header1 });
 };
+const getVolunteers = (id, token) => {
+  const url = backendURL + `/api/volunteers/${id}/`;
+  const header1 = {
+    Authorization: "Bearer " + token,
+  };
+  return axios.get(url, { headers: header1 });
+};
+const getTicketsBooked = (id, token) => {
+  const url = backendURL + `/api/tickets/event/${id}/`;
+  const header1 = {
+    Authorization: "Bearer " + token,
+  };
+  return axios.get(url, { headers: header1 });
+};
 export default {
   signin: signin,
   getEvents: getEvents,
@@ -219,4 +233,6 @@ export default {
   resetPassword,
   postUpdatePassword,
   deleteTicket,
+  getTicketsBooked,
+  getVolunteers,
 };

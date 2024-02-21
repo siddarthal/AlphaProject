@@ -15,12 +15,24 @@ import AnnouncementChannelCreator from "../ChattNew/AnnouncementChannelCreator "
 export default function UserEventDetails({ token }) {
   const { id } = useParams();
   const [details, setDetails] = useState({});
-
+  const [numOfTickets, setNumOfTickets] = useState(0);
   console.log(id);
   useEffect(() => {
     api.fetchParticularEvent(id, token).then((res) => {
       console.log(res);
+      if(res!==null && res!==undefined && res!==""){
       setDetails(res);
+      }
+    });
+    api.getTicketsBooked(id, token).then((res) => {
+      console.log(res);
+      if(res.status === 200){
+      setNumOfTickets(res.data.length);
+
+      }
+      else{
+        alert("Error fetching tickets");
+      }
     });
   }, [token]);
   const navigate = useNavigate();
@@ -221,7 +233,7 @@ export default function UserEventDetails({ token }) {
                 sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
               >
                 <CheckCircleIcon />
-                <Typography>No max participation limit</Typography>
+                <Typography>{numOfTickets} Tickets Booked</Typography>
               </Box>
             </Box>
           </Grid>
