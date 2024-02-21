@@ -32,6 +32,7 @@ import Alltickets from "./components/Creator/Alltickets.jsx";
 import CryptoJS from "crypto-js";
 import ForgotPassword from "./Pages/ForgotPassword.jsx";
 import ResetPassword from "./Pages/ResetPassword.jsx";
+import ErrorPage from "./Pages/ErrorPage.jsx";
 function App() {
   const [token, setToken] = useState(null);
   const isInitialMount = useRef(true);
@@ -184,6 +185,7 @@ function App() {
       path: "/pwdUpdate/:id/:token",
       element: <ResetPassword />,
     },
+    { path: '*', element: <ErrorPage /> },
   ]);
 
   return (

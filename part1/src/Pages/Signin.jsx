@@ -242,7 +242,7 @@ const Signin = ({ setToken }) => {
                   fontWeight="600"
                 >
                   <Link to="/forgotpassword">
-                    Oh no I don't remember my password
+                    Forgot password
                   </Link>
                 </Typography>
                 <Typography
