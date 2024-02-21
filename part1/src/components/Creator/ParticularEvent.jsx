@@ -15,23 +15,38 @@ import AnnouncementChannelCreator from "../ChattNew/AnnouncementChannelCreator "
 export default function UserEventDetails({ token }) {
   const { id } = useParams();
   const [details, setDetails] = useState({});
-  const [numOfTickets, setNumOfTickets] = useState(0);
+  const [numOfTickets, setNumOfTickets] = useState({
+    tickets: 0,
+    volunteers: 0,
+  });
   console.log(id);
   useEffect(() => {
     api.fetchParticularEvent(id, token).then((res) => {
       console.log(res);
-      if(res!==null && res!==undefined && res!==""){
-      setDetails(res);
+      if (res !== null && res !== undefined && res !== "") {
+        setDetails(res);
       }
     });
     api.getTicketsBooked(id, token).then((res) => {
       console.log(res);
-      if(res.status === 200){
-      setNumOfTickets(res.data.length);
-
-      }
-      else{
+      if (res.status === 200) {
+        setNumOfTickets((numOfTickets) => ({
+          ...numOfTickets,
+          tickets: res.data.length,
+        }));
+      } else {
         alert("Error fetching tickets");
+      }
+    });
+    api.getVolunteers(id, token).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        setNumOfTickets((numOfTickets) => ({
+          ...numOfTickets,
+          volunteers: res.data,
+        }));
+      } else {
+        alert("Error fetching volunteers");
       }
     });
   }, [token]);
@@ -225,7 +240,7 @@ export default function UserEventDetails({ token }) {
               >
                 <GroupIcon />
                 <Typography>
-                  {details.require_volunteers ? "Volunteers" : "Not Required"}
+                  {details.require_volunteers ? "Volunteers" : "No Volunteers"}
                 </Typography>
               </Box>
 
@@ -233,7 +248,15 @@ export default function UserEventDetails({ token }) {
                 sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
               >
                 <CheckCircleIcon />
-                <Typography>{numOfTickets} Tickets Booked</Typography>
+                <Typography>{numOfTickets.tickets} Tickets Booked</Typography>
+              </Box>
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
+              >
+                <GroupIcon />
+                <Typography>
+                  {numOfTickets.volunteers} Volunteers Registered
+                </Typography>
               </Box>
             </Box>
           </Grid>

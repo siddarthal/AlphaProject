@@ -193,7 +193,7 @@ const deleteTicket = (id, token) => {
   return axios.get(url, { headers: header1 });
 };
 const getVolunteers = (id, token) => {
-  const url = backendURL + `/api/volunteers/${id}/`;
+  const url = backendURL + `/api/num-volunteers/${id}/`;
   const header1 = {
     Authorization: "Bearer " + token,
   };
