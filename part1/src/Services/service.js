@@ -214,7 +214,7 @@ const getVID = (event_id, token) => {
   return axios.get(url, { headers: header });
 };
 const deleteVolunteer = (vid, token) => {
-  const url = backendURL + `/api/volunteer/${vid}`;
+  const url = backendURL + `/api/volunteers/${vid}`;
   const header = {
     Authorization: "Bearer " + token,
   };
