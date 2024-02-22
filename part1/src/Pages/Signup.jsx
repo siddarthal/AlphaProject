@@ -52,8 +52,8 @@ const Signup = () => {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters long";
-    } else if (!/(?=.*\d)(?=.*[!@#$%^&*])/.test(formData.password)) {
-      newErrors.password = "Password must contain at least 1 number and 1 special character";
+    } else if (!/(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])/.test(formData.password)) {
+      newErrors.password = "Password must contain at least 1 number, 1 letter and 1 special character";
     }
 
     if (!formData.confirmPassword) {
