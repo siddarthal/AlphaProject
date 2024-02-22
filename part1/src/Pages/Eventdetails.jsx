@@ -49,6 +49,8 @@ export default function EventDetails({ token }) {
   }, [token]);
 
   const handleChannel = () => {
+    const result = window.confirm("Are you sure to become a volunteer?");
+    if (result) {
     const eventName = event.event_name + " Broadcast";
     if (token !== null) {
       api
@@ -71,6 +73,7 @@ export default function EventDetails({ token }) {
             alert("error in subscribing to the channel");
           }
         });
+    }
     }
   };
   const handleBuyTicket = () => {

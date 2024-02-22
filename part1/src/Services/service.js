@@ -206,6 +206,20 @@ const getTicketsBooked = (id, token) => {
   };
   return axios.get(url, { headers: header1 });
 };
+const getVID = (event_id, token) => {
+  const url = backendURL + `/api/getVID/${event_id}`;
+  const header = {
+    Authorization: "Bearer " + token,
+  };
+  return axios.get(url, { headers: header });
+};
+const deleteVolunteer = (vid, token) => {
+  const url = backendURL + `/api/volunteer/${vid}`;
+  const header = {
+    Authorization: "Bearer " + token,
+  };
+  return axios.delete(url, { headers: header });
+}
 export default {
   signin: signin,
   getEvents: getEvents,
@@ -235,4 +249,6 @@ export default {
   deleteTicket,
   getTicketsBooked,
   getVolunteers,
+  getVID,
+  deleteVolunteer
 };

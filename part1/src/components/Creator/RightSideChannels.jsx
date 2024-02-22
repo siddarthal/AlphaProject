@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../Services/service";
-import { Box, Typography, Paper, List, Avatar, Stack } from "@mui/material";
+import { Box, Typography, Paper, List, Avatar, Stack, Button } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person"; // Import the person icon
 
 const RightSideChannels = ({ token, eventdata }) => {
   const { id, eventName } = useParams();
   const [messages, setMessages] = useState([]);
+  const [vid, setVid] = useState(0);
   console.log(id, "id");
   console.log(eventdata, "eventdata");
   useEffect(() => {
@@ -42,6 +43,26 @@ const RightSideChannels = ({ token, eventdata }) => {
   //   return 1;
   // };
 
+  async function handelLeave(){
+    api.getVID(id, token).then((res)=>{
+      console.log(res.data)
+      setVid(res.data.vid);
+    })
+    .catch((e) => {
+      console.log(e);
+    })
+    const result = window.confirm("Are you sure to unsbscribe as a volunteer?");
+    if(result){
+      api.deleteVolunteer(vid, token)
+        .then((res) => {
+          alert("You have been unsubscribed. Refresh the page");
+          
+        })
+        .catch((e) => {
+          alert("Something went wrong")
+        })
+    }
+  }
   let messageArray = [];
   const splitMessages = (message) => {
     messageArray.push({
@@ -90,7 +111,7 @@ const RightSideChannels = ({ token, eventdata }) => {
             backgroundColor: "#bac8d1",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "space-between",
           }}
         >
           <Typography variant="h5">
@@ -98,6 +119,16 @@ const RightSideChannels = ({ token, eventdata }) => {
               ? "Browse through channels to get latest info"
               : eventName.replace("Broadcast", "")}
           </Typography>
+          {id && <Button variant="contained"
+          disableElevation
+          sx={{
+            // py: 1.5,
+            fontWeight: 500,
+            fontSize: 16,
+          }}
+          onClick={handelLeave}>
+            Leave  
+          </Button>}
         </Box>
         {messageArray.map((message, index) => (
           <Box key={index}>
